@@ -128,3 +128,34 @@ setInterval(function () {
     secs_span.innerHTML = '<span class="number">' + seconds + '</span>' + '<span class="unit">Secs</span>'; 
  
 }, 1000);
+
+
+//MODAL IMPLEMENTATION
+const modal = document.getElementById('modal-speaker-1');
+
+  modal.addEventListener('show.bs.modal', function (event) {
+    const trigger = event.relatedTarget; // The link that was clicked
+
+    // Get values from data-* attributes
+    const name = trigger.getAttribute('data-name');
+    const title = trigger.getAttribute('data-title');
+    const company = trigger.getAttribute('data-company');
+    const img = trigger.getAttribute('data-img');
+    const bio = trigger.getAttribute('data-bio');
+
+    // Update modal content
+    if (name) {
+      modal.querySelector('.name').textContent = name;
+      modal.querySelector('#speaker-1-ModalLabel').textContent = name;
+    }
+    if (title) modal.querySelector('.meta').textContent = title;
+    if (company) modal.querySelectorAll('.meta')[1].textContent = company;
+    if (img) {
+      const imgEl = modal.querySelector('.profile-image');
+      imgEl.src = img;
+      imgEl.alt = name;
+    }
+    if (bio) {
+      modal.querySelector('.desc p').textContent = bio;
+    }
+  });
