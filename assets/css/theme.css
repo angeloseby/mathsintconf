@@ -11843,13 +11843,13 @@ a.theme-link:hover {
   height: 100%;
 }
 .hero-carousel .carousel-item-1 {
-  background: url("../images/hero.jpg") no-repeat center center;
+  background: url("../images/bg/bgcmmai.webp") no-repeat center center;
 }
 .hero-carousel .carousel-item-2 {
-  background: url("../images/hero.jpg") no-repeat center center;
+  background: url("../images/bg/bgcmmai.webp") no-repeat center center;
 }
 .hero-carousel .carousel-item-3 {
-  background: url("../images/hero.jpg") no-repeat center center;
+  background: url("../images/bg/bgcmmai.webp") no-repeat center center;
 }
 .hero-text-block {
   color: #fff;
@@ -11893,11 +11893,12 @@ a.theme-link:hover {
   padding: 0;
 }
 .countdown-box .number {
+  color: white;
   font-size: 2rem;
   font-weight: 400;
-  color: #141c25;
 }
 .countdown-box .unit {
+  color: white;
   -webkit-opacity: 0.8;
   -moz-opacity: 0.8;
   opacity: 0.8;
