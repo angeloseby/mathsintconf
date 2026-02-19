@@ -286,34 +286,68 @@
 
     <div class="nav-overlay" id="navOverlay"></div>
 
-    <nav class="navbar">
-          <a href="#home" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
+   <nav class="navbar">
+        <a href="#home" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
             <img src="logo.png" alt="CMMAI Logo" style="height: 70px; width: auto;">
             <div class="brand-text">
                 <h1 style="margin: 0; color: #1a1a1a; font-weight: 700;">CMMAI 2026</h1>
             </div>
         </a>
         
-        
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">Home</a></li>
+            
             <li class="dropdown">
-                <a href="#about-cmmai" class="dropbtn">About <i class="fas fa-chevron-down"></i></a>
+                <a href="#about-cmmai" class="dropbtn">
+                    About 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
                 <ul class="dropdown-content">
-                    <li><a href="#about-cmmai">About CMMAI 2026</a></li>
-                    <li><a href="#about-college">About College</a></li>
-                    <li><a href="#topics">Conference Topics</a></li>
+                    <li><a href="about.html#about-cmmai">About CMMAI 2026</a></li>
+                    <li><a href="about.html#about-college">About College</a></li>
+                    <li><a href="about.html#about-department">About Department</a></li>
+                    <li><a href="about.html#topics">Main Topics</a></li>
                 </ul>
             </li>
+            
             <li class="dropdown">
-                <a href="#speakers" class="dropbtn">Speakers <i class="fas fa-chevron-down"></i></a>
+                <a href="#speakers" class="dropbtn">
+                    Speakers & Committee 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
                 <ul class="dropdown-content">
                     <li><a href="#speakers">Plenary Speakers</a></li>
-                    <li><a href="#committee">Committee</a></li>
+                    <li><a href="#scientific-committee">Scientific Advisory Committee</a></li>
+                    <li><a href="#committee">Organising Committee</a></li>
                 </ul>
             </li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#register" class="btn-primary">Register Now</a></li>
+
+            <li class="dropdown">
+                <a href="#schedule" class="dropbtn">
+                    Details 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#mode">Mode of Participation</a></li>
+                    <li><a href="#dates">Important Dates</a></li>
+                    <li><a href="#call-for-papers">Call for Papers</a></li>
+                    <li><a href="#venue">Venue</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#fees" class="dropbtn">
+                    Registration 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="#early-bird">Early Bird Registration</a></li>
+                    <li><a href="#regular-fee">Regular Registration Fee</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="#register" class="btn btn-primary" style="color: white; border-radius: 50px; background: linear-gradient(135deg, #1e3c72, #2a5298); box-shadow: 0 4px 15px rgba(30,60,114,0.3);">Register Now</a></li>
         </ul>
         
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
