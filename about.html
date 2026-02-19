@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMMAI 2026 | International Academic Conference</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- Psychological Design Update --- */
+        html { 
+    scroll-behavior: smooth; 
+    overflow-x: hidden; /* <-- यह लाइन जोड़ी है (New) */
+    width: 100%;        /* <-- यह लाइन जोड़ी है (New) */
+}
+
+      body {
+            background-color: #f0f2f5; /* Softer gray for less eye strain */
+            background-image: radial-gradient(#dfe3e8 1px, transparent 1px); /* Subtle dot pattern */
+            background-size: 20px 20px;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            /* REQUESTED UPDATE: 10px padding for the whole page */
+            padding-top: 80px; /* जितनी आपके नेवबार की ऊँचाई है, उतना स्पेस दें */
+            box-sizing: border-box;
+            margin: 0;
+              overflow-x: hidden; /* <-- यह लाइन जोड़ी है (New) */
+    width: 100%;        /* <-- यह लाइन जोड़ी है (New) */
+    position: relative;
+        }
+
+        /* 1. MAIN CONFERENCE CARD: Wisdom & Depth (Blue/Purple) */
+        .main-gradient-card {
+            background: linear-gradient(120deg, #2b5876 0%, #4e4376 100%); /* Deep rich purple-blue */
+            padding: 20px 15px !important; /* मोबाइल के लिए कम पैडिंग */
+          border-radius: 15px !important; /* थोड़े छोटे कोनों के साथ मोबाइल पर अच्छा दिखता है */
+            box-shadow: 0 25px 50px -12px rgba(43, 88, 118, 0.4) !important;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Glassmorphism overlay for texture */
+        .main-gradient-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* 1. पहले टाइटल की चौड़ाई को टेक्स्ट के बराबर करें */
+.section-title {
+    display: table;           /* यह टाइटल को सिर्फ उतना ही चौड़ा रखेगा जितना टेक्स्ट है */
+    margin-left: auto;        /* सेंटर करने के लिए */
+    margin-right: auto;       /* सेंटर करने के लिए */
+    position: relative;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+/* 2. अब लाइन को 100% कर दें */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;                  /* अब 50% की ज़रूरत नहीं, शुरू से शुरू करें */
+    width: 100%;              /* अब यह टाइटल की पूरी चौड़ाई के बराबर होगा */
+    height: 3px;
+    background-color: var(--accent-gold);
+    transform: none;          /* translateX हटा दें क्योंकि अब हम left: 0 इस्तेमाल कर रहे हैं */
+}
+        .main-gradient-card .section-title {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+        }
+
+        /* --- UPDATED: New Grid Design for About Section --- */
+        .about-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+            margin-top: 30px;
+        }
+
+        .about-feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .about-feature-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .about-feature-card h4 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #a5f3fc; /* Light cyan accent */
+        }
+
+        .about-feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: justify;
+        }
+
+        /* Full width card for the final paragraph */
+        .about-feature-card.full-width {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%);
+            text-align: center;
+        }
+        .about-feature-card.full-width p {
+            text-align: center;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ------------------------------------------------ */
+
+        /* 2. TOPICS: Diversity & Rhythm (Multi-colored) */
+        .topics-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px; /* Slightly more gap */
+            margin-bottom: 70px;
+        }
+
+        .topic-pill {
+            background: #ffffff;
+            padding: 16px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03); /* Softer shadow */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Spring physics */
+            border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-pill:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            background: #fff;
+        }
+
+        /* Psychological Coloring for Topics - Repeating Pattern */
+        .topic-pill:nth-child(3n+1) { border-left-color: #3b82f6; } /* Blue - Logic */
+        .topic-pill:nth-child(3n+1) i { color: #3b82f6; }
+        .topic-pill:nth-child(3n+1):hover { background: linear-gradient(to right, rgba(59, 130, 246, 0.05), #fff); }
+
+        .topic-pill:nth-child(3n+2) { border-left-color: #10b981; } /* Green - Growth */
+        .topic-pill:nth-child(3n+2) i { color: #10b981; }
+        .topic-pill:nth-child(3n+2):hover { background: linear-gradient(to right, rgba(16, 185, 129, 0.05), #fff); }
+
+        .topic-pill:nth-child(3n+3) { border-left-color: #f59e0b; } /* Orange - Creativity */
+        .topic-pill:nth-child(3n+3) i { color: #f59e0b; }
+        .topic-pill:nth-child(3n+3):hover { background: linear-gradient(to right, rgba(245, 158, 11, 0.05), #fff); }
+
+        .topic-pill span {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+
+        /* 3. COLLEGE & DEPT CARDS: Distinct Identities */
+        
+        /* Common Card Styles */
+        .college-card, .dept-card {
+            border-radius: 30px;
+            padding: 45px;
+            height: 100%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        /* College: Growth & Stability (Teal/Emerald) */
+        .college-card {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); /* Elegant Dark Teal */
+            color: white;
+            box-shadow: 0 20px 40px rgba(32, 58, 67, 0.3);
+        }
+
+        /* Department: Energy & Creativity (Sunset) */
+        .dept-card {
+            background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); /* Vibrant Red/Pink */
+            color: white;
+            box-shadow: 0 20px 40px rgba(221, 36, 118, 0.3);
+        }
+
+        .college-card:hover, .dept-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .college-card .section-title, 
+        .dept-card .section-title {
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .college-card p, .dept-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* General UI Polish */
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            font-size: 2rem;
+        }
+
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-radius: 0 0 20px 20px;
+
+    /* --- position: fixed का जादू --- */
+    position: fixed !important; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+        
+       /* --- फुटर का नया लेआउट --- */
+.minimal-footer {
+    background-color: #001f3f;
+    color: #fff;
+    padding: 15px 0; /* थोड़ा पैडिंग बढ़ाया ताकि कंटेंट साफ़ दिखे */
+    font-size: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-flex-container {
+    display: flex;
+    justify-content: space-between; /* यह लेफ्ट, मिड और राइट को अलग करेगा */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* बीच वाले लिंक्स की स्टाइल */
+.footer-mini-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-mini-links a {
+    color: #a5f3fc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-mini-links a:hover {
+    color: #fff;
+    text-underline-offset: 3px;
+    text-decoration: underline;
+}
+
+/* मोबाइल के लिए सेटिंग (एक के नीचे एक दिखाना) */
+@media (max-width: 768px) {
+    .footer-flex-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .footer-mini-links {
+        justify-content: center;
+    }
+}
+
+        section.container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            max-width: 1200px; /* Constrain width for better reading on large screens */
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+ 
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="navbar">
+        <a href="#home" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
+            <img src="logo.png" alt="CMMAI Logo" style="height: 70px; width: auto;">
+            <div class="brand-text">
+                <h1 style="margin: 0; color: #1a1a1a; font-weight: 700;">CMMAI 2026</h1>
+            </div>
+        </a>
+        
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="#about-cmmai" class="dropbtn">
+                    About 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="about.html#about-cmmai">About CMMAI 2026</a></li>
+                    <li><a href="about.html#about-college">About College</a></li>
+                    <li><a href="about.html#about-department">About Department</a></li>
+                    <li><a href="about.html#topics">Main Topics</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#speakers" class="dropbtn">
+                    Speakers & Committee 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="#speakers">Plenary Speakers</a></li>
+                    <li><a href="#scientific-committee">Scientific Advisory Committee</a></li>
+                    <li><a href="#committee">Organising Committee</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#schedule" class="dropbtn">
+                    Details 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#mode">Mode of Participation</a></li>
+                    <li><a href="#dates">Important Dates</a></li>
+                    <li><a href="#call-for-papers">Call for Papers</a></li>
+                    <li><a href="#venue">Venue</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#fees" class="dropbtn">
+                    Registration 
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-content">
+                    <li><a href="#early-bird">Early Bird Registration</a></li>
+                    <li><a href="#regular-fee">Regular Registration Fee</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="#register" class="btn btn-primary" style="color: white; border-radius: 50px; background: linear-gradient(135deg, #1e3c72, #2a5298); box-shadow: 0 4px 15px rgba(30,60,114,0.3);">Register Now</a></li>
+        </ul>
+        
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <section id="about-cmmai" class="container" style="max-width: 2000px;">
+        
+        <div class="main-gradient-card">
+            <h3 class="section-title" style="text-align: center;">About CMMAI 2026</h3>
+            
+            <div class="about-grid-container">
+                <div class="about-feature-card">
+                    <h4><i class="fas fa-globe-americas"></i> The Vision</h4>
+                    <p>
+                        Welcome to the International Conference on Computational Mathematics, Modelling and Artificial Intelligence, a thoughtfully curated forum dedicated to the exchange of ideas at the intersection of mathematics, computation, and intelligent systems. The conference is envisioned as a space where rigorous mathematical theory meets modern computational practice, and where researchers gather to reflect on how foundational ideas are shaping contemporary science and technology.
+                    </p>
+                </div>
+
+                <div class="about-feature-card">
+                    <h4><i class="fas fa-microchip"></i> The Impact</h4>
+                    <p>
+                        Computational mathematics has become a defining force in scientific discovery, enabling the understanding, prediction, and control of complex systems across an expanding range of disciplines. From numerical analysis and scientific computing to stochastic modelling, optimisation, and data-driven methodologies, mathematical thinking now plays a central role in addressing challenges in the physical, biological, economic, and data sciences, as well as in artificial intelligence.
+                    </p>
+                </div>
+
+                <div class="about-feature-card">
+                    <h4><i class="fas fa-comments"></i> The Dialogue</h4>
+                    <p>
+                        The conference aims to brings together a diverse yet closely connected community of researchers from academia, research institutions, and industry. It is designed to encourage meaningful conversations, between established frameworks and emerging ideas, between theory and computation, and between disciplines that may differ in language but share common mathematical foundations.
+                    </p>
+                </div>
+
+                <div class="about-feature-card">
+                    <h4><i class="fas fa-rocket"></i> Future Horizons</h4>
+                    <p>
+                        With an emphasis on depth, dialogue, and intellectual openness, the conference offers a setting that values careful thought and genuine exchange. By highlighting emerging directions in computational mathematics, modelling, and artificial intelligence, including quantum computing, quantum-inspired algorithms, and their mathematical foundations, the conference seeks not only to present current advances, but also to create space for reflection on future challenges and opportunities.
+                    </p>
+                </div>
+
+                <div class="about-feature-card full-width">
+                    <p>
+                        <i class="fas fa-quote-left" style="margin-right: 10px; color: #a5f3fc;"></i>
+                        Above all, the conference aims to foster a sense of intellectual community—one grounded in mathematical rigour, driven by curiosity, and open to new perspectives. It is an invitation to engage deeply, to share ideas freely, and to collectively explore the evolving role of computation and mathematics in shaping modern science.
+                        <i class="fas fa-quote-right" style="margin-left: 10px; color: #a5f3fc;"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h3 id="topics" class="section-title" style="color: #2d3748;">Main Topics</h3>
+        
+        <div class="topics-container">
+            <div class="topic-pill"><i class="fas fa-calculator"></i> <span>Numerical Analysis and Scientific Computing</span></div>
+            <div class="topic-pill"><i class="fas fa-atom"></i> <span>Mathematical Modelling and Simulation of Physical Systems</span></div>
+            <div class="topic-pill"><i class="fas fa-chart-line"></i> <span>Optimisation, Variational Methods, and Control Theory</span></div>
+            <div class="topic-pill"><i class="fas fa-dice-d20"></i> <span>Stochastic Modelling, Uncertainty Quantification, and Dynamical Systems</span></div>
+            <div class="topic-pill"><i class="fas fa-leaf"></i> <span>Mathematical Modelling in Life and Environmental Sciences</span></div>
+            <div class="topic-pill"><i class="fas fa-coins"></i> <span>Mathematical Finance, Economics, and Decision Sciences</span></div>
+            <div class="topic-pill"><i class="fas fa-database"></i> <span>Data-Driven Mathematical Modelling and Scientific Machine Learning</span></div>
+            <div class="topic-pill"><i class="fas fa-dna"></i> <span>Mathematical Foundations of Artificial Intelligence and Data Science</span></div>
+            <div class="topic-pill"><i class="fas fa-brain"></i> <span>Computational Mathematics in Imaging, Neuroscience, and Medicine</span></div>
+            <div class="topic-pill"><i class="fas fa-lightbulb"></i> <span>Emerging Topics in Computational Mathematics and AI</span></div>
+        </div>
+
+        <div class="d-flex flex-wrap" style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div class="col-md-6" style="flex: 1; min-width: 300px;">
+                <div class="college-card">
+                    <h3 id="about-college" class="section-title" style="margin-top: 0; font-size: 1.5rem; text-align: left;">About Bharata Mata College</h3>
+                    <div class="about-text">
+                        <p>Bharata Mata College is a premier institution of higher education located in Thrikkakara, Kochi, in the south Indian state of Kerala. The college is affiliated with Mahatma Gandhi University and is known for its academic excellence, state-of-the-art infrastructure, and dedication to research.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" style="flex: 1; min-width: 300px;">
+                <div class="dept-card">
+                    <h3 id="about-department" class="section-title" style="margin-top: 0; font-size: 1.5rem; text-align: left;">About The Department</h3>
+                    <div class="about-text">
+                        <p>The Department of Mathematics has a rich tradition of promoting analytical thinking and applied mathematical research. It hosts numerous academic events, workshops, and seminars aimed at fostering innovation and bringing students closer to global mathematical advancements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+  <footer class="minimal-footer">
+    <div class="container footer-flex-container">
+        <div class="footer-left">
+            <p>© 2026 CMMAI - Bharata Mata College. All Rights Reserved.</p>
+        </div>
+
+        <div class="footer-center">
+            <ul class="footer-mini-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about-cmmai">About</a></li>
+                <li><a href="#register">Register</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-right">
+            <p>
+                Contact: contact@cmmai2026.org | 
+                <span style="opacity: 0.7;">Designed by Dept of Mathematics</span>
+            </p>
+        </div>
+    </div>
+</footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
