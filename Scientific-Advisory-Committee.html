@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMMAI 2026 | International Conference on
+Computational Mathematics, Modeling & AI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===================================================
+           1. GLOBAL VARIABLES & RESET (From Code A)
+           =================================================== */
+        :root {
+            --primary-navy: #001f3f;    
+            --secondary-blue: #0284c7;  
+            --accent-gold: #f2a900;      
+            --bg-light: #f8fafc;        
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --check-green: #10b981;      
+            --font-heading: 'Merriweather', serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s ease;
+            
+            /* Teal Theme Variables */
+            --theme-card-dark: #105854;   
+            --theme-card-main: #146c67;   
+            --theme-card-light: #d2e5e0;  
+            --theme-card-badge-bg: #e3f0ec; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+            width: 100%; 
+        }
+
+        body {
+            background-color: #f0f2f5;
+            background-image: radial-gradient(#dfe3e8 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            padding-top: 60px; 
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; 
+            width: 100%; 
+            position: relative;
+        }
+
+        .container {
+            padding-top: 50px;
+            padding-bottom: 5px;
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+
+        /* ===================================================
+           2. NAVBAR & TOP BAR (From Code A)
+           =================================================== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 20px 20px;
+            padding: 0.8rem 5%;
+            display: flex;
+            align-items: center;
+            position: fixed !important; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1005; 
+        }
+
+        .brand h1 { font-family: var(--font-heading); color: var(--theme-card-main); font-size: 1.7rem; font-weight: 900; white-space: nowrap; margin: 0; }
+
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; margin: 0 0 0 auto; padding: 0; justify-content: flex-end; }
+        .nav-links li { list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-links > li > a:hover { color: var(--theme-card-main); }
+
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.8rem; color: var(--theme-card-main); cursor: pointer; transition: 0.3s; margin-left: auto; }
+        .mobile-toggle:hover { color: var(--theme-card-dark); transform: scale(1.1); }
+
+        /* Dropdown Desktop */
+        .dropdown { position: relative; }
+        .dropdown .dropbtn { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .dropdown .dropbtn i { font-size: 0.75rem; transition: transform 0.3s ease; }
+        .dropdown .dropbtn i.fa-plus, .dropdown .dropbtn i.fa-minus { display: none; }
+        .dropdown .dropbtn i.fa-chevron-down { display: inline-block; }
+
+        .dropdown-content {
+            display: none; position: absolute; background-color: var(--bg-white); min-width: 260px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; border-radius: 8px; top: 100%; right: 0; padding: 0.5rem 0; border: 1px solid var(--border-color);
+            list-style: none; margin: 0;
+        }
+        .dropdown-content li { width: 100%; list-style: none; }
+        .dropdown-content a { color: var(--text-dark); padding: 12px 20px; display: block; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--bg-light); transition: 0.2s ease; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background-color: var(--bg-light); color: var(--theme-card-main); padding-left: 25px; } 
+
+        @media (min-width: 1025px) {
+            .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease forwards; }
+            .dropdown:hover .dropbtn i.fa-chevron-down { transform: rotate(180deg); color: var(--theme-card-main); }
+        }
+
+        .nav-overlay { display: none; }
+
+        @media (max-width: 1024px) {
+            .navbar { padding: 0.8rem 10px; justify-content: space-between; border-radius: 0; }
+            .mobile-toggle { display: block; z-index: 1006; position: relative; }
+
+            .nav-links { 
+                position: fixed; 
+                top: 96px; 
+                right: -100%; 
+                width: 340px; 
+                max-width: 85vw; 
+                height: calc(100vh - 96px); 
+                background-color: var(--bg-white); 
+                flex-direction: column; 
+                align-items: flex-start;
+                justify-content: flex-start; 
+                padding: 2rem 1.5rem 3rem 1.5rem; 
+                border-top: 1px solid var(--border-color); 
+                box-shadow: -10px 0 25px rgba(0,0,0,0.15); 
+                gap: 0; 
+                transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); 
+                z-index: 1003; 
+                overflow-y: auto; 
+                list-style: none; 
+                margin: 0; 
+                -webkit-overflow-scrolling: touch; 
+            }
+            .nav-links.active { right: 0; }
+            
+            .nav-links > li { width: 100%; border-bottom: 1px solid var(--border-color); list-style: none; }
+            .nav-links > li:last-child { border-bottom: none; margin-top: 1.5rem; } 
+            .nav-links a, .dropdown .dropbtn { font-size: 1.15rem; width: 100%; display: block; padding: 1.2rem 0; color: var(--text-dark); }
+
+            .dropdown .dropbtn { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+            .dropdown .dropbtn i.fa-chevron-down { display: none; }
+            .dropdown .dropbtn i.fa-plus { display: inline-block; font-size: 1.1rem; color: var(--theme-card-main); transition: 0.3s ease; }
+            .dropdown .dropbtn i.fa-minus { display: none; font-size: 1.1rem; color: var(--theme-card-main); transition: 0.3s ease; }
+            
+            .dropdown.active .dropbtn i.fa-plus { display: none; }
+            .dropdown.active .dropbtn i.fa-minus { display: inline-block; transform: rotate(180deg); }
+            
+            .dropdown-content {
+                display: none; position: static; box-shadow: none; border: none;
+                background-color: var(--bg-light); padding: 0; width: 100%;
+                border-radius: 8px; border-left: 4px solid var(--theme-card-main); margin-bottom: 1rem;
+                list-style: none; overflow: hidden;
+            }
+            .dropdown.active .dropdown-content { display: block; animation: slideDown 0.4s ease forwards; }
+            .dropdown-content a { font-size: 1.05rem; padding: 0.8rem 1.5rem; border-bottom: 1px solid #e2e8f0; }
+
+            .nav-overlay {
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(20, 108, 103, 0.8); z-index: 1002; opacity: 0; visibility: hidden; transition: 0.4s ease; 
+                backdrop-filter: blur(4px);
+            }
+            .nav-overlay.active { opacity: 1; visibility: visible; }
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* ===================================================
+           3. MAIN CONFERENCE CARD: Wisdom & Depth (From Code B)
+           =================================================== */
+        .main-gradient-card {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); 
+            padding: 60px 30px !important; 
+            border-radius: 20px !important; 
+            box-shadow: 0 25px 50px -12px rgba(15, 32, 39, 0.5) !important;
+            margin-bottom: 50px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .main-gradient-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .section-title {
+            display: table;            
+            margin-left: auto;        
+            margin-right: auto;        
+            position: relative;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%; 
+            transform: translateX(-50%);                   
+            width: 80px;                 
+            height: 4px;
+            background-color: var(--accent-gold, #f2a900);
+            border-radius: 2px;
+        }
+        
+        .main-gradient-card .section-title {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            font-size: 2.5rem;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 50px;
+            font-family: var(--font-heading);
+        }
+
+        /* --- SUPERIOR SPEAKER CARDS DESIGN (From Code B) --- */
+        .elite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .elite-card {
+            background: rgba(255, 255, 255, 0.07); 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .elite-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .elite-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .elite-card:hover::before {
+            left: 100%;
+            transition: 0.7s;
+        }
+
+        .elite-img-box {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            border-radius: 50%;
+            padding: 4px; 
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.5));
+            transition: transform 0.4s ease;
+        }
+
+        .elite-card:hover .elite-img-box {
+            transform: scale(1.08);
+            background: linear-gradient(45deg, #f2a900, #26d0ce); 
+        }
+
+        .elite-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .elite-card h4 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin: 0 0 5px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-family: var(--font-heading);
+        }
+        
+        .elite-designation {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a5f3fc; 
+            font-weight: 600;
+            margin-bottom: 10px !important;
+        }
+
+        .elite-institution {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* --- MOBILE OPTIMIZATION (Code A Scaling combined with Code B Styles) --- */
+        @media (max-width: 768px) {
+            html { font-size: 14px; } 
+
+            .main-gradient-card {
+                padding: 30px 10px !important; 
+            }
+
+            .main-gradient-card .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+            }
+
+            .elite-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 12px !important; 
+            }
+
+            .elite-card {
+                padding: 15px 10px !important; 
+                border-radius: 12px;
+            }
+
+            .elite-img-box {
+                width: 80px; 
+                height: 80px;
+                margin-bottom: 10px;
+            }
+
+            .elite-card h4 {
+                font-size: 0.95rem; 
+                line-height: 1.2;
+                margin-bottom: 5px;
+            }
+
+            .elite-designation {
+                font-size: 0.6rem !important;
+                padding: 2px 6px;
+                margin-bottom: 6px !important;
+            }
+
+            .elite-institution {
+                font-size: 0.75rem;
+                line-height: 1.2;
+            }
+        }
+
+        /* ===================================================
+           4. FOOTER STYLES (From Code A)
+           =================================================== */
+        .minimal-footer {
+            background-color: #001f3f;
+            color: #fff;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 15px 20px;
+        }
+
+        .footer-left p, .footer-right p {
+            margin: 0px 0;
+            line-height: 1.5;
+            color: var(--theme-card-light);
+        }
+
+        .footer-left { text-align: left; }
+        .footer-right { text-align: right; }
+
+        .dev-link {
+            color: #f2a900; 
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dev-link:hover {
+            color: #f7d56e;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .footer-left, .footer-right {
+                text-align: center;
+            }
+        }
+
+        /* ===================================================
+           5. MODAL CSS (From Code A)
+           =================================================== */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 600px; 
+            max-height: 85vh; 
+            border-radius: 20px;
+            position: relative;
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+
+        .modal-header {
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--theme-card-dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #a0aec0;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .close-btn:hover { color: #1a202c; }
+
+        .modal-body { 
+            padding: 25px 30px; 
+            text-align: center; 
+            color: #333;
+            overflow-y: auto; 
+        }
+
+        .modal-footer {
+            padding: 15px 25px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-light);
+        }
+
+        .dev-img {
+            width: 180px; height: 180px; 
+            border-radius: 50%; 
+            object-fit: cover;
+            border: 3px solid #f2a900;
+            margin-bottom: 15px;
+            padding: 3px;
+        }
+
+        .dev-info h2 { margin: 0 0 5px; color: var(--theme-card-dark); font-weight: 800; }
+        .dev-title { color: #f2a900; font-weight: 600; margin: 0 0 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .dev-desc { color: #4a5568; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+
+        .dev-contact { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+        .contact-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            background: var(--theme-card-main); 
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(20, 108, 103, 0.3); }
+        .contact-btn.whatsapp { background: #25D366; }
+    </style>
+</head>
+<body>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
+            <img src="logo.png" alt="CMMAI Logo" style="height: 70px; width: auto;">
+            <div class="brand-text">
+                <h1 style="margin: 0; font-weight: 700;">CMMAI 2026</h1>
+            </div>
+        </a>
+        
+         <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#speakers" class="dropbtn">
+                        Speakers & Committee
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="keynote-speakers.html">Keynote Speakers</a></li>
+                        <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
+                        <li><a href="organising-committee.html">Organising Committee</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#schedule" class="dropbtn">
+                       Program
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="dates.html">Important Dates</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                    </ul>
+                </li>
+                <li><a href="registration.html">Registration</a></li>
+                <li><a href="call-for-extended-abstracts.html">Call for Abstracts</a></li>
+                <li><a href="Contact-us.html">Contact us</a></li>
+                <li></li>
+            </ul>
+        
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <section id="about-cmmai" class="container" style="max-width: 1400px;">
+        
+        <div class="main-gradient-card">
+            <h3 class="section-title">Keynote Speakers</h3>
+            
+                  <div class="elite-grid">
+                
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/ProfWilSchilders.jpg" alt="Prof. Wil Schilders" loading="lazy">
+                    </div>
+                    <h4>Prof. Wil Schilders</h4>
+                    <span class="elite-designation">Professor</span>
+                    <p class="elite-institution">CASA, Netherlands</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/ProfPadmanabhanSeshaiter.jpg" alt="Prof. Padmanabhan Seshaiyer" loading="lazy">
+                    </div>
+                    <h4>Prof. P. Seshaiyer</h4>
+                    <span class="elite-designation">Director</span>
+                    <p class="elite-institution">George Mason University, USA</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/DominicPClemence.gif" alt="Prof. Dominic Clemence" loading="lazy">
+                    </div>
+                    <h4>Prof. Dominic Clemence</h4>
+                    <span class="elite-designation">Professor</span>
+                    <p class="elite-institution">North Carolina A&T State University</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/KadalJaboo.jpg" alt="Prof. M. K Kadalbajoo" loading="lazy">
+                    </div>
+                    <h4>Prof. M. K Kadalbajoo</h4>
+                    <span class="elite-designation">Retd. Professor</span>
+                    <p class="elite-institution">IIT Kanpur & LNMIIT Jaipur</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/SSundar.png" alt="Prof. S. Sundar" loading="lazy">
+                    </div>
+                    <h4>Prof. S. Sundar</h4>
+                    <span class="elite-designation">Director, NIT Mizoram</span>
+                    <p class="elite-institution">Chair Professor, IIT Madras</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/Nandakumaran.jpg" alt="Prof. A. K. Nandakumaran" loading="lazy">
+                    </div>
+                    <h4>Prof. A. K. Nandakumaran</h4>
+                    <span class="elite-designation">Professor</span>
+                    <p class="elite-institution">IISc, Bangalore</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/Veerappa-G-D-Gowda.jpg" alt="Prof. G. D. Veerappa Gowda" loading="lazy">
+                    </div>
+                    <h4>Prof. G. D. Veerappa Gowda</h4>
+                    <span class="elite-designation">Professor</span>
+                    <p class="elite-institution">Mahindra University</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/Peeyush-Chandra-1.jpg" alt="Prof. Peeyush Chandra" loading="lazy">
+                    </div>
+                    <h4>Prof. Peeyush Chandra</h4>
+                    <span class="elite-designation">Retd. Professor</span>
+                    <p class="elite-institution">IIT Kanpur</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/Adimoorthy.jpg" alt="Prof. A. Adimoorthy" loading="lazy">
+                    </div>
+                    <h4>Prof. A. Adimoorthy</h4>
+                    <span class="elite-designation">Professor</span>
+                    <p class="elite-institution">TIFR, Bangalore</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/D74106_003Jichun-Li.jpg" alt="Dr. Jichun Li" loading="lazy">
+                    </div>
+                    <h4>Dr. Jichun Li</h4>
+                    <span class="elite-designation">Associate Professor</span>
+                    <p class="elite-institution">Newcastle University, UK</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/Olga.jpg" alt="Dr. Olga Mula Hernandez" loading="lazy">
+                    </div>
+                    <h4>Dr. Olga Mula Hernandez</h4>
+                    <span class="elite-designation">Associate Professor</span>
+                    <p class="elite-institution">TU Eindhoven, Netherlands</p>
+                </div>
+
+                <div class="elite-card">
+                    <div class="elite-img-box">
+                        <img src="assets/images/speakers/AshishAs.jpg" alt="Dr. Ashish Awasthi" loading="lazy">
+                    </div>
+                    <h4>Dr. Ashish Awasthi</h4>
+                    <span class="elite-designation">Associate Professor</span>
+                    <p class="elite-institution">NIT Calicut</p>
+                </div>
+
+            </div>
+            
+            
+           
+        </div>
+        
+    </section>
+
+    <footer class="minimal-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
+                <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+            </div>
+            
+            <div class="footer-right">
+                <p>Developed by <a href="#" id="devModalBtn" class="dev-link">Raj Thakur</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="devModal" class="modal-overlay">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h3>Developer Profile</h3>
+                <span class="close-btn" id="closeModalBtn">&times;</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="dev-image-box">
+                    <img src="raj.png" alt="Raj Thakur" class="dev-img">
+                </div>
+                <div class="dev-info">
+                    <h2>Raj Thakur</h2>
+                    <p class="dev-title">Software & Web Developer</p>
+                    <p class="dev-desc">
+                        Hello! I am a developer specializing in building scalable websites and software solutions. 
+                        Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
+                        coaching institute software, and academic conference websites like CMMAI.
+                    </p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="dev-contact">
+                    <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
+                    <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("devModal");
+            const btn = document.getElementById("devModalBtn");
+            const closeBtn = document.getElementById("closeModalBtn");
+
+            // Click on "Raj Thakur" opens modal
+            btn.addEventListener("click", (e) => {
+                e.preventDefault(); 
+                modal.classList.add("show");
+            });
+
+            // Click on "X" closes modal
+            closeBtn.addEventListener("click", () => {
+                modal.classList.remove("show");
+            });
+
+            // Click outside the box closes modal
+            window.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove("show");
+                }
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMMAI 2026 | International Conference on
+Computational Mathematics, Modeling & AI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- Base Settings --- */
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+            width: 100%; 
+        }
+
+        body {
+            background-color: #f8f9fa; 
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            padding-top: 60px; 
+            box-sizing: border-box;
+            margin: 0;
+            overflow-x: hidden; 
+            width: 100%; 
+            position: relative;
+            /* Footer Bottom Fix */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 20px 20px;
+            position: fixed !important; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 5px;
+            box-sizing: border-box;
+        }
+        
+        /* Navigation Links & Brand */
+        .nav-links { list-style: none; display: flex; gap: 20px; align-items: center; margin-right: 20px;}
+        .nav-links li { position: relative; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: #1e3c72; }
+        .dropdown-content { display: none; position: absolute; background: white; box-shadow: 0 8px 16px rgba(0,0,0,0.1); min-width: 160px; border-radius: 8px; top: 100%; left: 0; z-index: 1000; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { padding: 10px 15px; display: block; font-size: 0.9rem; }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; padding-right: 20px;}
+        .brand { padding-left: 20px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+        }
+
+        /* --- SECTION STYLES --- */
+        .section-wrapper {
+            padding-top: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex: 1; /* Content pushes footer down */
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f1f1f1;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        /* ===================================================
+           5. FOOTER STYLES
+           =================================================== */
+        .minimal-footer {
+            background-color: #001f3f;
+            color: #fff;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: auto; /* Pushes footer to bottom */
+            width: 100%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+
+        .footer-left p, .footer-right p {
+            margin: 0px 0;
+            line-height: 1.5;
+            color: #d1d5db;
+        }
+
+        .footer-left { text-align: left; }
+        .footer-right { text-align: right; }
+
+        .dev-link {
+            color: #f2a900; 
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dev-link:hover {
+            color: #f7d56e;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .footer-left, .footer-right {
+                text-align: center;
+            }
+        }
+
+      /* ===================================================
+   6. MODAL CSS (Updated Fixed Header/Footer & Scrollable Body)
+   =================================================== */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 600px; 
+            max-height: 85vh; 
+            border-radius: 20px;
+            position: relative;
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+
+        /* --- Fixed Header --- */
+        .modal-header {
+            padding: 15px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #1a1a2e;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #a0aec0;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .close-btn:hover { color: #1a202c; }
+
+        /* --- Scrollable Body --- */
+        .modal-body { 
+            padding: 25px 30px; 
+            text-align: center; 
+            color: #333;
+            overflow-y: auto; 
+        }
+
+        /* --- Fixed Footer --- */
+        .modal-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8f9fa;
+        }
+
+        .dev-img {
+            width: 180px; height: 180px; 
+            border-radius: 50%; 
+            object-fit: cover;
+            border: 3px solid #f2a900;
+            margin-bottom: 15px;
+            padding: 3px;
+        }
+
+        .dev-info h2 { margin: 0 0 5px; color: #0f0c29; font-weight: 800; }
+        .dev-title { color: #f2a900; font-weight: 600; margin: 0 0 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .dev-desc { color: #4a5568; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+
+        .dev-contact { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+        .contact-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            background: #0f0c29; 
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .contact-btn.whatsapp { background: #25D366; }
+
+        /* ===================================================
+           3. RESPONSIVE NAVBAR (MOBILE & TABLET < 1024px)
+           =================================================== */
+        @media (max-width: 1024px) {
+            .navbar { padding: 1rem 5%; justify-content: space-between; border-radius: 0; }
+            .mobile-toggle { display: block; z-index: 1002; position: relative; }
+
+            .nav-links { 
+                position: fixed; top: 0; right: -100%; width: 340px; max-width: 85vw; height: 100vh; 
+                background-color: #ffffff; flex-direction: column; align-items: flex-start;
+                justify-content: flex-start; padding: 6rem 1.5rem 3rem 1.5rem; box-shadow: -10px 0 25px rgba(0,0,0,0.15); 
+                gap: 0; transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1001;
+                overflow-y: auto; list-style: none; margin: 0; -webkit-overflow-scrolling: touch; 
+            }
+            .nav-links.active { right: 0; }
+            
+            .nav-links > li { width: 100%; border-bottom: 1px solid #e2e8f0; list-style: none; }
+            .nav-links > li:last-child { border-bottom: none; margin-top: 1.5rem; } 
+            .nav-links a, .dropdown .dropbtn { font-size: 1.15rem; width: 100%; display: block; padding: 1.2rem 0; color: #333; }
+
+            .dropdown .dropbtn { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+            .dropdown .dropbtn i.fa-chevron-down { display: none; }
+            .dropdown .dropbtn i.fa-plus { display: inline-block; font-size: 1.1rem; color: #1e3c72; transition: 0.3s ease; }
+            .dropdown .dropbtn i.fa-minus { display: none; font-size: 1.1rem; color: #1e3c72; transition: 0.3s ease; }
+            
+            .dropdown.active .dropbtn i.fa-plus { display: none; }
+            .dropdown.active .dropbtn i.fa-minus { display: inline-block; transform: rotate(180deg); }
+            
+            .dropdown-content {
+                display: none; position: static; box-shadow: none; border: none;
+                background-color: #f8f9fa; padding: 0; width: 100%;
+                border-radius: 8px; border-left: 4px solid #1e3c72; margin-bottom: 1rem;
+                list-style: none; overflow: hidden;
+            }
+            .dropdown.active .dropdown-content { display: block; animation: slideDown 0.4s ease forwards; }
+            .dropdown-content a { font-size: 1.05rem; padding: 0.8rem 1.5rem; border-bottom: 1px solid #e2e8f0; }
+
+            .nav-overlay {
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 31, 63, 0.7); z-index: 1000; opacity: 0; visibility: hidden; transition: 0.4s ease;
+                backdrop-filter: blur(4px);
+            }
+            .nav-overlay.active { opacity: 1; visibility: visible; }
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="navbar">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; box-sizing: border-box; padding: 5px 0;">
+            
+            <a href="index.html" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                <img src="logo.png" alt="CMMAI Logo" style="height: 60px; width: auto;">
+                <div class="brand-text">
+                    <h1 style="margin: 0; color: #1a1a1a; font-weight: 700; font-size: 1.4rem;">CMMAI 2026</h1>
+                </div>
+            </a>
+            
+             <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#speakers" class="dropbtn">
+                        Speakers & Committee
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="keynote-speakers.html">Keynote Speakers</a></li>
+                        <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
+                        <li><a href="organising-committee.html">Organising Committee</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#schedule" class="dropbtn">
+                       Program
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="dates.html">Important Dates</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                    </ul>
+                </li>
+                <li><a href="registration.html">Registration</a></li>
+                <li><a href="call-for-extended-abstracts.html">Call for Abstracts</a></li>
+                <li><a href="Contact-us.html">Contact us</a></li>
+                <li></li>
+            </ul>
+        
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    
+
+    <section id="schedule" class="section-wrapper">
+        
+    
+ <h4 class="card-title">Comming Soon</h4>
+    </section>
+
+ 
+
+   <footer class="minimal-footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
+            <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+        </div>
+        
+        <div class="footer-right">
+            <p>Developed by <a href="#" id="devModalBtn" class="dev-link">Raj Thakur</a></p>
+        </div>
+    </div>
+</footer>
+
+<div id="devModal" class="modal-overlay">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+            <h3>Developer Profile</h3>
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+        </div>
+
+        <div class="modal-body">
+            <div class="dev-image-box">
+                <img src="raj.png" alt="Raj Thakur" class="dev-img">
+            </div>
+            <div class="dev-info">
+                <h2>Raj Thakur</h2>
+                <p class="dev-title">Software & Web Developer</p>
+                <p class="dev-desc">
+                    Hello! I am a developer specializing in building scalable websites and software solutions. 
+                    Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
+                    coaching institute software, and academic conference websites like CMMAI.
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="dev-contact">
+                <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
+                <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+   
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("devModal");
+        const btn = document.getElementById("devModalBtn");
+        const closeBtn = document.getElementById("closeModalBtn");
+
+        // Click on "Raj Thakur" opens modal
+        btn.addEventListener("click", (e) => {
+            e.preventDefault(); // Page ko top par jane se rokega
+            modal.classList.add("show");
+        });
+
+        // Click on "X" closes modal
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("show");
+        });
+
+        // Click outside the box closes modal
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.remove("show");
+            }
+        });
+    });
+</script>
+    
+    <script src="script.js"></script>
+    <script>
+        // Simple mobile toggle script included for functionality
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            var nav = document.getElementById('navLinks');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '70px';
+                nav.style.right = '0';
+                nav.style.width = '100%';
+                nav.style.background = 'white';
+                nav.style.padding = '20px';
+                nav.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

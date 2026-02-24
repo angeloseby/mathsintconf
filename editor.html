@@ -1,0 +1,796 @@
+<?php
+session_start();
+
+// ==========================================
+// 1. AUTHENTICATION & CONFIGURATION xs 
+// ==========================================
+$USERNAME = 'Raj';
+$PASSWORD = 'Ankit@900';
+$TIMEOUT = 1800; // 30 mins
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: ?");
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_user'])) {
+    if ($_POST['login_user'] === $USERNAME && $_POST['login_pass'] === $PASSWORD) {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['last_activity'] = time();
+        header("Location: ?");
+        exit;
+    } else {
+        $login_error = "Invalid Username or Password!";
+    }
+}
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Login - Pro IDE</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="d-flex justify-content-center align-items-center vh-100 bg-dark text-light">
+        <div class="card bg-secondary shadow-lg p-4" style="width: 350px;">
+            <h3 class="text-center text-info mb-4">CMMAI 2026 System Login</h3>
+            <?php if(isset($login_error)) echo "<div class='alert alert-danger py-2'>$login_error</div>"; ?>
+            <form method="POST">
+                <div class="mb-3"><input type="text" name="login_user" class="form-control" placeholder="Username" required autocomplete="off"></div>
+                <div class="mb-3"><input type="password" name="login_pass" class="form-control" placeholder="Password" required></div>
+                <button type="submit" class="btn btn-info w-100 fw-bold text-white">LOGIN</button>
+            </form>
+        </div>
+    </body>
+    </html>
+    <?php exit;
+}
+
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $TIMEOUT)) {
+    session_unset(); session_destroy(); header("Location: ?timeout=1"); exit;
+}
+$_SESSION['last_activity'] = time();
+
+$base_root = realpath(__DIR__);
+function getRelPath($path, $base) { return ltrim(str_replace($base, '', $path), DIRECTORY_SEPARATOR); }
+
+function deleteDir($dirPath) {
+    if (!is_dir($dirPath)) return false;
+    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') $dirPath .= '/';
+    $files = glob($dirPath . '*', GLOB_MARK);
+    foreach ($files as $file) { is_dir($file) ? deleteDir($file) : unlink($file); }
+    return rmdir($dirPath);
+}
+
+function copyr($source, $dest) {
+    if (is_link($source)) return symlink(readlink($source), $dest);
+    if (is_file($source)) return copy($source, $dest);
+    if (!is_dir($dest)) mkdir($dest, 0755);
+    $dir = dir($source);
+    while (false !== $entry = $dir->read()) {
+        if ($entry == '.' || $entry == '..') continue;
+        copyr("$source/$entry", "$dest/$entry");
+    }
+    $dir->close();
+    return true;
+}
+
+// ==========================================
+// 2. AJAX API (NO PAGE REFRESHES)
+// ==========================================
+if (isset($_POST['action'])) {
+    header('Content-Type: application/json');
+    $action = $_POST['action'];
+    $req_dir = isset($_POST['dir']) ? $_POST['dir'] : '';
+    $current_dir = realpath($base_root . DIRECTORY_SEPARATOR . $req_dir);
+    if ($current_dir === false || strpos($current_dir, $base_root) !== 0) $current_dir = $base_root;
+    
+    $target = isset($_POST['target']) ? $_POST['target'] : ''; 
+    $target_path = $base_root . DIRECTORY_SEPARATOR . $target;
+
+    // Secure hidden folder for notes
+    $notes_dir = $base_root . DIRECTORY_SEPARATOR . 'coding_notes';
+    if (!is_dir($notes_dir)) { mkdir($notes_dir, 0755); }
+
+    try {
+        switch ($action) {
+            case 'list': // Fetches directory contents via AJAX
+                $folders = []; $files = [];
+                if ($current_dir !== $base_root) {
+                    $parent_dir = dirname($current_dir);
+                    $folders[] = ['name' => '.. (Go Back)', 'path' => getRelPath($parent_dir, $base_root), 'is_back' => true];
+                }
+                $dir_items = scandir($current_dir);
+                foreach ($dir_items as $item) {
+                    // Hide coding_notes folder from the UI
+                    if ($item === '.' || $item === '..' || $item === 'coding_notes') continue;
+                    $full_path = $current_dir . DIRECTORY_SEPARATOR . $item;
+                    $perms = substr(sprintf('%o', fileperms($full_path)), -4);
+                    if (is_dir($full_path)) $folders[] = ['name' => $item, 'path' => getRelPath($full_path, $base_root), 'perms' => $perms];
+                    else $files[] = ['name' => $item, 'path' => getRelPath($full_path, $base_root), 'perms' => $perms, 'ext' => strtolower(pathinfo($item, PATHINFO_EXTENSION))];
+                }
+                echo json_encode(['status' => 'success', 'folders' => $folders, 'files' => $files, 'current_dir' => getRelPath($current_dir, $base_root)]);
+                break;
+
+            case 'load':
+                if (file_exists($target_path)) echo json_encode(['status' => 'success', 'content' => file_get_contents($target_path)]);
+                else echo json_encode(['status' => 'error', 'msg' => 'File not found.']);
+                break;
+
+            case 'save':
+                if (file_put_contents($target_path, $_POST['content']) !== false) echo json_encode(['status' => 'success', 'msg' => "Saved successfully!"]);
+                else echo json_encode(['status' => 'error', 'msg' => 'Save failed.']);
+                break;
+
+            // Notes specific endpoints
+            case 'load_note':
+                $note_file = $notes_dir . DIRECTORY_SEPARATOR . md5($target_path) . '.txt';
+                $content = file_exists($note_file) ? file_get_contents($note_file) : '';
+                echo json_encode(['status' => 'success', 'content' => $content]);
+                break;
+
+            case 'save_note':
+                $note_file = $notes_dir . DIRECTORY_SEPARATOR . md5($target_path) . '.txt';
+                file_put_contents($note_file, $_POST['note_content']);
+                echo json_encode(['status' => 'success']);
+                break;
+
+            case 'create_file':
+            case 'create_folder':
+                $newpath = $current_dir . DIRECTORY_SEPARATOR . basename($_POST['newname']);
+                if (file_exists($newpath)) echo json_encode(['status' => 'error', 'msg' => 'Exists already.']);
+                else {
+                    if ($action === 'create_file') file_put_contents($newpath, ''); else mkdir($newpath, 0755);
+                    echo json_encode(['status' => 'success', 'msg' => 'Created successfully.']);
+                }
+                break;
+
+            case 'delete':
+                if (file_exists($target_path)) {
+                    $res = is_dir($target_path) ? deleteDir($target_path) : unlink($target_path);
+                    // Clear associated note if file is deleted
+                    $note_file = $notes_dir . DIRECTORY_SEPARATOR . md5($target_path) . '.txt';
+                    if(file_exists($note_file)) unlink($note_file);
+                    
+                    echo json_encode(['status' => $res ? 'success' : 'error', 'msg' => $res ? 'Deleted.' : 'Delete failed.']);
+                }
+                break;
+
+            case 'rename':
+                $newpath = dirname($target_path) . DIRECTORY_SEPARATOR . basename($_POST['newname']);
+                if (rename($target_path, $newpath)) {
+                    // Rename note file mapping
+                    $old_note = $notes_dir . DIRECTORY_SEPARATOR . md5($target_path) . '.txt';
+                    $new_note = $notes_dir . DIRECTORY_SEPARATOR . md5($newpath) . '.txt';
+                    if(file_exists($old_note)) rename($old_note, $new_note);
+
+                    echo json_encode(['status' => 'success', 'msg' => 'Renamed.']);
+                }
+                else echo json_encode(['status' => 'error', 'msg' => 'Rename failed.']);
+                break;
+
+            case 'chmod':
+                if (chmod($target_path, octdec($_POST['perms']))) echo json_encode(['status' => 'success', 'msg' => 'Permissions Updated.']);
+                else echo json_encode(['status' => 'error', 'msg' => 'Failed.']);
+                break;
+
+            case 'info':
+                if (file_exists($target_path)) {
+                    $size = is_dir($target_path) ? 'Folder' : round(filesize($target_path)/1024, 2) . ' KB';
+                    $mod = date("F d Y H:i:s.", filemtime($target_path));
+                    $perms = substr(sprintf('%o', fileperms($target_path)), -4);
+                    $info = "Name: " . basename($target_path) . "\nSize: $size\nModified: $mod\nPerms: $perms\nPath: " . getRelPath($target_path, $base_root);
+                    echo json_encode(['status' => 'success', 'msg' => $info]);
+                }
+                break;
+
+            case 'paste':
+                $source_path = $base_root . DIRECTORY_SEPARATOR . $_POST['source'];
+                $dest_path = $current_dir . DIRECTORY_SEPARATOR . basename($source_path);
+                $op = $_POST['op']; 
+                if (file_exists($source_path)) {
+                    if ($op === 'copy') { copyr($source_path, $dest_path); echo json_encode(['status' => 'success', 'msg' => 'Copied.']); } 
+                    else if ($op === 'cut') { rename($source_path, $dest_path); echo json_encode(['status' => 'success', 'msg' => 'Moved.']); }
+                }
+                break;
+
+            case 'zip':
+                $filesToZip = json_decode($_POST['files'], true);
+                $zipFile = $current_dir . DIRECTORY_SEPARATOR . 'archive_' . time() . '.zip';
+                $zip = new ZipArchive();
+                if ($zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+                    foreach ($filesToZip as $file) {
+                        $fp = $current_dir . DIRECTORY_SEPARATOR . $file;
+                        if (is_file($fp)) $zip->addFile($fp, basename($fp));
+                    }
+                    $zip->close();
+                    echo json_encode(['status' => 'success', 'msg' => 'Zip created.']);
+                } else echo json_encode(['status' => 'error', 'msg' => 'Zip failed.']);
+                break;
+
+            case 'extract':
+                $zip = new ZipArchive;
+                if ($zip->open($target_path) === TRUE) {
+                    $zip->extractTo($current_dir); $zip->close();
+                    echo json_encode(['status' => 'success', 'msg' => 'Extracted successfully.']);
+                } else echo json_encode(['status' => 'error', 'msg' => 'Extraction failed.']);
+                break;
+
+            case 'download_url':
+                $url = $_POST['url'];
+                $filename = basename(parse_url($url, PHP_URL_PATH));
+                if(!$filename) $filename = "downloaded_file.dat";
+                $dest = $current_dir . DIRECTORY_SEPARATOR . $filename;
+                if (file_put_contents($dest, file_get_contents($url))) echo json_encode(['status' => 'success', 'msg' => 'Downloaded.']);
+                else echo json_encode(['status' => 'error', 'msg' => 'Failed.']);
+                break;
+
+            case 'upload':
+                if(isset($_FILES['file'])) {
+                    $dest = $current_dir . DIRECTORY_SEPARATOR . $_FILES['file']['name'];
+                    if(move_uploaded_file($_FILES['file']['tmp_name'], $dest)) echo json_encode(['status' => 'success', 'msg' => 'Uploaded']);
+                    else echo json_encode(['status' => 'error', 'msg' => 'Upload error']);
+                }
+                break;
+        }
+    } catch (Exception $e) { echo json_encode(['status' => 'error', 'msg' => $e->getMessage()]); }
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj's Ultimate IDE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.3/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.3/ext-language_tools.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.3/ext-modelist.js"></script>
+    <style>
+        body { overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        #loader { position: fixed; inset: 0; background: #212529; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s; }
+        .sidebar-container { width: 320px; border-right: 1px solid #495057; display: flex; flex-direction: column; background: #2b3035; }
+        .file-list { flex-grow: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
+        .file-item { padding: 8px 15px; cursor: pointer; border-bottom: 1px solid #343a40; display: flex; align-items: center; font-size: 14px; }
+        .file-item:hover { background: #343a40; color: #0dcaf0; }
+        .item-name { flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: 10px; }
+        
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; background: #1e1e1e; min-width: 0; }
+        .editor-tabs { display: flex; overflow-x: auto; background: #2b3035; border-bottom: 1px solid #495057; scrollbar-width: none; }
+        .editor-tabs::-webkit-scrollbar { display: none; }
+        .tab { padding: 8px 15px; cursor: pointer; color: #adb5bd; border-right: 1px solid #495057; white-space: nowrap; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .tab.active { background: #1e1e1e; color: #fff; border-top: 2px solid #0dcaf0; }
+        .tab-close { opacity: 0.6; cursor: pointer; } .tab-close:hover { opacity: 1; color: #dc3545; }
+        
+        #workspace { flex-grow: 1; display: flex; overflow: hidden; position: relative; }
+        
+        /* Inner workspace layout for editor and notes sidebar */
+        #main-editor-area { display: flex; width: 100%; height: 100%; }
+        #editor-preview-container { flex-grow: 1; display: flex; position: relative; }
+        
+        #editor-wrapper { flex-grow: 1; position: relative; }
+        #editor { position: absolute; inset: 0; }
+        #preview-wrapper { background: #212529; border-left: 1px solid #495057; display: flex; justify-content: center; align-items: center; overflow: auto; position: relative; }
+        #preview-wrapper img, #preview-wrapper video { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        #preview-wrapper audio { width: 80%; }
+        
+        /* Notes Sidebar */
+        #notes-sidebar { width: 15%; min-width: 200px; background: #2b3035; border-left: 1px solid #495057; display: flex; flex-direction: column; }
+        #file-notes-area { flex-grow: 1; resize: none; background: #1e1e1e; color: #dee2e6; border: none; font-size: 13px; padding: 15px; outline: none; box-shadow: none; }
+        #file-notes-area:focus { outline: none; box-shadow: none; background: #1e1e1e; color: #fff; }
+
+        /* Save Animation UI */
+        .save-status-badge {
+            position: absolute; bottom: 20px; right: 20px;
+            background: rgba(33, 37, 41, 0.9); color: #fff; padding: 8px 20px;
+            border-radius: 30px; font-size: 13px; font-weight: bold;
+            display: none; align-items: center; gap: 10px; z-index: 50;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 1px solid #495057;
+        }
+        .save-status-badge.success { background: #198754; border-color: #198754; }
+        .chk-anim { animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; font-size: 16px; }
+        @keyframes scaleIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .empty-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6c757d; background: #1e1e1e; z-index: 10; }
+        
+        .ctx-menu { position: fixed; background: #343a40; border: 1px solid #495057; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 9999; display: none; width: 180px; border-radius: 6px; padding: 5px 0; }
+        .ctx-menu div { padding: 8px 15px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: #dee2e6; }
+        .ctx-menu div:hover { background: #0dcaf0; color: #000; }
+
+        .progress-toast { position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 1055; }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner-border text-info mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+        <h3 class="text-light">Initializing Workspace...</h3>
+        <p class="text-secondary mt-2">Developed By Raj Thakur</p>
+    </div>
+
+    <nav class="navbar navbar-dark bg-dark border-bottom border-secondary px-3 py-2 flex-shrink-0">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary d-md-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
+                <i class="bi bi-list"></i>
+            </button>
+            <span class="navbar-brand mb-0 h1 text-info fw-bold"><i class="bi bi-code-square me-2"></i>IDE Pro</span>
+            <span class="text-secondary ms-3 d-none d-md-inline" id="nav-path">📂 /</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <select class="form-select form-select-sm w-auto bg-dark text-light" id="theme-select" onchange="changeTheme()">
+                <option value="ace/theme/monokai">Monokai</option><option value="ace/theme/dracula">Dracula</option><option value="ace/theme/github">GitHub Light</option>
+            </select>
+            <input type="number" id="font-size" value="15" class="form-control form-control-sm text-center" style="width: 60px;" title="Font Size" onchange="changeFont()">
+            <button class="btn btn-success btn-sm fw-bold" onclick="saveCurrentFile()" title="Ctrl+S"><i class="bi bi-floppy"></i> Save</button>
+            <a href="?logout=1" class="btn btn-danger btn-sm"><i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </nav>
+
+    <div class="d-flex flex-grow-1 overflow-hidden">
+        
+        <div class="offcanvas-md offcanvas-start sidebar-container" tabindex="-1" id="sidebarOffcanvas">
+            <div class="offcanvas-header bg-dark border-bottom border-secondary">
+                <h6 class="offcanvas-title text-info" id="offcanvas-path">📂 /</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas"></button>
+            </div>
+            <div class="p-2 border-bottom border-secondary bg-dark">
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                    <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="openModal('create_file')"><i class="bi bi-file-earmark-plus"></i> File</button>
+                    <button class="btn btn-sm btn-outline-warning flex-grow-1" onclick="openModal('create_folder')"><i class="bi bi-folder-plus"></i> Folder</button>
+                    <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('file-upload').click()"><i class="bi bi-upload"></i></button>
+                    <input type="file" id="file-upload" multiple class="d-none" onchange="handleFileUpload(event.target.files)">
+                </div>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-sm btn-outline-secondary w-50" onclick="zipSelected()"><i class="bi bi-file-zip"></i> Zip</button>
+                    <button class="btn btn-sm btn-outline-secondary w-50" onclick="openModal('download_url')"><i class="bi bi-globe"></i> Fetch</button>
+                </div>
+                <div id="paste-btn-container" class="mt-2 d-none">
+                    <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="pasteItem()"><i class="bi bi-clipboard"></i> Paste Here</button>
+                </div>
+            </div>
+            <ul class="file-list" id="file-list-ui">
+                </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="editor-tabs" id="tab-container"></div>
+            
+            <div id="workspace">
+                <div id="empty-state" class="empty-state">
+                    <i class="bi bi-braces display-1 opacity-25 mb-3"></i>
+                    <h5>Select a file to start working</h5>
+                    <small>Auto-refreshes • Background Uploads • Media Previews</small>
+                </div>
+                
+                <div id="main-editor-area" class="d-none">
+                    <div id="editor-preview-container">
+                        <div id="editor-wrapper" class="d-none">
+                            <div id="editor"></div>
+                            
+                            <div id="save-status" class="save-status-badge">
+                                <span id="save-spinner" class="spinner-border spinner-border-sm"></span>
+                                <i id="save-check" class="bi bi-check-circle-fill d-none chk-anim"></i>
+                                <span id="save-text">Saving...</span>
+                            </div>
+
+                        </div>
+                        <div id="preview-wrapper" class="d-none w-100">
+                            <div id="preview-content"></div>
+                        </div>
+                    </div>
+
+                    <div id="notes-sidebar" class="d-none d-md-flex">
+                        <div class="p-2 border-bottom border-secondary d-flex justify-content-between align-items-center bg-dark">
+                            <span class="text-info fw-bold" style="font-size:13px;"><i class="bi bi-journal-text me-1"></i> File Notes</span>
+                            <button class="btn btn-sm btn-outline-info py-0 px-2" onclick="saveNote(false)" title="Save Notes"><i class="bi bi-floppy"></i></button>
+                        </div>
+                        <textarea id="file-notes-area" class="form-control" placeholder="Write important notes or references for this file..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ctx-menu" id="ctx-menu">
+        <div onclick="ctxAction('info')"><i class="bi bi-info-circle text-info"></i> Info</div>
+        <div onclick="ctxAction('rename')"><i class="bi bi-pencil-square text-warning"></i> Rename</div>
+        <div onclick="ctxAction('copy')"><i class="bi bi-copy text-secondary"></i> Copy</div>
+        <div onclick="ctxAction('cut')"><i class="bi bi-scissors text-secondary"></i> Cut</div>
+        <div onclick="ctxAction('chmod')"><i class="bi bi-shield-lock text-success"></i> Permissions</div>
+        <div onclick="ctxAction('extract')" id="ctx-extract" class="d-none"><i class="bi bi-file-earmark-zip text-warning"></i> Extract Zip</div>
+        <div onclick="ctxAction('delete')" class="text-danger"><i class="bi bi-trash"></i> Delete</div>
+    </div>
+
+    <div class="modal fade" id="inputModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content bg-dark border-secondary text-light">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-info" id="in-title">Title</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control bg-secondary text-light border-0" id="in-val" autocomplete="off">
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-info" id="in-confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="permModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content bg-dark border-secondary text-light">
+                <div class="modal-header border-secondary"><h5 class="modal-title text-info">Permissions</h5></div>
+                <div class="modal-body">
+                    <div class="row text-center mb-2 fw-bold text-secondary">
+                        <div class="col-3"></div><div class="col-3">R</div><div class="col-3">W</div><div class="col-3">X</div>
+                    </div>
+                    <div class="row text-center align-items-center mb-2">
+                        <div class="col-3 text-start">Owner</div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_ur"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_uw"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_ux"></div>
+                    </div>
+                    <div class="row text-center align-items-center mb-2">
+                        <div class="col-3 text-start">Group</div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_gr"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_gw"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_gx"></div>
+                    </div>
+                    <div class="row text-center align-items-center">
+                        <div class="col-3 text-start">Other</div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_or"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_ow"></div>
+                        <div class="col-3"><input type="checkbox" class="form-check-input" id="p_ox"></div>
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary d-flex justify-content-between">
+                    <span id="perm-octal" class="text-warning fw-bold fs-5">0644</span>
+                    <button type="button" class="btn btn-sm btn-success" id="perm-confirm">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container progress-toast" id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- INITIALIZATION ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 300);
+            }, 300);
+            loadDirectory(''); 
+            checkClipboard();
+        });
+
+        // --- ACE EDITOR ---
+        ace.require("ace/ext/language_tools");
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.setOptions({ enableBasicAutocompletion: true, enableLiveAutocompletion: true, enableSnippets: true, fontSize: "15px", showPrintMargin: false });
+        var modelist = ace.require("ace/ext/modelist");
+        
+        // --- STATE & UTILS ---
+        var currentDir = ''; 
+        var openTabs = {}; 
+        var currentFile = null;
+        var ctxTarget = '', ctxType = '', ctxPerms = '';
+        var inputModal = new bootstrap.Modal(document.getElementById('inputModal'));
+        var permModal = new bootstrap.Modal(document.getElementById('permModal'));
+
+        function changeTheme() { editor.setTheme(document.getElementById('theme-select').value); }
+        function changeFont() { editor.setFontSize(document.getElementById('font-size').value + "px"); }
+        function showSysToast(msg, isErr=false) {
+            let id = 'sys-toast-'+Date.now();
+            let html = `<div id="${id}" class="toast align-items-center text-bg-${isErr?'danger':'success'} border-0 show" role="alert"><div class="d-flex"><div class="toast-body fw-bold">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div></div>`;
+            document.getElementById('toast-container').insertAdjacentHTML('beforeend', html);
+            setTimeout(() => { let t = document.getElementById(id); if(t) t.remove(); }, 3000);
+        }
+
+        // --- AJAX CORE ---
+        function api(action, data, cb) {
+            let fd = new FormData(); fd.append('action', action); fd.append('dir', currentDir);
+            for(let k in data) fd.append(k, data[k]);
+            fetch('', {method:'POST', body:fd}).then(r=>r.json()).then(res => {
+                if(res.status==='success'){ if(res.msg && !['load','save','list','load_note','save_note'].includes(action)) showSysToast(res.msg); cb(res); }
+                else showSysToast("Error: " + res.msg, true);
+            }).catch(e=>showSysToast("Network Error", true));
+        }
+
+        // --- DIRECTORY NAVIGATION (NO REFRESH) ---
+        function loadDirectory(path) {
+            currentDir = path;
+            document.getElementById('nav-path').innerText = "📂 /" + path;
+            document.getElementById('offcanvas-path').innerText = "📂 /" + path;
+            
+            api('list', {}, (res) => {
+                let ul = document.getElementById('file-list-ui');
+                ul.innerHTML = '';
+                
+                res.folders.forEach(f => {
+                    let li = document.createElement('li'); li.className = 'file-item';
+                    if(!f.is_back) li.oncontextmenu = (e) => showCtx(e, 'folder', f.name, f.perms, f.path);
+                    li.onclick = () => loadDirectory(f.path);
+                    
+                    let chk = f.is_back ? '' : `<input type="checkbox" class="form-check-input me-2 cb-item" value="${f.name}" onclick="event.stopPropagation()">`;
+                    li.innerHTML = `${chk}<i class="bi bi-folder-fill text-warning fs-5"></i><span class="item-name">${f.name}</span>`;
+                    ul.appendChild(li);
+                });
+
+                res.files.forEach(f => {
+                    let li = document.createElement('li'); li.className = 'file-item';
+                    li.oncontextmenu = (e) => showCtx(e, 'file', f.name, f.perms, f.path);
+                    li.onclick = () => openFile(f.path, f.ext);
+                    
+                    let icon = 'bi-file-earmark-text text-light';
+                    if(['png','jpg','jpeg','gif','webp'].includes(f.ext)) icon = 'bi-file-image text-success';
+                    else if(['mp4','webm'].includes(f.ext)) icon = 'bi-file-play text-danger';
+                    else if(['mp3','wav','ogg'].includes(f.ext)) icon = 'bi-file-music text-info';
+                    else if(f.ext === 'zip') icon = 'bi-file-zip text-warning';
+                    else if(['php','html','css','js','json'].includes(f.ext)) icon = 'bi-file-earmark-code text-primary';
+
+                    li.innerHTML = `<input type="checkbox" class="form-check-input me-2 cb-item" value="${f.name}" onclick="event.stopPropagation()">
+                                    <i class="bi ${icon} fs-5"></i><span class="item-name" title="${f.name}">${f.name}</span>`;
+                    ul.appendChild(li);
+                });
+            });
+        }
+
+        // --- MEDIA PREVIEWS, NOTES & TAB HANDLING ---
+        const mediaExts = ['png','jpg','jpeg','gif','webp','ico','mp4','webm','mp3','wav','ogg'];
+        
+        function loadNoteForFile(path) {
+            let noteArea = document.getElementById('file-notes-area');
+            noteArea.value = 'Loading notes...';
+            api('load_note', {target: path}, (res) => {
+                // Ensure the user hasn't switched tabs while loading
+                if(currentFile === path) noteArea.value = res.content || '';
+            });
+        }
+
+        function saveNote(silent = true) {
+            if(!currentFile) return;
+            let content = document.getElementById('file-notes-area').value;
+            api('save_note', {target: currentFile, note_content: content}, () => {
+                if(!silent) showSysToast("Notes saved successfully!");
+            });
+        }
+
+        function switchView(type, path) {
+            let mainArea = document.getElementById('main-editor-area');
+            let edWrap = document.getElementById('editor-wrapper');
+            let prWrap = document.getElementById('preview-wrapper');
+            let prCont = document.getElementById('preview-content');
+            
+            document.getElementById('empty-state').classList.add('d-none');
+            mainArea.classList.remove('d-none');
+            
+            edWrap.className = 'd-none'; prWrap.className = 'd-none'; prCont.innerHTML = '';
+
+            if (type === 'media') {
+                prWrap.className = 'w-100 d-flex justify-content-center align-items-center bg-dark';
+                let ext = path.split('.').pop().toLowerCase();
+                if(['mp4','webm'].includes(ext)) prCont.innerHTML = `<video src="${path}" controls autoplay loop></video>`;
+                else if(['mp3','wav','ogg'].includes(ext)) prCont.innerHTML = `<audio src="${path}" controls autoplay></audio>`;
+                else prCont.innerHTML = `<img src="${path}?t=${Date.now()}">`;
+            } else if (type === 'svg') {
+                edWrap.className = 'flex-grow-1 position-relative';
+                prWrap.className = 'bg-dark border-start border-secondary p-3 d-flex justify-content-center align-items-center';
+                prWrap.style.width = '40%';
+                prCont.innerHTML = `<img src="${path}?t=${Date.now()}" style="max-width:100%; max-height:100%;">`;
+                editor.resize();
+            } else {
+                edWrap.className = 'flex-grow-1 position-relative w-100';
+                editor.resize();
+            }
+
+            loadNoteForFile(path); // Load the specific note for this file
+        }
+
+        function openFile(path, ext) {
+            if (!ext) ext = path.split('.').pop().toLowerCase();
+            if (openTabs[path]) { 
+                currentFile = path; 
+                if(openTabs[path].type !== 'media') editor.setSession(openTabs[path].session); 
+                switchView(openTabs[path].type, path);
+                renderTabs(); return; 
+            }
+            
+            let isMedia = mediaExts.includes(ext);
+            let type = isMedia ? 'media' : (ext === 'svg' ? 'svg' : 'code');
+            
+            if (isMedia) {
+                openTabs[path] = { session: null, type: type, ext: ext };
+                currentFile = path; switchView(type, path); renderTabs();
+            } else {
+                api('load', {target: path}, (res) => {
+                    let mode = modelist.getModeForPath(path).mode;
+                    let session = ace.createEditSession(res.content, mode);
+                    openTabs[path] = { session: session, type: type, ext: ext };
+                    currentFile = path; editor.setSession(session);
+                    switchView(type, path); renderTabs();
+                });
+            }
+        }
+
+        function saveCurrentFile() {
+            if(!currentFile || openTabs[currentFile].type === 'media') return;
+
+            // Show Saving Badge UI
+            let badge = document.getElementById('save-status');
+            let spinner = document.getElementById('save-spinner');
+            let check = document.getElementById('save-check');
+            let txt = document.getElementById('save-text');
+            
+            badge.className = 'save-status-badge';
+            badge.style.display = 'flex';
+            spinner.classList.remove('d-none');
+            check.classList.add('d-none');
+            txt.innerText = 'Saving...';
+
+            // Save notes data automatically when saving the file
+            saveNote(true);
+
+            api('save', {target: currentFile, content: editor.getSession().getValue()}, () => {
+                if(openTabs[currentFile].ext === 'svg') switchView('svg', currentFile); 
+                
+                // Show Success Animation UI
+                badge.classList.add('success');
+                spinner.classList.add('d-none');
+                check.classList.remove('d-none');
+                txt.innerText = 'Saved';
+                
+                setTimeout(() => { badge.style.display = 'none'; }, 2000); // Hide after 2 seconds
+            });
+        }
+        editor.commands.addCommand({ name: 'save', bindKey: {win: "Ctrl-S", mac: "Cmd-S"}, exec: saveCurrentFile });
+
+        function closeTab(e, path) {
+            e.stopPropagation(); delete openTabs[path];
+            if(currentFile === path) {
+                let keys = Object.keys(openTabs);
+                if(keys.length > 0) openFile(keys[0], openTabs[keys[0]].ext);
+                else { 
+                    currentFile = null; 
+                    document.getElementById('main-editor-area').classList.add('d-none'); 
+                    document.getElementById('empty-state').classList.remove('d-none'); 
+                }
+            }
+            renderTabs();
+        }
+
+        function renderTabs() {
+            let c = document.getElementById('tab-container'); c.innerHTML = '';
+            for(let path in openTabs) {
+                let act = (path === currentFile) ? 'active' : '';
+                let name = path.split('/').pop();
+                c.innerHTML += `<div class="tab ${act}" onclick="openFile('${path}','${openTabs[path].ext}')" title="${path}">${name} <span class="tab-close ms-2" onclick="closeTab(event, '${path}')"><i class="bi bi-x-circle-fill"></i></span></div>`;
+            }
+        }
+
+        // --- CONTEXT MENU & MODALS ---
+        let menu = document.getElementById('ctx-menu');
+        function showCtx(e, type, name, perms, path) {
+            e.preventDefault(); ctxTarget = path; ctxType = type; ctxPerms = perms;
+            let ext = document.getElementById('ctx-extract');
+            if(name.endsWith('.zip')){ ext.classList.remove('d-none'); ext.classList.add('d-flex'); } else { ext.classList.add('d-none'); ext.classList.remove('d-flex'); }
+            menu.style.display = 'block'; menu.style.left = e.pageX + 'px'; menu.style.top = e.pageY + 'px';
+        }
+        document.addEventListener('click', () => menu.style.display = 'none');
+
+        let actType = '';
+        function openModal(act, pre='') {
+            actType = act; let inp = document.getElementById('in-val'); inp.value = pre;
+            let t = document.getElementById('in-title');
+            if(act==='create_file') { t.innerText = "New File"; inp.placeholder="index.php"; }
+            if(act==='create_folder') { t.innerText = "New Folder"; inp.placeholder="assets"; }
+            if(act==='rename') { t.innerText = "Rename Item"; }
+            if(act==='download_url') { t.innerText = "Fetch URL"; inp.placeholder="https://..."; }
+            inputModal.show();
+        }
+
+        document.getElementById('in-confirm').onclick = () => {
+            let val = document.getElementById('in-val').value;
+            if(!val) return;
+            if(actType==='create_file' || actType==='create_folder' || actType==='rename') api(actType, {target: ctxTarget, newname: val}, () => { inputModal.hide(); loadDirectory(currentDir); });
+            if(actType==='download_url') api('download_url', {url: val}, () => { inputModal.hide(); loadDirectory(currentDir); });
+        };
+
+        function ctxAction(act) {
+            if(act==='rename') openModal('rename', ctxTarget.split('/').pop());
+            if(act==='delete') { if(confirm("Permanently delete?")) api('delete', {target: ctxTarget}, ()=>loadDirectory(currentDir)); }
+            if(act==='extract') api('extract', {target: ctxTarget}, ()=>loadDirectory(currentDir));
+            if(act==='info') api('info', {target: ctxTarget}, (r)=>alert(r.msg));
+            if(act==='copy' || act==='cut') {
+                document.cookie = `clipboard=${act}:${ctxTarget}; path=/`;
+                showSysToast("Item copied. Navigate to destination and click 'Paste Here'.");
+                checkClipboard();
+            }
+            if(act==='chmod') {
+                let p = "0" + ctxPerms.slice(-3); document.getElementById('perm-octal').innerText = p;
+                let pArr = p.split('');
+                const setCb = (type, val) => {
+                    document.getElementById(`p_${type}r`).checked = (val & 4);
+                    document.getElementById(`p_${type}w`).checked = (val & 2);
+                    document.getElementById(`p_${type}x`).checked = (val & 1);
+                };
+                setCb('u', parseInt(pArr[1])); setCb('g', parseInt(pArr[2])); setCb('o', parseInt(pArr[3]));
+                permModal.show();
+            }
+        }
+
+        function checkClipboard() {
+            let cb = document.cookie.split('; ').find(row => row.startsWith('clipboard='));
+            if(cb) document.getElementById('paste-btn-container').classList.remove('d-none');
+            else document.getElementById('paste-btn-container').classList.add('d-none');
+        }
+
+        function pasteItem() {
+            let cb = document.cookie.split('; ').find(row => row.startsWith('clipboard='));
+            if(cb) {
+                let data = cb.split('=')[1].split(':');
+                api('paste', {op: data[0], source: data[1]}, () => {
+                    document.cookie = 'clipboard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    checkClipboard(); loadDirectory(currentDir);
+                });
+            }
+        }
+
+        document.querySelectorAll('#permModal input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const getV = (t) => (document.getElementById(`p_${t}r`).checked?4:0)+(document.getElementById(`p_${t}w`).checked?2:0)+(document.getElementById(`p_${t}x`).checked?1:0);
+                document.getElementById('perm-octal').innerText = "0" + getV('u') + getV('g') + getV('o');
+            });
+        });
+        document.getElementById('perm-confirm').onclick = () => api('chmod', {target: ctxTarget, perms: document.getElementById('perm-octal').innerText}, () => { permModal.hide(); loadDirectory(currentDir); });
+
+        function zipSelected() {
+            let sel = Array.from(document.querySelectorAll('.cb-item:checked')).map(cb=>cb.value);
+            if(sel.length===0) return showSysToast("Select files first.", true);
+            api('zip', {files: JSON.stringify(sel)}, ()=>loadDirectory(currentDir));
+        }
+
+        // --- BACKGROUND UPLOADS ---
+        function handleFileUpload(files) {
+            if(files.length === 0) return;
+            let targetUploadDir = currentDir; 
+            
+            let id = 'up-'+Date.now();
+            let html = `<div id="${id}" class="toast show bg-dark border-secondary"><div class="toast-header bg-secondary text-light border-0"><strong class="me-auto"><i class="bi bi-cloud-arrow-up"></i> Uploading to /${targetUploadDir}</strong><button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button></div><div class="toast-body"><div class="fw-bold text-info" id="txt-${id}">0/${files.length}</div><div class="progress mt-2" style="height: 10px;"><div id="bar-${id}" class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 0%;"></div></div></div></div>`;
+            document.getElementById('toast-container').insertAdjacentHTML('afterbegin', html);
+
+            let uploaded = 0;
+            function uploadNext() {
+                if(uploaded >= files.length) { 
+                    document.getElementById('txt-'+id).innerText = "Upload Complete!";
+                    document.getElementById('bar-'+id).classList.replace('bg-info', 'bg-success');
+                    if(currentDir === targetUploadDir) loadDirectory(currentDir); 
+                    setTimeout(() => document.getElementById(id).remove(), 4000); return; 
+                }
+                let file = files[uploaded];
+                let fd = new FormData(); fd.append('action', 'upload'); fd.append('dir', targetUploadDir); fd.append('file', file);
+                
+                let xhr = new XMLHttpRequest(); xhr.open('POST', '', true);
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        let p = Math.round((e.loaded / e.total) * 100);
+                        document.getElementById('bar-'+id).style.width = p + '%';
+                        document.getElementById('txt-'+id).innerText = `Uploading: ${file.name} (${uploaded+1}/${files.length}) - ${p}%`;
+                    }
+                };
+                xhr.onload = () => { uploaded++; uploadNext(); };
+                xhr.send(fd);
+            }
+            uploadNext();
+        }
+    </script>
+</body>
+</html>
