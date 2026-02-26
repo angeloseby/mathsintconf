@@ -718,7 +718,19 @@ Computational Mathematics, Modeling & AI.</title>
             color: #94a3b8; font-size: 28px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
         .close-modal:hover { color: var(--primary); }
-
+.contact-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: white;
+    background: var(--theme-card-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
         /* =============================================
            FOOTER STYLES (UPDATED)
         ============================================= */
@@ -784,7 +796,7 @@ Computational Mathematics, Modeling & AI.</title>
                         <i class="fas fa-minus"></i>
                     </a>
                     <ul class="dropdown-content">
-                      <li><a href="keynote-speakers.html">Keynote Speakers</a></li>
+                      <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
                         <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
                         <li><a href="organising-committee.html">Organising Committee</a></li>
                     </ul>
@@ -805,7 +817,7 @@ Computational Mathematics, Modeling & AI.</title>
                 </li>
 
                <li>
-    <a href="registration.html">
+    <a href="https://rajweb.shop/bharatfinal/registration.html">
         Registration
     </a>
 </li>
@@ -970,8 +982,14 @@ Mathematics <br>
                 <span style="color: var(--primary);">Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</span></p>
             </div>
             <div>
-                <p>Developed by <span class="heart-blink"><i class="fas fa-heart"></i></span> <a href="#" id="devModalBtn" style="color: var(--primary); text-decoration: none; font-weight: bold; margin-left: 5px;">Raj Thakur</a></p>
-            </div>
+               
+               
+             <p>Developed by <span class="heart-blink"><i class="fas fa-heart"></i></span> 
+    <a href="#" id="devModalBtn" style="color: var(--primary); text-decoration: none; font-weight: bold; margin-left: 5px;">Raj Thakur</a> & 
+    <a href="#" id="devModalBtn2" style="color: var(--primary); text-decoration: none; font-weight: bold; margin-left: 5px;">Angelo Seby</a>
+</p>  
+               
+                </div>
         </div>
     </footer>
 
@@ -1003,7 +1021,30 @@ Mathematics <br>
         </div>
     </div>
 </div>
+<div id="devModal2" class="dev-modal">
+    <div class="dev-modal-content">
+        <span class="close-modal" id="closeDevModal2">&times;</span>
+        <h2 style="margin-bottom: 20px; color: var(--primary); font-family: 'Space Grotesk', sans-serif;">Angelo Seby</h2>
+        
+        <div style="width: 240px; height: 240px; background: rgba(0, 242, 255, 0.05); border: 2px dashed var(--border); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img src="angelo.webp" alt="Angelo" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        
+        <h4 style="color: #fff; margin-bottom: 10px;">Web Developer</h4>
+        
+        <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; padding: 0 10px;">
+            Hello! I am Angelo. I specialize in building modern and responsive websites.
+        </p>
 
+        <div class="contact-animation">Contact Me</div>
+        
+        <div class="dev-social-grid">
+            <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+        </div>
+    </div>
+</div>
     <script>
         // --- 1. HERO NEURAL NETWORK ANIMATION ---
         const canvas = document.getElementById('neural-canvas');
@@ -1255,25 +1296,47 @@ Mathematics <br>
         });
 
         // --- 8. DEVELOPER MODAL SCRIPT ---
+        
+        // Raj Thakur Modal Variables
         const devModal = document.getElementById('devModal');
         const devModalBtn = document.getElementById('devModalBtn');
         const closeDevModal = document.getElementById('closeDevModal');
 
+        // Angelo Modal Variables
+        const devModal2 = document.getElementById('devModal2');
+        const devModalBtn2 = document.getElementById('devModalBtn2');
+        const closeDevModal2 = document.getElementById('closeDevModal2');
+
+        // Raj Button Click Event
         devModalBtn.addEventListener('click', (e) => {
             e.preventDefault();
             devModal.style.display = 'block';
         });
 
+        // Angelo Button Click Event
+        devModalBtn2.addEventListener('click', (e) => {
+            e.preventDefault();
+            devModal2.style.display = 'block';
+        });
+
+        // Close Buttons
         closeDevModal.addEventListener('click', () => {
             devModal.style.display = 'none';
         });
 
+        closeDevModal2.addEventListener('click', () => {
+            devModal2.style.display = 'none';
+        });
+
+        // Close when clicking outside the modal box
         window.addEventListener('click', (e) => {
             if (e.target === devModal) {
                 devModal.style.display = 'none';
             }
+            if (e.target === devModal2) {
+                devModal2.style.display = 'none';
+            }
         });
     </script>
 </body>
-
 </html>
