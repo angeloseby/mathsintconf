@@ -141,33 +141,43 @@ Computational Mathematics, Modeling & AI</title>
             height: 8px;
         }
 
-        .card-icon-wrapper {
-            width: 60px;
-            height: 60px;
+        /* Inline Header for Icon and Title */
+        .card-header-inline {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card-header-inline .card-icon-wrapper {
+            width: 50px;
+            height: 50px;
             background: rgba(0, 82, 212, 0.08);
             color: #0052d4;
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
+            font-size: 1.5rem;
+            flex-shrink: 0;
             transition: transform 0.3s ease;
+            margin-bottom: 0;
         }
-        .gold-theme .card-icon-wrapper {
+
+        .gold-theme .card-header-inline .card-icon-wrapper {
             background: rgba(242, 169, 0, 0.1);
             color: #f2a900;
         }
+        
         .modern-cfp-card:hover .card-icon-wrapper {
             transform: scale(1.1) rotate(-5deg);
         }
 
-        .cfp-box-title {
+        .card-header-inline .cfp-box-title {
             font-family: 'Merriweather', serif;
             font-size: 1.5rem;
             color: #1a202c;
-            margin-top: 0;
-            margin-bottom: 20px;
+            margin: 0;
             font-weight: 700;
         }
 
@@ -341,7 +351,7 @@ Computational Mathematics, Modeling & AI</title>
             color: #f2a900;
         }
 
-        /* --- MOBILE OPTIMIZATION FOR CFP --- */
+        /* --- MOBILE OPTIMIZATION FOR CFP & NAVBAR --- */
         @media (max-width: 992px) {
             .modern-cfp-grid { grid-template-columns: 1fr; }
             .modern-publication-banner { flex-direction: column; text-align: center; gap: 20px; padding: 30px 20px; }
@@ -350,16 +360,35 @@ Computational Mathematics, Modeling & AI</title>
         }
 
         @media (max-width: 768px) {
+            /* Mobile Navbar Adjustments */
+            .nav-links {
+                top: 71px !important; /* Forces sidebar to open below fixed header (approx 71px height) */
+                height: calc(100vh - 71px) !important;
+            }
+            .nav-overlay {
+                top: 71px !important;
+            }
+
             .committee-section { padding: 40px 15px; }
             .main-card-bg { padding: 30px 15px; }
             
-            .section-title { font-size: 1.75rem; margin-bottom: 15px; }
+            /* Reduced Text Sizes for Mobile */
+            .section-title { font-size: 1.6rem; margin-bottom: 15px; }
             .section-title::after { width: 90%; margin-top: 10px; }
-            .cfp-intro-text { font-size: 1rem; }
+            .cfp-intro-text { font-size: 0.95rem; }
             
-            .modern-cfp-card { padding: 30px 20px; }
+            .modern-cfp-card { padding: 25px 20px; }
+            .card-header-inline .cfp-box-title { font-size: 1.25rem; }
+            
+            .cfp-list li { font-size: 0.95rem; margin-bottom: 15px; }
+            .date-label { font-size: 0.95rem; }
+            .date-value { font-size: 0.85rem; padding: 4px 10px; }
+
+            .banner-text h4 { font-size: 1.25rem; }
+            .banner-text p { font-size: 0.95rem; }
+
             .modern-download-area { flex-direction: column; gap: 15px; }
-            .btn-modern-download { width: 100%; justify-content: center; }
+            .btn-modern-download { width: 100%; justify-content: center; font-size: 0.95rem; }
         }
 
         /* Navbar & Footer Styles (Unchanged) */
@@ -532,6 +561,68 @@ Computational Mathematics, Modeling & AI</title>
 
 .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 .contact-btn.whatsapp { background: #25D366; }
+
+/* --- Animated Google Form Submit Button --- */
+        .btn-animated-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 100%);
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 82, 212, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: pulse-submit 2s infinite; /* Pulsing effect */
+        }
+        
+        .btn-animated-submit i {
+            font-size: 1.2rem;
+        }
+
+        /* Hover Animation (Gold Sweep) */
+        .btn-animated-submit::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: linear-gradient(135deg, #f2a900 0%, #ffcc33 100%);
+            transition: all 0.4s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .btn-animated-submit:hover::before {
+            width: 100%;
+        }
+
+        .btn-animated-submit:hover {
+            transform: translateY(-4px);
+            color: #000; /* Text color on hover */
+            box-shadow: 0 10px 25px rgba(242, 169, 0, 0.4);
+            animation: none; /* Stops pulsing when mouse is over it */
+        }
+
+        /* Pulse Keyframes */
+        @keyframes pulse-submit {
+            0% { box-shadow: 0 0 0 0 rgba(0, 82, 212, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 82, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 82, 212, 0); }
+        }
+        
+        /* Mobile adjust for button */
+        @media (max-width: 768px) {
+            .btn-animated-submit {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -548,7 +639,7 @@ Computational Mathematics, Modeling & AI</title>
                 </div>
             </a>
             
-              <ul class="nav-links" id="navLinks">
+               <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="#speakers" class="dropbtn">
@@ -558,7 +649,7 @@ Computational Mathematics, Modeling & AI</title>
                         <i class="fas fa-minus"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="keynote-speakers.html">Keynote Speakers</a></li>
+                        <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
                         <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
                         <li><a href="organising-committee.html">Organising Committee</a></li>
                     </ul>
@@ -596,25 +687,31 @@ Computational Mathematics, Modeling & AI</title>
 
             <div class="modern-cfp-grid">
                 
-                <div class="modern-cfp-card anim-fade-up delay-2">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-paper-plane"></i>
+           <div class="modern-cfp-card anim-fade-up delay-2">
+                    <div class="card-header-inline">
+                        <div class="card-icon-wrapper">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <h4 class="cfp-box-title">Submission Guidelines</h4>
                     </div>
-                    <h4 class="cfp-box-title">Submission Guidelines</h4>
                     <ul class="cfp-list">
-                        <li>Interested participants are requested to send their <strong>extended abstracts</strong> (in PDF format).</li>
+                        <li>Interested participants are requested to submit their <strong>extended abstracts</strong> (in PDF format).</li>
                         <li>Word limit: Not exceeding <strong>500 words</strong>.</li>
-                        <li>Send submissions via email to the organizers at:<br>
-                            <span class="highlight-email">cmmai2026@bharatamatacollege.in</span>
-                        </li>
                     </ul>
+                    <div style="margin-top: auto; text-align: left; padding-top: 15px;">
+                        <a href="YOUR_GOOGLE_FORM_LINK_HERE" target="_blank" class="btn-animated-submit">
+                            <i class="fab fa-wpforms"></i> Submit Abstract
+                        </a>
+                    </div>
                 </div>
 
                 <div class="modern-cfp-card gold-theme anim-fade-up delay-3">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-calendar-alt"></i>
+                    <div class="card-header-inline">
+                        <div class="card-icon-wrapper">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4 class="cfp-box-title">Important Dates</h4>
                     </div>
-                    <h4 class="cfp-box-title">Important Dates</h4>
                     <div class="dates-container">
                         <div class="date-row">
                             <span class="date-label">Abstract Submission Deadline</span>
@@ -638,90 +735,126 @@ Computational Mathematics, Modeling & AI</title>
             </div>
 
             <div class="modern-download-area anim-fade-up delay-5">
-                <a href="assets/docs/abstract_template.docx" class="btn-modern-download" download>
-                    <i class="fas fa-file-word"></i> Download Template Abstract in .docx
-                </a>
-                <a href="assets/docs/abstract_template.docx" class="btn-modern-download" download>
-                    <i class="fas fa-code"></i> Download Template Abstract in .LaTex
+                <a href="assets/docs/abstract_template.pdf" class="btn-modern-download" download>
+                    <i class="fas fa-file-pdf"></i> Download Template Abstract in PDF
                 </a>
             </div>
 
         </div>
     </section>
 
-    <footer class="minimal-footer">
-    <div class="footer-content">
-        <div class="footer-left">
-            <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
-            <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+      <footer class="minimal-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
+                <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+            </div>
+            
+            <div class="footer-right">
+            <p>Developed by <a href="#" id="devModalBtnRaj" class="dev-link">Raj Thakur</a> & <a href="#" id="devModalBtnAngelo" class="dev-link">Angelo</a></p>
         </div>
-        
-        <div class="footer-right">
-            <p>Developed by <a href="#" id="devModalBtn" class="dev-link">Raj Thakur</a></p>
+        </div>
+    </footer>
+
+    <div id="devModalRaj" class="modal-overlay">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h3>Developer Profile</h3>
+                <span class="close-btn" id="closeModalBtnRaj">&times;</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="dev-image-box">
+                    <img src="raj.png" alt="Raj Thakur" class="dev-img">
+                </div>
+                <div class="dev-info">
+                    <h2>Raj Thakur</h2>
+                    <p class="dev-title">Software & Web Developer</p>
+                    <p class="dev-desc">
+                        Hello! I am a developer specializing in building scalable websites and software solutions. 
+                        Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
+                        coaching institute software, and academic conference websites like CMMAI.
+                    </p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="dev-contact">
+                    <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
+                    <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+
         </div>
     </div>
-</footer>
-
-<div id="devModal" class="modal-overlay">
+<div id="devModalAngelo" class="modal-overlay">
     <div class="modal-content">
-        
         <div class="modal-header">
             <h3>Developer Profile</h3>
-            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <span class="close-btn" id="closeModalBtnAngelo">×</span>
         </div>
-
         <div class="modal-body">
             <div class="dev-image-box">
-                <img src="raj.png" alt="Raj Thakur" class="dev-img">
+                <img src="angelo.webp" alt="Angelo" class="dev-img"> 
             </div>
             <div class="dev-info">
-                <h2>Raj Thakur</h2>
-                <p class="dev-title">Software & Web Developer</p>
+                <h2>Angelo</h2>
+                <p class="dev-title">Web Developer / Designer</p>
                 <p class="dev-desc">
-                    Hello! I am a developer specializing in building scalable websites and software solutions. 
-                    Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
-                    coaching institute software, and academic conference websites like CMMAI.
+                    Hello! I contributed to the UI/UX design and frontend development for this academic conference website. 
+                    Passionate about creating clean, responsive, and user-friendly digital experiences.
                 </p>
             </div>
         </div>
-
         <div class="modal-footer">
             <div class="dev-contact">
-                <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
-                <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+              
             </div>
         </div>
-
     </div>
 </div>
+    <script>
+       document.addEventListener("DOMContentLoaded", () => {
+        // Elements for Raj
+        const modalRaj = document.getElementById("devModalRaj");
+        const btnRaj = document.getElementById("devModalBtnRaj");
+        const closeBtnRaj = document.getElementById("closeModalBtnRaj");
 
-   
+        // Elements for Angelo
+        const modalAngelo = document.getElementById("devModalAngelo");
+        const btnAngelo = document.getElementById("devModalBtnAngelo");
+        const closeBtnAngelo = document.getElementById("closeModalBtnAngelo");
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.getElementById("devModal");
-        const btn = document.getElementById("devModalBtn");
-        const closeBtn = document.getElementById("closeModalBtn");
+        // Function to open modal
+        function openModal(e, modalElement) {
+            e.preventDefault();
+            modalElement.classList.add("show");
+        }
 
-        // Click on "Raj Thakur" opens modal
-        btn.addEventListener("click", (e) => {
-            e.preventDefault(); // Page ko top par jane se rokega
-            modal.classList.add("show");
-        });
+        // Function to close modal
+        function closeModal(modalElement) {
+            modalElement.classList.remove("show");
+        }
 
-        // Click on "X" closes modal
-        closeBtn.addEventListener("click", () => {
-            modal.classList.remove("show");
-        });
+        // Event Listeners for Raj
+        btnRaj.addEventListener("click", (e) => openModal(e, modalRaj));
+        closeBtnRaj.addEventListener("click", () => closeModal(modalRaj));
 
-        // Click outside the box closes modal
+        // Event Listeners for Angelo
+        btnAngelo.addEventListener("click", (e) => openModal(e, modalAngelo));
+        closeBtnAngelo.addEventListener("click", () => closeModal(modalAngelo));
+
+        // Click outside to close for both modals
         window.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.classList.remove("show");
-            }
+            if (e.target === modalRaj) closeModal(modalRaj);
+            if (e.target === modalAngelo) closeModal(modalAngelo);
         });
     });
-</script>
+    </script>
     
     <script src="script.js"></script>
 </body>
