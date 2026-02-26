@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMMAI 2026 | International Conference on
-Computational Mathematics, Modeling & AI</title>
+    <title>CMMAI 2026 | International Conference on Computational Mathematics, Modeling & AI</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -573,7 +572,7 @@ Computational Mathematics, Modeling & AI</title>
                         <i class="fas fa-minus"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="keynote-speakers.html">Keynote Speakers</a></li>
+                        <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
                         <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
                         <li><a href="organising-committee.html">Organising Committee</a></li>
                     </ul>
@@ -730,17 +729,17 @@ Computational Mathematics, Modeling & AI</title>
             </div>
             
             <div class="footer-right">
-                <p>Developed by <a href="#" id="devModalBtn" class="dev-link">Raj Thakur</a></p>
-            </div>
+            <p>Developed by <a href="#" id="devModalBtnRaj" class="dev-link">Raj Thakur</a> & <a href="#" id="devModalBtnAngelo" class="dev-link">Angelo</a></p>
+        </div>
         </div>
     </footer>
 
-    <div id="devModal" class="modal-overlay">
+    <div id="devModalRaj" class="modal-overlay">
         <div class="modal-content">
             
             <div class="modal-header">
                 <h3>Developer Profile</h3>
-                <span class="close-btn" id="closeModalBtn">&times;</span>
+                <span class="close-btn" id="closeModalBtnRaj">&times;</span>
             </div>
 
             <div class="modal-body">
@@ -767,31 +766,72 @@ Computational Mathematics, Modeling & AI</title>
 
         </div>
     </div>
-
+<div id="devModalAngelo" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Developer Profile</h3>
+            <span class="close-btn" id="closeModalBtnAngelo">×</span>
+        </div>
+        <div class="modal-body">
+            <div class="dev-image-box">
+                <img src="angelo.webp" alt="Angelo" class="dev-img"> 
+            </div>
+            <div class="dev-info">
+                <h2>Angelo</h2>
+                <p class="dev-title">Web Developer / Designer</p>
+                <p class="dev-desc">
+                    Hello! I contributed to the UI/UX design and frontend development for this academic conference website. 
+                    Passionate about creating clean, responsive, and user-friendly digital experiences.
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="dev-contact">
+                <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+              
+            </div>
+        </div>
+    </div>
+</div>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const modal = document.getElementById("devModal");
-            const btn = document.getElementById("devModalBtn");
-            const closeBtn = document.getElementById("closeModalBtn");
+       document.addEventListener("DOMContentLoaded", () => {
+        // Elements for Raj
+        const modalRaj = document.getElementById("devModalRaj");
+        const btnRaj = document.getElementById("devModalBtnRaj");
+        const closeBtnRaj = document.getElementById("closeModalBtnRaj");
 
-            // Click on "Raj Thakur" opens modal
-            btn.addEventListener("click", (e) => {
-                e.preventDefault(); 
-                modal.classList.add("show");
-            });
+        // Elements for Angelo
+        const modalAngelo = document.getElementById("devModalAngelo");
+        const btnAngelo = document.getElementById("devModalBtnAngelo");
+        const closeBtnAngelo = document.getElementById("closeModalBtnAngelo");
 
-            // Click on "X" closes modal
-            closeBtn.addEventListener("click", () => {
-                modal.classList.remove("show");
-            });
+        // Function to open modal
+        function openModal(e, modalElement) {
+            e.preventDefault();
+            modalElement.classList.add("show");
+        }
 
-            // Click outside the box closes modal
-            window.addEventListener("click", (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove("show");
-                }
-            });
+        // Function to close modal
+        function closeModal(modalElement) {
+            modalElement.classList.remove("show");
+        }
+
+        // Event Listeners for Raj
+        btnRaj.addEventListener("click", (e) => openModal(e, modalRaj));
+        closeBtnRaj.addEventListener("click", () => closeModal(modalRaj));
+
+        // Event Listeners for Angelo
+        btnAngelo.addEventListener("click", (e) => openModal(e, modalAngelo));
+        closeBtnAngelo.addEventListener("click", () => closeModal(modalAngelo));
+
+        // Click outside to close for both modals
+        window.addEventListener("click", (e) => {
+            if (e.target === modalRaj) closeModal(modalRaj);
+            if (e.target === modalAngelo) closeModal(modalAngelo);
         });
+    });
     </script>
     <script src="script.js"></script>
 </body>
