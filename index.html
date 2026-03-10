@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMMAI 2026 | International Conference on
-Computational Mathematics, Modeling & AI.</title>
+    <title>CMMAI 2026 | International Conference on Computational Mathematics, Modeling & AI.</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -100,30 +99,47 @@ Computational Mathematics, Modeling & AI.</title>
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1300px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
+        
+        /* Updated Nav Brand for Vertical Alignment */
         .nav-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: white;
-    letter-spacing: -1px;
-    padding: 14px 0;
-    flex-shrink: 0;
-    /* Niche ki 3 lines add ki gayi hain perfect alignment ke liye */
-    display: flex;
-    align-items: center;
-    gap: 12px; /* Text aur logo ke beech ka space */
-}
-.nav-brand span { color: var(--primary); text-shadow: 0 0 15px var(--primary); }
+            text-decoration: none;
+            padding: 5px 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+        .nav-logo {
+            height: 60px; 
+            width: auto;
+            object-fit: contain;
+        }
+        .brand-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff; /* CMMAI strict white color */
+            line-height: 1;
+            letter-spacing: 0.5px;
+        }
+        .brand-text span { 
+            color: var(--primary); 
+            text-shadow: 0 0 12px var(--primary); 
+        }
 
-/* Logo ki height set karne ke liye (Aap iski value apne logo ke hisaab se kam ya zyada kar sakte hain) */
-.nav-logo {
-    height: 70px; 
-    width: auto;
-}
         /* Nav links list */
         .nav-links {
             list-style: none;
@@ -230,7 +246,7 @@ Computational Mathematics, Modeling & AI.</title>
         .mobile-toggle:hover { background: rgba(0, 242, 255, 0.08); }
 
         /* =============================================
-           MOBILE SIDEBAR
+           MOBILE SIDEBAR & MEDIA QUERIES
         ============================================= */
         .nav-overlay {
             display: none;
@@ -243,30 +259,72 @@ Computational Mathematics, Modeling & AI.</title>
         .nav-overlay.active { display: block; }
 
         @media (max-width: 1024px) {
-            /* Is line ko add karein */
-    #cursor-scanner { display: none !important; }
+            #cursor-scanner { display: none !important; }
 
-    
             .top-bar .contact-info { font-size: 0.72rem; }
             .top-bar-links { display: none; }
 
-            .mobile-toggle { display: flex; align-items: center; }
+            .nav-container {
+                padding: 8px 15px !important;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .nav-brand {
+                padding: 0 !important;
+            }
+
+            .nav-logo {
+                height: 42px !important; 
+            }
+
+            .brand-text {
+                font-size: 0.8rem !important; 
+            }
+
+            .mobile-header-logo2 {
+                display: block !important;
+                height: 100% !important; 
+                width: auto !important; 
+                max-width: 60vw; /* yaha se mobile me assests logo ki width control hoti hai*/
+                object-fit: contain;
+            }
+
+            .desktop-nav-logo {
+                display: none !important;
+            }
+
+            .mobile-toggle { 
+                display: flex !important; 
+                align-items: center; 
+                justify-content: center;
+                background: rgba(255,255,255,0.03); 
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 12px;
+                width: 44px;
+                height: 44px;
+                color: var(--primary);
+                font-size: 1.4rem;
+                padding: 0;
+                margin: 0;
+            }
 
             /* Sidebar panel */
-           /* Sidebar panel */
             .nav-links {
                 position: fixed;
-                top: 98px; /* Header ki height ke hisaab se niche shift kiya */
+                top: 100%;
                 right: -320px;
                 width: 300px;
-                height: calc(100vh - 98px); /* Bachi hui screen height legal */
+                height: calc(100vh - 70px);
                 background: rgba(6, 6, 12, 0.98);
                 border-left: 1px solid var(--border);
-                border-top: 1px solid var(--border); /* Header aur menu ke beech ek line ke liye */
+                border-top: 1px solid var(--border);
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0;
-                padding: 20px 0 40px; /* Top padding 80px se kam karke 20px kar di */
+                padding: 20px 0 40px;
                 overflow-y: auto;
                 z-index: 1200;
                 transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -346,18 +404,39 @@ Computational Mathematics, Modeling & AI.</title>
             .sidebar-brand span { color: var(--primary); }
         }
 
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 6px 12px !important;
+            }
+            .nav-logo {
+                height: 55px !important;
+            }
+            .mobile-header-logo2 {
+                height: 100% !important;
+            }
+            .brand-text {
+                font-size: 0.7rem !important;
+            }
+            .mobile-toggle {
+                width: 38px;
+                height: 38px;
+                font-size: 1.2rem;
+            }
+        }
+
         /* =============================================
            HERO SECTION
         ============================================= */
         .hero {
             position: relative;
-            min-height: 100vh;
+            min-height: 120vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             
             overflow: hidden;
+            padding-top: 70px;
         }
         #neural-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -370,7 +449,7 @@ Computational Mathematics, Modeling & AI.</title>
             font-size: clamp(2.5rem, 2vw, 5rem);
             line-height: 1;
             font-weight: 800;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             background: linear-gradient(to bottom, #fff 40%, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -436,27 +515,27 @@ Computational Mathematics, Modeling & AI.</title>
         .btn-outline:hover { background: white; color: black; }
         
         /* Card Buttons */
-.btn-card {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 18px;
-    padding: 10px 22px;
-    background: transparent;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-.btn-card:hover {
-    background: var(--primary);
-    color: #000;
-    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
-    transform: translateY(-2px);
-}
+        .btn-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            padding: 10px 22px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-card:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+            transform: translateY(-2px);
+        }
 
         /* =============================================
            ABOUT SECTION
@@ -718,19 +797,19 @@ Computational Mathematics, Modeling & AI.</title>
             color: #94a3b8; font-size: 28px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
         .close-modal:hover { color: var(--primary); }
-.contact-btn {
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    color: white;
-    background: var(--theme-card-main);
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .contact-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            background: var(--theme-card-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         /* =============================================
            FOOTER STYLES (UPDATED)
         ============================================= */
@@ -765,6 +844,32 @@ Computational Mathematics, Modeling & AI.</title>
             .top-bar { font-size: 0.7rem; padding: 7px 4%; }
             .footer-content { flex-direction: column; text-align: center; gap: 12px; }
             .footer-content > div { text-align: center !important; }
+            .hero {
+                padding-top: 120px; /* Header ke piche chupne se rokne ke liye */
+            }
+            .main-title {
+                font-size: 2rem; /* Mobile par font size thoda aur theek dikhne ke liye */
+                margin-top: 5px;
+            }
+        }
+
+        /* --- Custom additions for Logo and Padding --- */
+        .mobile-header-logo2 {
+            display: none;
+        }
+       .desktop-nav-logo {
+            height: 95px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+           
+            padding-left: 20px; /* Line aur logo ke beech ka space */
+        }
+        
+        @media (min-width: 1025px) {
+            .hero {
+                padding-top: 1px; /* Ensures header doesn't overlap hero content */
+            }
         }
     </style>
 </head>
@@ -774,20 +879,24 @@ Computational Mathematics, Modeling & AI.</title>
 
     <div class="nav-overlay" id="navOverlay"></div>
 
-    <nav class="navbar">
+   <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-    <img src="home_logo_dark.png" alt="CMMAI Logo" class="nav-logo"> CMMAI <span>2026</span>
-    
-</a>
+            
+            <div class="nav-left-group" style="display: flex; align-items: center;">
+                <a href="index.html" class="nav-brand">
+                    <div class="logo-text-group">
+                        <img src="home_logo_dark.png" alt="CMMAI Logo" class="nav-logo">
+                        <span class="brand-text">CMMAI <span>2026</span></span>
+                    </div>
+                </a>
+                
+                <img src="assets/logo/logo2.webp" alt="CMMAI Logo" class="desktop-nav-logo"> 
+            </div>
+
+            <img src="assets/logo/logo2.webp" alt="CMMAI Logo 2" class="mobile-header-logo2">
 
             <ul class="nav-links" id="navLinks">
-              
-
                 <li><a href="index.html">Home</a></li>
-
-               
-
                 <li class="dropdown">
                     <a href="#speakers" class="dropbtn">
                         Speakers & Committee
@@ -801,7 +910,6 @@ Computational Mathematics, Modeling & AI.</title>
                         <li><a href="organising-committee.html">Organising Committee</a></li>
                     </ul>
                 </li>
-
                 <li class="dropdown">
                     <a href="#schedule" class="dropbtn">
                        Program
@@ -812,29 +920,11 @@ Computational Mathematics, Modeling & AI.</title>
                     <ul class="dropdown-content">
                          <li><a href="dates.html">Important Dates</a></li>
                         <li><a href="schedule.html">Schedule</a></li>
-                        
                     </ul>
                 </li>
-
-               <li>
-    <a href="registration.html">
-        Registration
-    </a>
-</li>
-
-<li>
-    <a href="call-for-extended-abstracts.html">
-        Call for Abstracts
-    </a>
-</li>
-
-<li>
-    <a href="Contact-us.html">
-        Contact us
-    </a>
-</li>
-                
-               
+                <li><a href="registration.html">Registration</a></li>
+                <li><a href="call-for-extended-abstracts.html">Call for Abstracts</a></li>
+                <li><a href="Contact-us.html">Contact us</a></li>
             </ul>
 
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
@@ -850,8 +940,20 @@ Computational Mathematics, Modeling & AI.</title>
             <h1 class="main-title">International Conference on <br>Computational Mathematics, Modeling & Artificial Intelligence.</h1>
             <p style="color: #94a3b8; font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
               
-                <span style="color: white; display: block; margin-top: 10px;">Organized by Postgraduate and Research Department of Mathematics <br> 
-Bharata Mata College (Autonomous), Thrikkakara</span>
+                  <p style="color: white; font-size: 0.95rem; font-weight: 500;">Organized by Postgraduate and Research Department of Mathematics </p>
+                <br> <p style="color: white; font-size: 0.95rem; font-weight: 500;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 6px;"></i> Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India
+
+
+                </p>
+                
+              <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: dropIn 0.8s ease;">
+                <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; color: #fff; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);">
+                    <i class="fas fa-calendar-check" style="color: var(--primary); margin-right: 8px;"></i> 27 - 29 August 2026
+                </h3>
+               
+            </div>
+            
             </p>
             <div class="timer-grid" id="timer">
                 <div class="timer-item"><span class="t-num" id="d">00</span><span class="t-lab">Days</span></div>
@@ -863,7 +965,7 @@ Bharata Mata College (Autonomous), Thrikkakara</span>
                 <a href="dates.html" class="btn-primary">Important Dates <i class="fas fa-calendar-days"></i></a>
                 
             </div>
-            
+          
         </div>
     </header>
 
@@ -954,7 +1056,7 @@ and socio-economic backgrounds.</p>
                         
                         <p>The Postgraduate and Research Department of
 Mathematics at Bharata Mata College, Thrikkakara,
-established in 1965, is distinguished for its academic
+established in 1965, is distinguished for academic
 excellence and vibrant research culture. Offering
 undergraduate, postgraduate, and doctoral
 programmes, the department has produced ten
@@ -983,13 +1085,13 @@ Mathematics <br>
                 <span style="color: var(--primary);">Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</span></p>
             </div>
             <div>
-               
-               
+                
+                
              <p>Developed by <span class="heart-blink"><i class="fas fa-heart"></i></span> 
     <a href="#" id="devModalBtn" style="color: var(--primary); text-decoration: none; font-weight: bold; margin-left: 5px;">Raj Thakur</a> & 
     <a href="#" id="devModalBtn2" style="color: var(--primary); text-decoration: none; font-weight: bold; margin-left: 5px;">Angelo Seby</a>
 </p>  
-               
+                
                 </div>
         </div>
     </footer>
@@ -1077,10 +1179,12 @@ Mathematics <br>
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
-            draw() {
+          draw() {
                 if (animationMode === 1) { 
                     ctx.fillStyle = 'rgba(0, 242, 255, 0.4)';
-                    ctx.font = '30px Space Grotesk';
+                    // Screen ki width check karke font size set karein (768px se kam par 12px, warna 24px)
+                    let fontSize = window.innerWidth <= 768 ? '18px' : '24px';
+                    ctx.font = fontSize + ' Space Grotesk';
                     ctx.fillText(this.symbol, this.x, this.y);
                 } else { 
                     ctx.fillStyle = animationMode === 2 ? '#bd00ff' : '#00f2ff';
@@ -1091,9 +1195,11 @@ Mathematics <br>
             }
         }
 
-        function initParticles() {
+      function initParticles() {
             particles = [];
-            for (let i = 0; i < 80; i++) particles.push(new Particle());
+            // Screen check karega: Mobile par 30 particles, Desktop par 80
+            let particleCount = window.innerWidth <= 768 ? 30 : 80; 
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
         }
 
         function animate() {
@@ -1341,6 +1447,3 @@ Mathematics <br>
     </script>
 </body>
 </html>
-
-
-
