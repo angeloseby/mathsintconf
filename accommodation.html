@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -24,6 +24,14 @@
             --border-color: #e2e8f0;
             --font-display: 'Outfit', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
+            
+            /* Code A variables required for navbar */
+            --primary-navy: #001f3f;    
+            --secondary-blue: #0284c7;  
+            --bg-light: #f8fafc;        
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -88,46 +96,96 @@
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
         /* ===================================================
-           2. GLASSMORPHISM NAVBAR & OFFCANVAS
+           2. NAVBAR & TOP BAR (DESKTOP) - FROM CODE A
            =================================================== */
         .navbar {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 20px 20px;
             padding: 0.8rem 5%;
-            display: flex; align-items: center;
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1010;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            position: fixed !important; 
+            top: 0; left: 0; width: 100%;
+            z-index: 1010;
         }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-1 { max-height: 45px; background: white; padding: 3px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-        .logo-2 { max-height: 45px; background: white; padding: 3px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-        
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent-green); }
-        .mobile-toggle { display: none; background: none; border: none; font-size: 1.6rem; color: var(--text-main); cursor: pointer; transition: 0.2s; }
-        .mobile-toggle:hover { color: var(--accent-green); }
-        
-        .mobile-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
-            z-index: 1008; opacity: 0; visibility: hidden; transition: 0.3s ease;
-        }
-        .mobile-overlay.active { opacity: 1; visibility: visible; }
 
-        @media (max-width: 992px) {
-            .mobile-toggle { display: block; }
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; max-width: 1400px; margin: 0 auto;
+        }
+
+        /* Logos Styling */
+        .brand {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .logo-1 { height: auto; max-height: 65px; width: auto; max-width: 25vw; object-fit: contain; }
+        .logo-2 { height: auto; max-height: 65px; width: auto; max-width: 45vw; object-fit: contain; }
+
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; margin: 0; padding: 0; justify-content: flex-end; }
+        .nav-links li { list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-links > li > a:hover { color: var(--secondary-blue); }
+
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1rem; color: var(--primary-navy); cursor: pointer; transition: 0.3s; margin-left: auto; }
+        .mobile-toggle:hover { color: var(--secondary-blue); transform: scale(1.1); }
+
+        /* Dropdown Desktop */
+        .dropdown { position: relative; }
+        .dropdown .dropbtn { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .dropdown .dropbtn i { font-size: 0.75rem; transition: transform 0.3s ease; }
+        .dropdown .dropbtn i.fa-plus, .dropdown .dropbtn i.fa-minus { display: none; }
+        .dropdown .dropbtn i.fa-chevron-down { display: inline-block; }
+
+        .dropdown-content {
+            display: none; position: absolute; background-color: var(--bg-white); min-width: 260px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; border-radius: 8px; top: 100%; left: 0; padding: 0.5rem 0; border: 1px solid var(--border-color);
+            list-style: none; margin: 0;
+        }
+        .dropdown-content a { color: var(--text-dark); padding: 12px 20px; display: block; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--bg-light); transition: 0.2s ease; }
+        .dropdown-content a:hover { background-color: var(--bg-light); color: var(--secondary-blue); padding-left: 25px; } 
+
+        @media (min-width: 1025px) {
+            .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease forwards; }
+            .dropdown:hover .dropbtn i.fa-chevron-down { transform: rotate(180deg); color: var(--secondary-blue); }
+        }
+
+        .nav-overlay { display: none; }
+
+        /* RESPONSIVE NAVBAR (MOBILE & TABLET < 1024px) */
+        @media (max-width: 1024px) {
+            .navbar { padding: 5px 1px; justify-content: space-between; border-radius: 0; }
+            .nav-container { padding-left: 1px; justify-content: space-between; }
+            .brand { width: auto; justify-content: flex-start; gap: 5px; margin-right: auto; }
+            
+            .logo-1 { max-height: 70px; max-width: 30vw; }
+            .logo-2 { max-height: 70px; max-width: 55vw; }
+
+            .mobile-toggle { display: block; z-index: 1006; position: relative; margin-right: 1px; margin-left: auto; font-size: 1.2rem; padding: 5px; }
+
             .nav-links { 
-                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
-                background: var(--card-bg); flex-direction: column; padding: 80px 2rem 2rem; 
-                transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); border-left: 1px solid var(--border-color);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1009; align-items: flex-start; gap: 1.5rem;
+                position: absolute; top: 100%; right: -100%; width: 340px; max-width: 85vw; height: 100vh; 
+                background-color: var(--bg-white); flex-direction: column; align-items: flex-start; justify-content: flex-start; 
+                padding: 2rem 1.5rem 3rem 1.5rem; border-top: 1px solid var(--border-color); box-shadow: -10px 0 25px rgba(0,0,0,0.15); 
+                gap: 0; transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1003; overflow-y: auto; 
             }
             .nav-links.active { right: 0; }
-            .nav-links a { font-size: 1.1rem; width: 100%; display: block; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
+            .nav-links > li { width: 100%; border-bottom: 1px solid var(--border-color); }
+            .nav-links a, .dropdown .dropbtn { font-size: 1.15rem; width: 100%; display: block; padding: 1.2rem 0; color: var(--text-dark); }
+            .dropdown .dropbtn i.fa-chevron-down { display: none; }
+            .dropdown .dropbtn i.fa-plus { display: inline-block; font-size: 1.1rem; color: var(--secondary-blue); }
+            .dropdown.active .dropbtn i.fa-plus { display: none; }
+            .dropdown.active .dropbtn i.fa-minus { display: inline-block; transform: rotate(180deg); }
+            .dropdown-content { display: none; position: static; box-shadow: none; border: none; background-color: var(--bg-light); border-left: 4px solid var(--secondary-blue); margin-bottom: 1rem; }
+            .dropdown.active .dropdown-content { display: block; }
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ===================================================
            3. HERO HEADER
@@ -420,21 +478,49 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
     
-    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="brand" tabindex="0" aria-label="Home">
-                <img src="logo.png" alt="CMMAI" class="logo-1" onerror="this.src='https://via.placeholder.com/80x30?text=CMMAI'">
-                <img src="https://www.bharatamatacollege.in/assets/images/hLogo.png" alt="BMC" class="logo-2">
+            
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="CMMAI Logo" class="logo-1">
+                <img src="https://www.bharatamatacollege.in/assets/images/hLogo.png" alt="BMC Logo" class="logo-2">
             </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html"><i class="fas fa-home" style="margin-right:5px; font-size: 0.9em;"></i> Home</a></li>
-                <li><a href="schedule.html"><i class="fas fa-calendar-alt" style="margin-right:5px; font-size: 0.9em;"></i> Program</a></li>
-                <li><a href="registration.html"><i class="fas fa-id-badge" style="margin-right:5px; font-size: 0.9em;"></i> Registration</a></li>
-                <li><a href="Contact-us.html"><i class="fas fa-envelope" style="margin-right:5px; font-size: 0.9em;"></i> Contact Us</a></li>
+            
+             <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#speakers" class="dropbtn">
+                        Speakers & Committee
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                      <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
+                        <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
+                        <li><a href="organising-committee.html">Organising Committee</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#schedule" class="dropbtn">
+                       Program
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                         <li><a href="dates.html">Important Dates</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                    </ul>
+                </li>
+                <li><a href="author.html">Author info</a></li>
+                 <li><a href="accommodation.html">Accommodation</a></li>
+                <li><a href="Contact-us.html">Contact us</a></li>
             </ul>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -445,7 +531,7 @@
     </header>
 
     <div class="expanding-container reveal-up" id="morphingGrid">
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Alleppey Details" data-place="alleppey" data-bg="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?q=60&w=800&fm=webp&auto=format&fit=crop">
+        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Alleppey Details" data-place="alleppey" data-bg="https://picsum.photos/seed/alleppey_main/800/600">
             <span class="panel-title-small">Alleppey</span>
             <div class="panel-content">
                 <h3>Alleppey Backwaters</h3>
@@ -453,7 +539,7 @@
             </div>
         </div>
         
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Munnar Details" data-place="munnar" data-bg="https://images.unsplash.com/photo-1571536802807-30451e3955d8?q=60&w=800&fm=webp&auto=format&fit=crop">
+        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Munnar Details" data-place="munnar" data-bg="https://picsum.photos/seed/munnar_main/800/600">
             <span class="panel-title-small">Munnar</span>
             <div class="panel-content">
                 <h3>Munnar Hills</h3>
@@ -461,7 +547,7 @@
             </div>
         </div>
 
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Fort Kochi Details" data-place="fortkochi" data-bg="https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=60&w=800&fm=webp&auto=format&fit=crop">
+        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Fort Kochi Details" data-place="fortkochi" data-bg="https://picsum.photos/seed/fortkochi_main/800/600">
             <span class="panel-title-small">Fort Kochi</span>
             <div class="panel-content">
                 <h3>Historic Fort Kochi</h3>
@@ -469,7 +555,7 @@
             </div>
         </div>
 
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Athirappilly Details" data-place="athirappilly" data-bg="https://images.unsplash.com/photo-1621217743588-44445582f6e9?q=60&w=800&fm=webp&auto=format&fit=crop">
+        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Athirappilly Details" data-place="athirappilly" data-bg="https://picsum.photos/seed/athirappilly_main/800/600">
             <span class="panel-title-small">Athirappilly</span>
             <div class="panel-content">
                 <h3>Athirappilly Waterfalls</h3>
@@ -483,7 +569,7 @@
         
         <div class="bento-grid">
             <div class="bento-item span-2x2 reveal-up" tabindex="0" role="button" data-place="thekkady">
-                <img data-src="https://images.unsplash.com/photo-1596752003714-db13e2d677ec?q=60&w=600&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Thekkady">
+                <img data-src="https://picsum.photos/seed/thekkady_main/800/600" class="bento-bg lazy-img" alt="Thekkady">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 155 km away</div>
                     <h3 class="bento-title">Thekkady & Periyar</h3>
@@ -492,7 +578,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="hillpalace">
-                <img data-src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Hill Palace">
+                <img data-src="https://picsum.photos/seed/hillpalace_main/800/600" class="bento-bg lazy-img" alt="Hill Palace">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 11 km away</div>
                     <h3 class="bento-title">Hill Palace Museum</h3>
@@ -501,7 +587,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="cherai">
-                <img data-src="https://images.unsplash.com/photo-1590050752112-9c849184c7f5?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Cherai Beach">
+                <img data-src="https://picsum.photos/seed/cherai_main/800/600" class="bento-bg lazy-img" alt="Cherai Beach">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 30 km away</div>
                     <h3 class="bento-title">Cherai Beach</h3>
@@ -510,7 +596,7 @@
             </div>
 
             <div class="bento-item span-2x1 reveal-up" tabindex="0" role="button" data-place="mattancherry">
-                <img data-src="https://images.unsplash.com/photo-1620803134371-10c0dc8ea4dd?q=60&w=600&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Mattancherry">
+                <img data-src="https://picsum.photos/seed/mattancherry_main/800/600" class="bento-bg lazy-img" alt="Mattancherry">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> Adjacent to Fort Kochi</div>
                     <h3 class="bento-title">Mattancherry</h3>
@@ -519,7 +605,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="kumarakom">
-                <img data-src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Kumarakom">
+                <img data-src="https://picsum.photos/seed/kumarakom_main/800/600" class="bento-bg lazy-img" alt="Kumarakom">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 55 km away</div>
                     <h3 class="bento-title">Kumarakom</h3>
@@ -528,7 +614,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="marari">
-                <img data-src="https://images.unsplash.com/photo-1548013146-72479768bada?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Marari Beach">
+                <img data-src="https://picsum.photos/seed/marari_main/800/600" class="bento-bg lazy-img" alt="Marari Beach">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 54 km away</div>
                     <h3 class="bento-title">Marari Beach</h3>
@@ -537,7 +623,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="paniyeli">
-                <img data-src="https://images.unsplash.com/photo-1605640840469-6934c267039a?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Paniyeli Poru">
+                <img data-src="https://picsum.photos/seed/paniyeli_main/800/600" class="bento-bg lazy-img" alt="Paniyeli Poru">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 40 km away</div>
                     <h3 class="bento-title">Paniyeli Poru</h3>
@@ -546,7 +632,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="vagamon">
-                <img data-src="https://images.unsplash.com/photo-1629117621932-5a21ff461aab?q=60&w=400&fm=webp&auto=format&fit=crop" class="bento-bg lazy-img" alt="Vagamon">
+                <img data-src="https://picsum.photos/seed/vagamon_main/800/600" class="bento-bg lazy-img" alt="Vagamon">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 95 km away</div>
                     <h3 class="bento-title">Vagamon</h3>
@@ -631,23 +717,28 @@
 
     document.addEventListener("DOMContentLoaded", () => {
         
-        // 1. Mobile Navbar Toggle
-        const toggleBtn = document.getElementById('mobileToggle');
-        const navLinks = document.getElementById('navLinks');
-        const overlay = document.getElementById('mobileOverlay');
+        // 1. Mobile Navbar Toggle (Code A logic)
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            var nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        });
 
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-            overlay.classList.toggle('active');
-            const icon = toggleBtn.querySelector('i');
-            if(navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars'); icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times'); icon.classList.add('fa-bars');
-            }
-        }
-        toggleBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu); 
+        // Dropdown toggle logic for mobile (Code A logic)
+        var dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(function(dropdown) {
+            var dropbtn = dropdown.querySelector('.dropbtn');
+            dropbtn.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    e.preventDefault();
+                    if (dropdown.classList.contains('active')) {
+                        dropdown.classList.remove('active');
+                    } else {
+                        dropdowns.forEach(function(d) { d.classList.remove('active'); });
+                        dropdown.classList.add('active');
+                    }
+                }
+            });
+        });
 
         // 2. SCROLL ANIMATIONS
         const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -689,20 +780,20 @@
         lazyImages.forEach(img => imageObserver.observe(img));
         lazyBgs.forEach(bg => imageObserver.observe(bg));
 
-        // 4. Data for Place Gallery
+        // 4. Data for Place Gallery (Unique Images for Every Location using specific seeds)
         const placesData = {
-            'alleppey': { title: 'Alleppey Backwaters', dist: '65 km from venue', desc: 'Famous for its serene backwaters, traditional houseboat cruises, lush village landscapes, and a rich tradition of coir and boat festivals. The ultimate peaceful retreat.', images: ['1593693397690-362cb9666fc2','1602216056096-3b40cc0c9944','1548013146-72479768bada'] },
-            'munnar': { title: 'Munnar Hills', dist: '115 km from venue (Idukki)', desc: 'A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, cool weather, and the Eravikulam National Park.', images: ['1571536802807-30451e3955d8','1596752003714-db13e2d677ec','1629117621932-5a21ff461aab'] },
-            'fortkochi': { title: 'Historic Fort Kochi', dist: '26 km from venue', desc: 'Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, cultural hubs, and iconic Chinese fishing nets.', images: ['1593693411515-c20261bcad6e','1620803134371-10c0dc8ea4dd','1582510003544-4d00b7f74220'] },
-            'athirappilly': { title: 'Athirappilly Waterfalls', dist: '57 km from venue', desc: 'Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it is a breathtaking nature retreat.', images: ['1621217743588-44445582f6e9','1605640840469-6934c267039a','1593693397690-362cb9666fc2'] },
-            'thekkady': { title: 'Thekkady & Periyar', dist: '155 km from venue', desc: 'Rich in biodiversity with options for boating in the Periyar Lake. Home to wild elephants, bison, rare bird species, and vast aromatic spice plantations.', images: ['1596752003714-db13e2d677ec','1571536802807-30451e3955d8','1621217743588-44445582f6e9'] },
-            'hillpalace': { title: 'Hill Palace Museum', dist: '11 km away', desc: 'Former royal residence of the Kochi Maharajas, showcasing Kerala\'s grand cultural legacy and historical artifacts.', images: ['1582510003544-4d00b7f74220','1593693411515-c20261bcad6e','1620803134371-10c0dc8ea4dd'] },
-            'cherai': { title: 'Cherai Beach', dist: '30 km away', desc: 'A clean and quiet beach near Vypin Island, perfect for swimming and glorious sunset views.', images: ['1590050752112-9c849184c7f5','1548013146-72479768bada','1593693411515-c20261bcad6e'] },
-            'mattancherry': { title: 'Mattancherry', dist: 'Adjacent to Fort Kochi', desc: 'Home to the Paradesi Synagogue, Jew Town, and antique shops. A rich blend of Jewish, Dutch, and Malabar cultures.', images: ['1620803134371-10c0dc8ea4dd','1593693411515-c20261bcad6e','1582510003544-4d00b7f74220'] },
-            'kumarakom': { title: 'Kumarakom', dist: '55 km away', desc: 'A peaceful backwater village on Vembanad Lake, known for birdwatching at the Kumarakom Bird Sanctuary and relaxing houseboat stays.', images: ['1602216056096-3b40cc0c9944','1593693397690-362cb9666fc2','1548013146-72479768bada'] },
-            'marari': { title: 'Marari Beach', dist: '54 km away', desc: 'A serene, less-crowded beach destination known for its eco-resorts and traditional fishing villages.', images: ['1548013146-72479768bada','1590050752112-9c849184c7f5','1602216056096-3b40cc0c9944'] },
-            'paniyeli': { title: 'Paniyeli Poru', dist: '40 km away', desc: 'A scenic riverside spot along the Periyar River, known for its natural rock formations and gushing rapids. Ideal for picnics and photography.', images: ['1605640840469-6934c267039a','1621217743588-44445582f6e9','1596752003714-db13e2d677ec'] },
-            'vagamon': { title: 'Vagamon', dist: '95 km away', desc: 'A lesser-known hill station with rolling meadows, pine forests, and misty valleys. Ideal for trekking, paragliding, and quiet nature walks.', images: ['1629117621932-5a21ff461aab','1571536802807-30451e3955d8','1596752003714-db13e2d677ec'] }
+            'alleppey': { title: 'Alleppey Backwaters', dist: '65 km from venue', desc: 'Famous for its serene backwaters, traditional houseboat cruises, lush village landscapes, and a rich tradition of coir and boat festivals. The ultimate peaceful retreat.', images: ['https://picsum.photos/seed/alleppey1/800/600','https://picsum.photos/seed/alleppey2/800/600','https://picsum.photos/seed/alleppey3/800/600'] },
+            'munnar': { title: 'Munnar Hills', dist: '115 km from venue (Idukki)', desc: 'A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, cool weather, and the Eravikulam National Park.', images: ['https://picsum.photos/seed/munnar1/800/600','https://picsum.photos/seed/munnar2/800/600','https://picsum.photos/seed/munnar3/800/600'] },
+            'fortkochi': { title: 'Historic Fort Kochi', dist: '26 km from venue', desc: 'Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, cultural hubs, and iconic Chinese fishing nets.', images: ['https://picsum.photos/seed/fortkochi1/800/600','https://picsum.photos/seed/fortkochi2/800/600','https://picsum.photos/seed/fortkochi3/800/600'] },
+            'athirappilly': { title: 'Athirappilly Waterfalls', dist: '57 km from venue', desc: 'Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it is a breathtaking nature retreat.', images: ['https://picsum.photos/seed/athirappilly1/800/600','https://picsum.photos/seed/athirappilly2/800/600','https://picsum.photos/seed/athirappilly3/800/600'] },
+            'thekkady': { title: 'Thekkady & Periyar', dist: '155 km from venue', desc: 'Rich in biodiversity with options for boating in the Periyar Lake. Home to wild elephants, bison, rare bird species, and vast aromatic spice plantations.', images: ['https://picsum.photos/seed/thekkady1/800/600','https://picsum.photos/seed/thekkady2/800/600','https://picsum.photos/seed/thekkady3/800/600'] },
+            'hillpalace': { title: 'Hill Palace Museum', dist: '11 km away', desc: 'Former royal residence of the Kochi Maharajas, showcasing Kerala\'s grand cultural legacy and historical artifacts.', images: ['https://picsum.photos/seed/hillpalace1/800/600','https://picsum.photos/seed/hillpalace2/800/600','https://picsum.photos/seed/hillpalace3/800/600'] },
+            'cherai': { title: 'Cherai Beach', dist: '30 km away', desc: 'A clean and quiet beach near Vypin Island, perfect for swimming and glorious sunset views.', images: ['https://picsum.photos/seed/cherai1/800/600','https://picsum.photos/seed/cherai2/800/600','https://picsum.photos/seed/cherai3/800/600'] },
+            'mattancherry': { title: 'Mattancherry', dist: 'Adjacent to Fort Kochi', desc: 'Home to the Paradesi Synagogue, Jew Town, and antique shops. A rich blend of Jewish, Dutch, and Malabar cultures.', images: ['https://picsum.photos/seed/mattancherry1/800/600','https://picsum.photos/seed/mattancherry2/800/600','https://picsum.photos/seed/mattancherry3/800/600'] },
+            'kumarakom': { title: 'Kumarakom', dist: '55 km away', desc: 'A peaceful backwater village on Vembanad Lake, known for birdwatching at the Kumarakom Bird Sanctuary and relaxing houseboat stays.', images: ['https://picsum.photos/seed/kumarakom1/800/600','https://picsum.photos/seed/kumarakom2/800/600','https://picsum.photos/seed/kumarakom3/800/600'] },
+            'marari': { title: 'Marari Beach', dist: '54 km away', desc: 'A serene, less-crowded beach destination known for its eco-resorts and traditional fishing villages.', images: ['https://picsum.photos/seed/marari1/800/600','https://picsum.photos/seed/marari2/800/600','https://picsum.photos/seed/marari3/800/600'] },
+            'paniyeli': { title: 'Paniyeli Poru', dist: '40 km away', desc: 'A scenic riverside spot along the Periyar River, known for its natural rock formations and gushing rapids. Ideal for picnics and photography.', images: ['https://picsum.photos/seed/paniyeli1/800/600','https://picsum.photos/seed/paniyeli2/800/600','https://picsum.photos/seed/paniyeli3/800/600'] },
+            'vagamon': { title: 'Vagamon', dist: '95 km away', desc: 'A lesser-known hill station with rolling meadows, pine forests, and misty valleys. Ideal for trekking, paragliding, and quiet nature walks.', images: ['https://picsum.photos/seed/vagamon1/800/600','https://picsum.photos/seed/vagamon2/800/600','https://picsum.photos/seed/vagamon3/800/600'] }
         };
 
         const placeModal = document.getElementById('placeGalleryModal');
@@ -719,13 +810,13 @@
             
             // Map Link
             const mapQuery = encodeURIComponent(data.title + ' Kerala');
-            document.getElementById('modalMapBtn').href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+            document.getElementById('modalMapBtn').href = `https://www.google.com/maps/search/?api=1&query=$${mapQuery}`;
 
             // Image Skeleton
             const fallbackImg = 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?q=60&w=800&fm=webp&auto=format&fit=crop';
-            const galleryHTML = data.images.slice(0, 3).map(imgId => 
+            const galleryHTML = data.images.slice(0, 3).map(imgUrl => 
                 `<div class="img-wrapper skeleton-box">
-                    <img src="https://images.unsplash.com/photo-${imgId}?q=60&w=800&fm=webp&auto=format&fit=crop" alt="${data.title} Image" onload="this.parentElement.classList.remove('skeleton-box');" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                    <img src="${imgUrl}" alt="${data.title} Image" onload="this.parentElement.classList.remove('skeleton-box');" onerror="this.onerror=null;this.src='${fallbackImg}';">
                  </div>`
             ).join('');
             
