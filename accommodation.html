@@ -96,7 +96,7 @@
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
         /* ===================================================
-           2. NAVBAR & TOP BAR (DESKTOP) - FROM CODE A
+           2. NAVBAR & TOP BAR (DESKTOP)
            =================================================== */
         .navbar {
             background: rgba(255, 255, 255, 0.95);
@@ -109,7 +109,7 @@
             align-items: center;
             position: fixed !important; 
             top: 0; left: 0; width: 100%;
-            z-index: 1010;
+            z-index: 1005;
         }
 
         .nav-container {
@@ -157,17 +157,25 @@
 
         .nav-overlay { display: none; }
 
-        /* RESPONSIVE NAVBAR (MOBILE & TABLET < 1024px) */
+        /* ===================================================
+           3. RESPONSIVE NAVBAR (MOBILE & TABLET < 1024px)
+           =================================================== */
         @media (max-width: 1024px) {
+            /* Mobile header styling: 1px padding left & right */
             .navbar { padding: 5px 1px; justify-content: space-between; border-radius: 0; }
+            
             .nav-container { padding-left: 1px; justify-content: space-between; }
+            
+            /* Logos ab exactly left align rahenge aur auto adjust honge */
             .brand { width: auto; justify-content: flex-start; gap: 5px; margin-right: auto; }
             
             .logo-1 { max-height: 70px; max-width: 30vw; }
             .logo-2 { max-height: 70px; max-width: 55vw; }
 
+            /* Toggle button sabse right edge pe 1px distance se */
             .mobile-toggle { display: block; z-index: 1006; position: relative; margin-right: 1px; margin-left: auto; font-size: 1.2rem; padding: 5px; }
 
+            /* Sidebar menu adjustment - absolute positioned exactly at bottom of header */
             .nav-links { 
                 position: absolute; top: 100%; right: -100%; width: 340px; max-width: 85vw; height: 100vh; 
                 background-color: var(--bg-white); flex-direction: column; align-items: flex-start; justify-content: flex-start; 
@@ -531,7 +539,7 @@
     </header>
 
     <div class="expanding-container reveal-up" id="morphingGrid">
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Alleppey Details" data-place="alleppey" data-bg="https://picsum.photos/seed/alleppey_main/800/600">
+        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Alleppey Details" data-place="alleppey" data-bg="https://keralahouseboat.com/wp-content/uploads/2024/03/sunset-at-the-backwaters-of-alleppey-kerala-indi-2023-11-27-05-01-00-utc-1.webp">
             <span class="panel-title-small">Alleppey</span>
             <div class="panel-content">
                 <h3>Alleppey Backwaters</h3>
@@ -539,37 +547,40 @@
             </div>
         </div>
         
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Munnar Details" data-place="munnar" data-bg="https://picsum.photos/seed/munnar_main/800/600">
-            <span class="panel-title-small">Munnar</span>
-            <div class="panel-content">
-                <h3>Munnar Hills</h3>
-                <p><strong><i class="fas fa-route"></i> 115 km from venue</strong><br>A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, and cool weather.</p>
-            </div>
-        </div>
-
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Fort Kochi Details" data-place="fortkochi" data-bg="https://picsum.photos/seed/fortkochi_main/800/600">
-            <span class="panel-title-small">Fort Kochi</span>
-            <div class="panel-content">
-                <h3>Historic Fort Kochi</h3>
-                <p><strong><i class="fas fa-route"></i> 26 km from venue</strong><br>Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, and iconic Chinese fishing nets.</p>
-            </div>
-        </div>
-
-        <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Athirappilly Details" data-place="athirappilly" data-bg="https://picsum.photos/seed/athirappilly_main/800/600">
-            <span class="panel-title-small">Athirappilly</span>
-            <div class="panel-content">
-                <h3>Athirappilly Waterfalls</h3>
-                <p><strong><i class="fas fa-route"></i> 57 km from venue</strong><br>Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it's a breathtaking retreat.</p>
-            </div>
-        </div>
+       <div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Munnar Details" data-place="munnar" data-bg="https://images.unsplash.com/photo-1637066742971-726bee8d9f56?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVubmFyfGVufDB8fDB8fHww">
+    <span class="panel-title-small">Munnar</span>
+    <div class="panel-content">
+        <h3>Munnar Hills</h3>
+        <p><strong><i class="fas fa-route"></i> 115 km from venue</strong><br>A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, and cool weather.</p>
     </div>
+</div>
+
+<div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Fort Kochi Details" data-place="fortkochi" data-bg="https://media-cdn.tripadvisor.com/media/photo-s/12/a5/55/7d/forte-kochi.jpg">
+    <span class="panel-title-small">Fort Kochi</span>
+    <div class="panel-content">
+        <h3>Historic Fort Kochi</h3>
+        <p><strong><i class="fas fa-route"></i> 26 km from venue</strong><br>Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, and iconic Chinese fishing nets.</p>
+    </div>
+</div>
+
+<div class="panel lazy-bg" tabindex="0" role="button" aria-label="View Athirappilly Details" data-place="athirappilly" data-bg="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/The_View_of_the_Athirapally_Falls_during_the_onset_of_Monsoon.jpg/1280px-The_View_of_the_Athirapally_Falls_during_the_onset_of_Monsoon.jpg">
+    <span class="panel-title-small">Athirappilly</span>
+    <div class="panel-content">
+        <h3>Athirappilly Waterfalls</h3>
+        <p><strong><i class="fas fa-route"></i> 57 km from venue</strong><br>Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it's a breathtaking retreat.</p>
+    </div>
+</div>
+       
+       
+       
+        </div>
 
     <section class="bento-section">
         <h2 class="section-title reveal-up">More Hidden Gems</h2>
         
         <div class="bento-grid">
             <div class="bento-item span-2x2 reveal-up" tabindex="0" role="button" data-place="thekkady">
-                <img data-src="https://picsum.photos/seed/thekkady_main/800/600" class="bento-bg lazy-img" alt="Thekkady">
+                <img data-src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/43/ba/50/the-starting-point-for.jpg?w=900&h=500&s=1" class="bento-bg lazy-img" alt="Thekkady">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 155 km away</div>
                     <h3 class="bento-title">Thekkady & Periyar</h3>
@@ -578,7 +589,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="hillpalace">
-                <img data-src="https://picsum.photos/seed/hillpalace_main/800/600" class="bento-bg lazy-img" alt="Hill Palace">
+                <img data-src="https://www.hoteldekho.com/storage/img/tourattraction/1650712601ghijojhokgfkjopyo.jpg" class="bento-bg lazy-img" alt="Hill Palace">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 11 km away</div>
                     <h3 class="bento-title">Hill Palace Museum</h3>
@@ -587,7 +598,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="cherai">
-                <img data-src="https://picsum.photos/seed/cherai_main/800/600" class="bento-bg lazy-img" alt="Cherai Beach">
+                <img data-src="https://www.trawell.in/admin/images/upload/486072149CheraiBeach_Main.jpg" class="bento-bg lazy-img" alt="Cherai Beach">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 30 km away</div>
                     <h3 class="bento-title">Cherai Beach</h3>
@@ -596,7 +607,7 @@
             </div>
 
             <div class="bento-item span-2x1 reveal-up" tabindex="0" role="button" data-place="mattancherry">
-                <img data-src="https://picsum.photos/seed/mattancherry_main/800/600" class="bento-bg lazy-img" alt="Mattancherry">
+                <img data-src="https://www.keralatourism.org/_next/image/?url=http%3A%2F%2F127.0.0.1%2Fktadmin%2Fimg%2Fpages%2Fmobile%2Fmattancherry-dutch-palace-1724133264_10c5950fcc6a868bc2bb.webp&w=3840&q=75" class="bento-bg lazy-img" alt="Mattancherry">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> Adjacent to Fort Kochi</div>
                     <h3 class="bento-title">Mattancherry</h3>
@@ -605,7 +616,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="kumarakom">
-                <img data-src="https://picsum.photos/seed/kumarakom_main/800/600" class="bento-bg lazy-img" alt="Kumarakom">
+                <img data-src="https://images.trvl-media.com/lodging/4000000/3790000/3780300/3780257/59a49a24.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill" class="bento-bg lazy-img" alt="Kumarakom">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 55 km away</div>
                     <h3 class="bento-title">Kumarakom</h3>
@@ -614,7 +625,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="marari">
-                <img data-src="https://picsum.photos/seed/marari_main/800/600" class="bento-bg lazy-img" alt="Marari Beach">
+                <img data-src="https://www.keralatourism.org/images/enchanting_kerala/large/marari_beach_alappuzha20220730073122_1204_1.jpg" class="bento-bg lazy-img" alt="Marari Beach">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 54 km away</div>
                     <h3 class="bento-title">Marari Beach</h3>
@@ -623,7 +634,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="paniyeli">
-                <img data-src="https://picsum.photos/seed/paniyeli_main/800/600" class="bento-bg lazy-img" alt="Paniyeli Poru">
+                <img data-src="https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/07/Waterfall-cover-image-840x425.jpg" class="bento-bg lazy-img" alt="Paniyeli Poru">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 40 km away</div>
                     <h3 class="bento-title">Paniyeli Poru</h3>
@@ -632,7 +643,7 @@
             </div>
 
             <div class="bento-item reveal-up" tabindex="0" role="button" data-place="vagamon">
-                <img data-src="https://picsum.photos/seed/vagamon_main/800/600" class="bento-bg lazy-img" alt="Vagamon">
+                <img data-src="https://www.keralatourism.org/_next/image/?url=https%3A%2F%2Fik.imagekit.io%2Fxsnlqng4k%2FYoutubeImages%2Ftr%3Aw-1920%2Ch-1080%2Fvi%2Fxk-XhUnsQNc%2Fmaxresdefault.jpg&w=1920&q=75" class="bento-bg lazy-img" alt="Vagamon">
                 <div class="bento-content">
                     <div class="bento-dist"><i class="fas fa-map-marker-alt"></i> 95 km away</div>
                     <h3 class="bento-title">Vagamon</h3>
@@ -782,18 +793,44 @@
 
         // 4. Data for Place Gallery (Unique Images for Every Location using specific seeds)
         const placesData = {
-            'alleppey': { title: 'Alleppey Backwaters', dist: '65 km from venue', desc: 'Famous for its serene backwaters, traditional houseboat cruises, lush village landscapes, and a rich tradition of coir and boat festivals. The ultimate peaceful retreat.', images: ['https://picsum.photos/seed/alleppey1/800/600','https://picsum.photos/seed/alleppey2/800/600','https://picsum.photos/seed/alleppey3/800/600'] },
-            'munnar': { title: 'Munnar Hills', dist: '115 km from venue (Idukki)', desc: 'A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, cool weather, and the Eravikulam National Park.', images: ['https://picsum.photos/seed/munnar1/800/600','https://picsum.photos/seed/munnar2/800/600','https://picsum.photos/seed/munnar3/800/600'] },
-            'fortkochi': { title: 'Historic Fort Kochi', dist: '26 km from venue', desc: 'Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, cultural hubs, and iconic Chinese fishing nets.', images: ['https://picsum.photos/seed/fortkochi1/800/600','https://picsum.photos/seed/fortkochi2/800/600','https://picsum.photos/seed/fortkochi3/800/600'] },
-            'athirappilly': { title: 'Athirappilly Waterfalls', dist: '57 km from venue', desc: 'Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it is a breathtaking nature retreat.', images: ['https://picsum.photos/seed/athirappilly1/800/600','https://picsum.photos/seed/athirappilly2/800/600','https://picsum.photos/seed/athirappilly3/800/600'] },
-            'thekkady': { title: 'Thekkady & Periyar', dist: '155 km from venue', desc: 'Rich in biodiversity with options for boating in the Periyar Lake. Home to wild elephants, bison, rare bird species, and vast aromatic spice plantations.', images: ['https://picsum.photos/seed/thekkady1/800/600','https://picsum.photos/seed/thekkady2/800/600','https://picsum.photos/seed/thekkady3/800/600'] },
-            'hillpalace': { title: 'Hill Palace Museum', dist: '11 km away', desc: 'Former royal residence of the Kochi Maharajas, showcasing Kerala\'s grand cultural legacy and historical artifacts.', images: ['https://picsum.photos/seed/hillpalace1/800/600','https://picsum.photos/seed/hillpalace2/800/600','https://picsum.photos/seed/hillpalace3/800/600'] },
-            'cherai': { title: 'Cherai Beach', dist: '30 km away', desc: 'A clean and quiet beach near Vypin Island, perfect for swimming and glorious sunset views.', images: ['https://picsum.photos/seed/cherai1/800/600','https://picsum.photos/seed/cherai2/800/600','https://picsum.photos/seed/cherai3/800/600'] },
-            'mattancherry': { title: 'Mattancherry', dist: 'Adjacent to Fort Kochi', desc: 'Home to the Paradesi Synagogue, Jew Town, and antique shops. A rich blend of Jewish, Dutch, and Malabar cultures.', images: ['https://picsum.photos/seed/mattancherry1/800/600','https://picsum.photos/seed/mattancherry2/800/600','https://picsum.photos/seed/mattancherry3/800/600'] },
-            'kumarakom': { title: 'Kumarakom', dist: '55 km away', desc: 'A peaceful backwater village on Vembanad Lake, known for birdwatching at the Kumarakom Bird Sanctuary and relaxing houseboat stays.', images: ['https://picsum.photos/seed/kumarakom1/800/600','https://picsum.photos/seed/kumarakom2/800/600','https://picsum.photos/seed/kumarakom3/800/600'] },
-            'marari': { title: 'Marari Beach', dist: '54 km away', desc: 'A serene, less-crowded beach destination known for its eco-resorts and traditional fishing villages.', images: ['https://picsum.photos/seed/marari1/800/600','https://picsum.photos/seed/marari2/800/600','https://picsum.photos/seed/marari3/800/600'] },
-            'paniyeli': { title: 'Paniyeli Poru', dist: '40 km away', desc: 'A scenic riverside spot along the Periyar River, known for its natural rock formations and gushing rapids. Ideal for picnics and photography.', images: ['https://picsum.photos/seed/paniyeli1/800/600','https://picsum.photos/seed/paniyeli2/800/600','https://picsum.photos/seed/paniyeli3/800/600'] },
-            'vagamon': { title: 'Vagamon', dist: '95 km away', desc: 'A lesser-known hill station with rolling meadows, pine forests, and misty valleys. Ideal for trekking, paragliding, and quiet nature walks.', images: ['https://picsum.photos/seed/vagamon1/800/600','https://picsum.photos/seed/vagamon2/800/600','https://picsum.photos/seed/vagamon3/800/600'] }
+            'alleppey': { title: 'Alleppey Backwaters', dist: '65 km from venue', desc: 'Famous for its serene backwaters, traditional houseboat cruises, lush village landscapes, and a rich tradition of coir and boat festivals. The ultimate peaceful retreat.', images: [     'https://keralahouseboat.com/wp-content/uploads/2024/03/sunset-at-the-backwaters-of-alleppey-kerala-indi-2023-11-27-05-01-00-utc-1.webp',     'https://media.gettyimages.com/id/1205929782/video/aerial-view-of-houseboats-in-alleppey-backwaters.avif?s=640x640&k=20&c=3RiLkaUDaGHZvtjlfwxgrItL3rn-Hh8uJ2WZap5uwZ0=',     'https://media.gettyimages.com/id/1156682070/video/backwaters-kerala-india.avif?s=640x640&k=20&c=4UOzPtqYsPdJbsTBiPQtBUwyGDMPxpifco73gzZ0Cg8=' ] },
+           'munnar': { 
+                title: 'Munnar Hills', 
+                dist: '115 km from venue (Idukki)', 
+                desc: 'A picturesque hill station nestled in the Western Ghats, known for endless tea plantations, mist-covered valleys, cool weather, and the Eravikulam National Park.', 
+                images: [
+                    'https://images.unsplash.com/photo-1637066742971-726bee8d9f56?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVubmFyfGVufDB8fDB8fHww',
+                    'https://images.unsplash.com/photo-1616388969587-8196f32388b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bXVubmFyfGVufDB8fDB8fHww'
+                ] 
+            },
+            'fortkochi': { 
+                title: 'Historic Fort Kochi', 
+                dist: '26 km from venue', 
+                desc: 'Famous for its colonial architecture, Jewish heritage, Dutch Palace, St. Francis Church, Art cafes, cultural hubs, and iconic Chinese fishing nets.', 
+                images: [
+                    'https://media-cdn.tripadvisor.com/media/photo-s/12/a5/55/7d/forte-kochi.jpg',
+                    'https://www.pauljohnhotels.com/images/blog/20/fort-kochi-heritage-walk-guide.jpeg',
+                    'https://res.cloudinary.com/kmadmin/image/upload/v1729685675/kiomoi/fort_kochi_kerala_8380.jpg'
+                ] 
+            },
+            'athirappilly': { 
+                title: 'Athirappilly Waterfalls', 
+                dist: '57 km from venue', 
+                desc: 'Often called the "Niagara of South India", this is Kerala’s largest waterfall. Surrounded by lush forest, it is a breathtaking nature retreat.', 
+                images: [
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/The_View_of_the_Athirapally_Falls_during_the_onset_of_Monsoon.jpg/1280px-The_View_of_the_Athirapally_Falls_during_the_onset_of_Monsoon.jpg',
+                    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/4b/a2/1c/athirapally-falls-in.jpg?w=1200&h=-1&s=1',
+                    'https://img.mathrubhumi.com/view/acePublic/alias/contentid/1mupm3zr1rdrf1odhnm/0/athirappilly-jpg.webp?$p=f162f31&f=16:9&w=1080&q=0.8'
+                ] 
+            },
+            'thekkady': { title: 'Thekkady & Periyar', dist: '155 km from venue', desc: 'Rich in biodiversity with options for boating in the Periyar Lake. Home to wild elephants, bison, rare bird species, and vast aromatic spice plantations.', images: ['https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/43/ba/50/the-starting-point-for.jpg?w=900&h=500&s=1','https://www.forestcanopy.in/uploads/big-220925112010periyar-np.jpg','https://static.toiimg.com/thumb/msid-43527991,width=1200,height=900/43527991.jpg'] },
+            'hillpalace': { title: 'Hill Palace Museum', dist: '11 km away', desc: 'Former royal residence of the Kochi Maharajas, showcasing Kerala\'s grand cultural legacy and historical artifacts.', images: ['https://www.hoteldekho.com/storage/img/tourattraction/1650712601ghijojhokgfkjopyo.jpg','https://www.pelago.com/img/products/IN-India/hill-palace-museum-with-local-style-lunch/bc09b11e-0655-4ec2-bf74-f5cd5594c5a9_hill-palace-museum-with-local-style-lunch.jpg','https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/07/91/bf/6f.jpg'] },
+            'cherai': { title: 'Cherai Beach', dist: '30 km away', desc: 'A clean and quiet beach near Vypin Island, perfect for swimming and glorious sunset views.', images: ['https://www.trawell.in/admin/images/upload/486072149CheraiBeach_Main.jpg','https://www.keralatourism.org/_next/image/?url=http%3A%2F%2F127.0.0.1%2Fktadmin%2Fimg%2Fpages%2Ftablet%2Fcherai-beach-1728570752_384a8191992d3fc60b77.webp&w=1920&q=75','https://upload.wikimedia.org/wikipedia/commons/1/13/Sunrise_at_Cherai_Beach.jpg'] },
+            'mattancherry': { title: 'Mattancherry', dist: 'Adjacent to Fort Kochi', desc: 'Home to the Paradesi Synagogue, Jew Town, and antique shops. A rich blend of Jewish, Dutch, and Malabar cultures.', images: ['https://www.keralatourism.org/_next/image/?url=http%3A%2F%2F127.0.0.1%2Fktadmin%2Fimg%2Fpages%2Fmobile%2Fmattancherry-dutch-palace-1724133264_10c5950fcc6a868bc2bb.webp&w=3840&q=75','https://touringwithpk.com/wp-content/uploads/2021/06/201805-087a.jpg','https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Mattancherry_palace_at_night.jpg/250px-Mattancherry_palace_at_night.jpg'] },
+            'kumarakom': { title: 'Kumarakom', dist: '55 km away', desc: 'A peaceful backwater village on Vembanad Lake, known for birdwatching at the Kumarakom Bird Sanctuary and relaxing houseboat stays.', images: ['https://images.trvl-media.com/lodging/4000000/3790000/3780300/3780257/59a49a24.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill','https://r1imghtlak.mmtcdn.com/f4b20fd44ee611e88c4c0217e5ea4c2e.jpg','https://www.i-escape.com/image/hotel/kumarakom-lake-resort/overview/294639.jpg'] },
+            'marari': { title: 'Marari Beach', dist: '54 km away', desc: 'A serene, less-crowded beach destination known for its eco-resorts and traditional fishing villages.', images: ['https://www.keralatourism.org/images/enchanting_kerala/large/marari_beach_alappuzha20220730073122_1204_1.jpg','https://tds.indianeagle.com/wp-content/uploads/2022/07/Marari-Beach-Kerala.png','https://alleppeykayakingclub.com/wp-content/uploads/Marari-Beach-Alleppey.jpeg'] },
+            'paniyeli': { title: 'Paniyeli Poru', dist: '40 km away', desc: 'A scenic riverside spot along the Periyar River, known for its natural rock formations and gushing rapids. Ideal for picnics and photography.', images: ['https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/07/Waterfall-cover-image-840x425.jpg','https://lh4.googleusercontent.com/proxy/bK3wWmQPchNUjfhNE8wbZDesxJFiiP0HivqsexLQTuF9rT3sUPB-5NSbDKzXIuUCnhYRw8a2Ts8s0-cSWis4wEa3QIFI7EgZG3wgyb2TYxw','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQJ28qP-wH30a9RYto6mpSc3EybYjbqfCakg&s'] },
+            'vagamon': { title: 'Vagamon', dist: '95 km away', desc: 'A lesser-known hill station with rolling meadows, pine forests, and misty valleys. Ideal for trekking, paragliding, and quiet nature walks.', images: ['https://www.keralatourism.org/_next/image/?url=https%3A%2F%2Fik.imagekit.io%2Fxsnlqng4k%2FYoutubeImages%2Ftr%3Aw-1920%2Ch-1080%2Fvi%2Fxk-XhUnsQNc%2Fmaxresdefault.jpg&w=1920&q=75','https://olgaresorts.com/wp-content/uploads/2025/04/paragliding-fest-at-vagamon-olga-hills-resort-vagamon.jpg','https://cloudcabanaholidays.com/wp-content/uploads/2024/08/img_011.jpg'] }
         };
 
         const placeModal = document.getElementById('placeGalleryModal');
