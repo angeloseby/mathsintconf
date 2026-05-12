@@ -234,14 +234,18 @@
         .ribbon-sidebar h3 { font-family: var(--font-heading); font-size: 1.6rem; line-height: 1.3; margin: 0; }
         .ribbon-content { flex: 1; padding: 40px; background: white; }
 
-        .check-list { list-style: none; margin: 0; padding: 0; }
-        .check-list li { position: relative; padding-left: 35px; margin-bottom: 16px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; }
-        .check-list li::before {
-            content: ''; position: absolute; left: 0; top: 6px; width: 18px; height: 18px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat center center;
-            background-size: contain;
-        }
+       .check-list { 
+    list-style: disc; 
+    margin: 0; 
+    padding-left: 20px; 
+}
 
+.check-list li { 
+    margin-bottom: 16px; 
+    color: var(--text-muted); 
+    font-size: 1.05rem; 
+    line-height: 1.6; 
+}
         .action-panel { margin-top: 30px; padding-top: 30px; border-top: 1px dashed var(--border-color); display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
         .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: var(--transition); border: none; cursor: pointer; }
         .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-dark); }
@@ -546,10 +550,10 @@
                     <a href="assets/images/Abstract_Template_2.pdf" class="btn btn-outline" target="_blank">
                         <i class="fas fa-file-pdf" style="color: #d32f2f;"></i> PDF Template
                     </a>
-                    <a href="assets/images/Abstract_Template_2.tex" class="btn btn-outline">
+                    <a href="assets/Abstract_Template_2.tex" class="btn btn-outline">
                         <i class="fas fa-file-code" style="color: #0284c7;"></i> LaTeX Template
                     </a>
-                    <a href="https://docs.google.com/forms/d/1Gyz9p8L-gZib_OHR1fJMUGyDaX22E3QumFq8ArtKZcw/viewform" class="btn btn-solid" target="_blank" style="margin-left: auto;">
+                    <a href="YOUR_SUBMIT_LINK_HERE" class="btn btn-solid" target="_blank" style="margin-left: auto;">
                         <i class="fas fa-paper-plane"></i> Submit Your Abstract
                     </a>
                 </div>
@@ -603,7 +607,7 @@
                     <li>After abstract submission, enter your reference number in the form.</li>
                     <li>At least one author of each accepted paper must register.</li>
                     <li>Fee must be paid before deadline; submit proof to committee.</li>
-                    <li>See Important Dates for Early Bird and Late deadlines.</li>
+                    <li>See Important Dates for Early Bird Fee and Late deadlines.</li>
                     <li>Accommodation is not included; borne separately.</li>
                     <li>Only registered authors will be scheduled for presentation.</li>
                     <li>Financial assistance subject to availability of funding.</li>
@@ -618,7 +622,7 @@
                             <h4>Indian Participants (INR)</h4>
                         </div>
                         <table class="pricing-table">
-                            <thead><tr><th>Category</th><th>Early Bird</th><th>Late Reg</th></tr></thead>
+                            <thead><tr><th>Category</th><th>Early Bird Fee</th><th>Standard Fee</th></tr></thead>
                             <tbody>
                                 <tr><td>UG / PG Students</td><td class="price-tag">₹1000</td><td class="price-tag">₹2000</td></tr>
                                 <tr><td>Scholars / Postdocs</td><td class="price-tag">₹3000</td><td class="price-tag">₹4000</td></tr>
@@ -633,7 +637,7 @@
                             <h4>International Participants (USD)</h4>
                         </div>
                         <table class="pricing-table">
-                            <thead><tr><th>Category</th><th>Early Bird</th><th>Late Reg</th></tr></thead>
+                            <thead><tr><th>Category</th><th>Early Bird Fee</th><th>Standard Fee</th></tr></thead>
                             <tbody>
                                 <tr><td>Developing Countries</td><td class="price-tag">$65</td><td class="price-tag">$75</td></tr>
                                 <tr><td>Developed Countries</td><td class="price-tag">$150</td><td class="price-tag">$200</td></tr>
@@ -652,7 +656,7 @@
                         </div>
                         <div class="bank-item">
                             <span class="lbl">Account Name</span>
-                            <span class="val">Principal BMC</span>
+                            <span class="val">PRINCIPAL BMC</span>
                         </div>
                         <div class="bank-item">
                             <span class="lbl">Account No.</span>
@@ -664,7 +668,7 @@
                         </div>
                     </div>
 
-                    <a href="https://docs.google.com/forms/d/1i0o7460r8zX8sm435Xj4XYEWvQ9L6eXODNEbANaVhnU/viewform" class="register-full-btn" target="_blank">
+                    <a href="https://docs.google.com/forms/" class="register-full-btn" target="_blank">
                         Proceed to Register <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
