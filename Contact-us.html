@@ -1,556 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMMAI 2026 | International Conference on
-Computational Mathematics, Modeling & AI</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMMAI 2026 | International Conference on Computational Mathematics, Modeling & AI</title>
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+  <link rel="stylesheet" href="style.css">
 
-    <style>
-        /* --- Global Settings --- */
-        html { 
-            scroll-behavior: smooth; 
-            overflow-x: hidden; 
-            width: 100%; 
-        }
+  <style>
+    /* ===================================================
+     GLOBAL VARIABLES (From Code B)
+     =================================================== */
+    :root {
+      --primary-navy: #001f3f; 
+      --secondary-blue: #0284c7;
+      --accent-gold: #f2a900;  
+      --bg-light: #f8fafc;   
+      --bg-white: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --check-green: #10b981;  
+      --font-heading: 'Merriweather', serif;
+      --font-body: 'Inter', sans-serif;
+      --transition: all 0.3s ease;
+    }
 
-        body {
-            background-color: #f8fafc; /* Lighter, cleaner background */
-            color: #334155;
-            font-family: 'Inter', sans-serif;
-            padding-top: 80px; 
-            padding-bottom: 0px;
-            box-sizing: border-box;
-            margin: 0;
-            overflow-x: hidden; 
-            width: 100%; 
-            position: relative;
-        }
-
-        /* --- Section Container --- */
-        .committee-section {
-            padding: 60px 15px 2px 15px; /* Updated padding for mobile fit */
-            padding-bottom: 0px;
-            max-width: 1600px;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 20px;
-            position: relative;
-            letter-spacing: -0.5px;
-            font-family: 'Merriweather', serif; /* Academic feel for headings */
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px; /* Minimal underline */
-            height: 3px;
-            background: #1e3a8a; /* Navy Blue */
-            margin: 15px auto 0;
-            border-radius: 2px;
-        }
-
-        .section-intro-text {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 50px;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #475569;
-        }
-
-        /* =========================================================
-           MINIMAL ACADEMIC VENUE SECTION STYLES
-           ========================================================= */
-        .venue-modern-wrapper {
-            max-width: 1200px; /* Slightly tighter for better readability */
-            margin: 0 auto 60px;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .venue-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: stretch;
-        }
-
-        /* Left Side: Transport Tabs */
-        .transport-nav-modern {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .nav-pill {
-            flex: 1;
-            min-width: 110px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1; /* Clean thin border */
-            padding: 12px 15px;
-            border-radius: 6px; /* Academic, less rounded */
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .nav-pill i { font-size: 1.1rem; }
-
-        .nav-pill:hover {
-            border-color: #1e3a8a;
-            color: #1e3a8a;
-            background-color: #f1f5f9;
-        }
-
-        .nav-pill.active {
-            background: #1e3a8a; /* Solid Navy */
-            border-color: #1e3a8a;
-            color: #ffffff;
-        }
-
-        .transport-content-area {
-            background: #ffffff;
-            border-radius: 8px; /* Square-ish edges */
-            padding: 35px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); /* Subtle shadow */
-            border: 1px solid #e2e8f0;
-            position: relative;
-            min-height: 280px;
-            overflow: hidden; 
-            box-sizing: border-box;
-        }
-
-        .tab-pane-modern {
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-        }
-        .tab-pane-modern.active { display: block; }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .pane-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .pane-icon {
-            width: 50px;
-            height: 50px;
-            background: #f1f5f9; /* Light gray-blue */
-            color: #1e3a8a; /* Navy */
-            font-size: 1.5rem;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pane-title {
-            font-family: 'Merriweather', serif;
-            font-size: 1.4rem;
-            color: #0f172a;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .pane-desc {
-            color: #475569;
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 25px;
-        }
-
-        .btn-modern-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 500;
-            color: #ffffff;
-            background: #1e3a8a; /* Navy Blue */
-            padding: 10px 24px;
-            border-radius: 4px; /* Academic button */
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-        .btn-modern-link i { transition: transform 0.2s ease; font-size: 0.85rem; }
-        .btn-modern-link:hover {
-            background: #1e40af; /* Slightly lighter navy on hover */
-        }
-        .btn-modern-link:hover i { transform: translateX(3px); }
-
-        /* Right Side: Contact & Profile Styles */
-        .contact-right-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .info-card-full {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .info-card-full h3 {
-            font-family: 'Merriweather', serif; 
-            font-size: 1.3rem; 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            color: #0f172a;
-        }
-
-        .info-item-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1rem;
-            color: #475569;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .info-item-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .info-item-row div {
-            flex: 1; /* Allows the div to take remaining space */
-            min-width: 0; /* CRITICAL: Prevents flex child from overflowing its parent */
-        }
-
-        .info-item-row i {
-            color: #1e3a8a;
-            font-size: 1.2rem;
-            width: 35px;
-            height: 35px;
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
-
-        .info-item-row a {
-            color: #1e3a8a;
-            text-decoration: none;
-            transition: color 0.2s ease;
-            word-break: break-word; /* Forces long email IDs to wrap to next line */
-            overflow-wrap: anywhere; /* Modern support for text wrapping */
-            display: inline-block;
-        }
-
-        .info-item-row a:hover { 
-            text-decoration: underline; 
-        }
-        
-        .info-item-row strong {
-            color: #0f172a;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        /* Bottom Map Layout */
-        .map-bottom-wrapper {
-            margin-top: 40px; 
-            display: flex;
-            flex-direction: column;
-            gap: 20px; 
-            align-items: stretch;
-        }
-
-       /* Purane code ko isse replace karein */
-.map-container-modern {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    width: 100%; /* Poori width ke liye */
-    height: 450px; /* Fixed height dein taaki box khula dikhe */
-    border: 1px solid #e2e8f0;
-    display: flex; /* Iframe ko stretch karne ke liye */
-}
-
-.map-container-modern iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block; /* Extra niche ki space hatane ke liye */
-    filter: grayscale(10%) contrast(1.05);
-}
-
-        /* --- MOBILE OPTIMIZATION --- */
-        @media (max-width: 1024px) {
-            .venue-grid { grid-template-columns: 1fr; gap: 30px; }
-            .map-container-modern { min-height: 300px; }
-        }
-
-        @media (max-width: 768px) {
-            body { padding-top: 71px; } /* Adjust for header */
-            .committee-section { padding: 40px 15px 20px 15px; }
-            .section-title { font-size: 1.6rem; margin-bottom: 10px; }
-            .section-intro-text { font-size: 0.95rem; margin-bottom: 30px; padding: 0 10px; }
-            
-            /* Sidebar fix to open below header */
-            .navbar { height: 71px; }
-            .nav-links {
-                top: 71px !important; /* Starts below the navbar */
-                height: calc(100vh - 71px) !important;
-                overflow-y: auto;
-            }
-
-            /* Clean Mobile Tabs */
-            .transport-nav-modern { 
-                flex-wrap: nowrap; 
-                gap: 5px; 
-                width: 100%;
-            }
-            .nav-pill { 
-                flex: 1; /* Automatically fits screen width */
-                padding: 12px 0; 
-                font-size: 0; /* Hides text */
-                color: transparent !important; 
-                min-width: 0; /* Allows to shrink properly */
-            }
-            .nav-pill i { 
-                font-size: 1.25rem; 
-                color: #64748b; 
-                margin: 0; 
-            }
-            .nav-pill.active i { color: #ffffff; }
-            
-            /* Content Area Mobile Adjustments */
-            .transport-content-area { padding: 25px 20px; min-height: auto; width: 100%; }
-            .pane-header { margin-bottom: 15px; }
-            .pane-icon { width: 45px; height: 45px; font-size: 1.3rem; }
-            .pane-title { font-size: 1.2rem; }
-            .pane-desc { font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
-            
-            /* Profile & Info Cards Mobile */
-            .info-card-full { padding: 20px; width: 100%; box-sizing: border-box; }
-            .info-card-full h3 { font-size: 1.15rem; margin-bottom: 15px; }
-            .info-item-row { font-size: 0.95rem; }
-            
-            /* Map Mobile */
-            .map-bottom-wrapper { margin-top: 25px; gap: 15px; }
-            .map-container-modern { min-height: 250px; }
-            
-            /* Full width button on mobile */
-            .btn-modern-link { width: 100%; box-sizing: border-box; }
-        }
-
-        /* Navbar Styles (Unchanged but ensuring it sits correctly) */
+       /* ===================================================
+           2. NAVBAR & TOP BAR (DESKTOP)
+           =================================================== */
         .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-            border-bottom: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 20px 20px;
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
             position: fixed !important; 
-            top: 0; left: 0; width: 100%; z-index: 1000;
+            top: 0; left: 0; width: 100%;
+            z-index: 1005;
         }
 
-        /* ===================================================
-           FOOTER STYLES (Minimal adjustments for cohesion)
-           =================================================== */
-        .minimal-footer {
-            background-color: #0f172a; /* Matched to dark elements */
-            color: #cbd5e1;
-            font-size: 0.9rem;
-            padding: 20px 0;
-            border-top: 1px solid #1e293b;
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; max-width: 1400px; margin: 0 auto;
         }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center; 
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            padding: 0 20px;
-        }
-
-        .footer-left p, .footer-right p {
-            margin: 5px 0;
-            line-height: 1.5;
-        }
-
-        .dev-link {
-            color: #38bdf8; /* Bright blue color for high contrast */
+        /* Logos Styling */
+        .brand {
             text-decoration: none;
-            font-weight: 600; /* Thoda bold kiya hai visibility ke liye */
-            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .logo-1 { height: auto; max-height: 65px; width: auto; max-width: 25vw; object-fit: contain; }
+        .logo-2 { height: auto; max-height: 65px; width: auto; max-width: 45vw; object-fit: contain; }
+
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; margin: 0; padding: 0; justify-content: flex-end; }
+        .nav-links li { list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-links > li > a:hover { color: var(--secondary-blue); }
+
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.2rem; color: var(--primary-navy); cursor: pointer; transition: 0.3s; margin-left: auto; outline: none; }
+        .mobile-toggle:hover { color: var(--secondary-blue); transform: scale(1.1); }
+
+        /* Dropdown Desktop */
+        .dropdown { position: relative; }
+        .dropdown .dropbtn { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .dropdown .dropbtn i { font-size: 0.75rem; transition: transform 0.3s ease; }
+        .dropdown .dropbtn i.fa-plus, .dropdown .dropbtn i.fa-minus { display: none; }
+        .dropdown .dropbtn i.fa-chevron-down { display: inline-block; }
+
+        .dropdown-content {
+            display: none; position: absolute; background-color: var(--bg-white); min-width: 260px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; border-radius: 8px; top: 100%; left: 0; padding: 0.5rem 0; border: 1px solid var(--border-color);
+            list-style: none; margin: 0;
+        }
+        .dropdown-content a { color: var(--text-dark); padding: 12px 20px; display: block; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--bg-light); transition: 0.2s ease; }
+        .dropdown-content a:hover { background-color: var(--bg-light); color: var(--secondary-blue); padding-left: 25px; } 
+
+        @media (min-width: 1025px) {
+            .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease forwards; }
+            .dropdown:hover .dropbtn i.fa-chevron-down { transform: rotate(180deg); color: var(--secondary-blue); }
         }
 
-        .dev-link:hover {
-            color: #ffffff; /* Hover par white ho jayega */
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-        }
-
-        /* ===================================================
-           MODAL CSS (Cleaned up for academic look)
-           =================================================== */
-        .modal-overlay {
-            display: none; 
+        /* Improved Navigation Overlay */
+        .nav-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.7); /* Darker backdrop */
-            z-index: 9999;
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 1003;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .modal-overlay.show { display: flex; opacity: 1; }
+        /* ===================================================
+           3. RESPONSIVE NAVBAR (MOBILE & TABLET < 1024px)
+           =================================================== */
+        @media (max-width: 1024px) {
+            /* Mobile header styling */
+            .navbar { padding: 10px 15px; justify-content: space-between; border-radius: 0; }
+            .nav-container { padding-left: 0; justify-content: space-between; }
+            
+            /* Logos exactly left align */
+            .brand { width: auto; justify-content: flex-start; gap: 8px; margin-right: auto; }
+            .logo-1 { max-height: 55px; max-width: 25vw; }
+            .logo-2 { max-height: 55px; max-width: 50vw; }
 
-        .modal-content {
-            background: #ffffff;
-            width: 90%;
-            max-width: 500px; 
-            max-height: 85vh; 
-            border-radius: 8px;
-            position: relative;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column; 
-            overflow: hidden; 
+            /* Toggle button right edge */
+            .mobile-toggle { display: block; z-index: 1006; position: relative; padding: 5px; }
+
+            /* Refined Sidebar Menu */
+            .nav-links { 
+                position: fixed; top: 0; right: -100%; width: 320px; max-width: 80vw; height: 100vh; 
+                background-color: var(--bg-white); flex-direction: column; align-items: flex-start; justify-content: flex-start; 
+                padding: 90px 1.5rem 3rem 1.5rem; border-top: none; box-shadow: -10px 0 25px rgba(0,0,0,0.15); 
+                gap: 0; transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1004; overflow-y: auto; 
+            }
+            .nav-links.active { right: 0; }
+            .nav-links > li { width: 100%; border-bottom: 1px solid var(--border-color); }
+            .nav-links a, .dropdown .dropbtn { font-size: 1.1rem; width: 100%; display: block; padding: 1.2rem 0; color: var(--text-dark); }
+            
+            .dropdown .dropbtn i.fa-chevron-down { display: none; }
+            .dropdown .dropbtn i.fa-plus { display: inline-block; font-size: 1rem; color: var(--secondary-blue); float: right; margin-top: 5px; }
+            .dropdown.active .dropbtn i.fa-plus { display: none; }
+            .dropdown.active .dropbtn i.fa-minus { display: inline-block; transform: rotate(180deg); float: right; margin-top: 5px; }
+            
+            .dropdown-content { display: none; position: static; box-shadow: none; border: none; background-color: var(--bg-light); border-left: 3px solid var(--secondary-blue); margin-bottom: 1rem; border-radius: 4px; }
+            .dropdown.active .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
         }
 
-        .modal-overlay.show .modal-content { transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .modal-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #e2e8f0;
-            background: #f8fafc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* --- Global Settings (Original Code A) --- */
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
 
-        .modal-header h3 {
-            margin: 0;
-            color: #0f172a;
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
+    body {
+      background-color: #f8fafc; /* Lighter, cleaner background */
+      color: #334155;
+      font-family: 'Inter', sans-serif;
+      padding-top: 80px;
+      padding-bottom: 0px;
+      box-sizing: border-box;
+      margin: 0;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
 
-        .close-btn {
-            font-size: 24px;
-            cursor: pointer;
-            color: #64748b;
-            transition: color 0.2s;
-            line-height: 1;
-        }
+    /* --- Section Container --- */
+    .committee-section {
+      padding: 60px 15px 2px 15px; /* Updated padding for mobile fit */
+      padding-bottom: 0px;
+      max-width: 1600px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
 
-        .close-btn:hover { color: #0f172a; }
+    .section-title {
+      text-align: center;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 20px;
+      position: relative;
+      letter-spacing: -0.5px;
+      font-family: 'Merriweather', serif; /* Academic feel for headings */
+    }
 
-        .modal-body { 
-            padding: 25px 20px; 
-            text-align: center; 
-            color: #334155;
-            overflow-y: auto; 
-        }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px; /* Minimal underline */
+      height: 3px;
+      background: #1e3a8a; /* Navy Blue */
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
 
-        .modal-footer {
-            padding: 15px 20px;
-            border-top: 1px solid #e2e8f0;
-            background: #f8fafc;
-        }
+    .section-intro-text {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #475569;
+    }
 
-        .dev-img {
-            width: 140px; height: 140px; 
-            border-radius: 50%; 
-            object-fit: cover;
-            border: 2px solid #e2e8f0;
-            margin-bottom: 15px;
-            padding: 2px;
-        }
+    /* =========================================================
+     MINIMAL ACADEMIC VENUE SECTION STYLES
+     ========================================================= */
+    .venue-modern-wrapper {
+      max-width: 1200px; /* Slightly tighter for better readability */
+      margin: 0 auto 60px;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .dev-info h2 { margin: 0 0 5px; color: #0f172a; font-weight: 700; font-size: 1.4rem; }
-        .dev-title { color: #1e3a8a; font-weight: 500; margin: 0 0 15px; font-size: 0.9rem; }
-        .dev-desc { color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+    .venue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: stretch;
+    }
 
-        .dev-contact { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    /* Left Side: Transport Tabs */
+    .transport-nav-modern {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
 
-        .contact-btn {
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #ffffff;
-            background: #0f172a; 
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.2s;
-            display: flex; align-items: center; gap: 8px;
-        }
+    .nav-pill {
+      flex: 1;
+      min-width: 110px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1; /* Clean thin border */
+      padding: 12px 15px;
+      border-radius: 6px; /* Academic, less rounded */
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
-        .contact-btn:hover { background: #334155; }
-        .contact-btn.whatsapp { background: #16a34a; }
-        .contact-btn.whatsapp:hover { background: #15803d; }
+    .nav-pill i { font-size: 1.1rem; }
 
-    </style>
+    .nav-pill:hover {
+      border-color: #1e3a8a;
+      color: #1e3a8a;
+      background-color: #f1f5f9;
+    }
+
+    .nav-pill.active {
+      background: #1e3a8a; /* Solid Navy */
+      border-color: #1e3a8a;
+      color: #ffffff;
+    }
+
+    .transport-content-area {
+      background: #ffffff;
+      border-radius: 8px; /* Square-ish edges */
+      padding: 35px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); /* Subtle shadow */
+      border: 1px solid #e2e8f0;
+      position: relative;
+      min-height: 280px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .tab-pane-modern {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .tab-pane-modern.active { display: block; }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .pane-icon {
+      width: 50px;
+      height: 50px;
+      background: #f1f5f9; /* Light gray-blue */
+      color: #1e3a8a; /* Navy */
+      font-size: 1.5rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pane-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .pane-desc {
+      color: #475569;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .btn-modern-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 500;
+      color: #ffffff;
+      background: #1e3a8a; /* Navy Blue */
+      padding: 10px 24px;
+      border-radius: 4px; /* Academic button */
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    .btn-modern-link i { transition: transform 0.2s ease; font-size: 0.85rem; }
+    .btn-modern-link:hover {
+      background: #1e40af; /* Slightly lighter navy on hover */
+    }
+    .btn-modern-link:hover i { transform: translateX(3px); }
+
+    /* Right Side: Contact & Profile Styles */
+    .contact-right-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card-full {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .info-card-full h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .info-item-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 1rem;
+      color: #475569;
+      margin-bottom: 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .info-item-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-item-row div {
+      flex: 1; /* Allows the div to take remaining space */
+      min-width: 0; /* CRITICAL: Prevents flex child from overflowing its parent */
+    }
+
+    .info-item-row i {
+      color: #1e3a8a;
+      font-size: 1.2rem;
+      width: 35px;
+      height: 35px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .info-item-row a {
+      color: #1e3a8a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      word-break: break-word; /* Forces long email IDs to wrap to next line */
+      overflow-wrap: anywhere; /* Modern support for text wrapping */
+      display: inline-block;
+    }
+
+    .info-item-row a:hover {
+      text-decoration: underline;
+    }
+   
+    .info-item-row strong {
+      color: #0f172a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Bottom Map Layout */
+    .map-bottom-wrapper {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .map-container-modern {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      width: 100%; /* Poori width ke liye */
+      height: 450px; /* Fixed height dein taaki box khula dikhe */
+      border: 1px solid #e2e8f0;
+      display: flex; /* Iframe ko stretch karne ke liye */
+    }
+
+    .map-container-modern iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block; /* Extra niche ki space hatane ke liye */
+      filter: grayscale(10%) contrast(1.05);
+    }
+
+    /* --- MOBILE OPTIMIZATION --- */
+    @media (max-width: 1024px) {
+      .venue-grid { grid-template-columns: 1fr; gap: 30px; }
+      .map-container-modern { min-height: 300px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 71px; } /* Adjust for header */
+      .committee-section { padding: 40px 15px 20px 15px; }
+      .section-title { font-size: 1.6rem; margin-bottom: 10px; }
+      .section-intro-text { font-size: 0.95rem; margin-bottom: 30px; padding: 0 10px; }
+
+      /* Clean Mobile Tabs */
+      .transport-nav-modern {
+        flex-wrap: nowrap;
+        gap: 5px;
+        width: 100%;
+      }
+      .nav-pill {
+        flex: 1; /* Automatically fits screen width */
+        padding: 12px 0;
+        font-size: 0; /* Hides text */
+        color: transparent !important;
+        min-width: 0; /* Allows to shrink properly */
+      }
+      .nav-pill i {
+        font-size: 1.25rem;
+        color: #64748b;
+        margin: 0;
+      }
+      .nav-pill.active i { color: #ffffff; }
+     
+      /* Content Area Mobile Adjustments */
+      .transport-content-area { padding: 25px 20px; min-height: auto; width: 100%; }
+      .pane-header { margin-bottom: 15px; }
+      .pane-icon { width: 45px; height: 45px; font-size: 1.3rem; }
+      .pane-title { font-size: 1.2rem; }
+      .pane-desc { font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+     
+      /* Profile & Info Cards Mobile */
+      .info-card-full { padding: 20px; width: 100%; box-sizing: border-box; }
+      .info-card-full h3 { font-size: 1.15rem; margin-bottom: 15px; }
+      .info-item-row { font-size: 0.95rem; }
+     
+      /* Map Mobile */
+      .map-bottom-wrapper { margin-top: 25px; gap: 15px; }
+      .map-container-modern { min-height: 250px; }
+     
+      /* Full width button on mobile */
+      .btn-modern-link { width: 100%; box-sizing: border-box; }
+    }
+
+    /* ===================================================
+     FOOTER STYLES (Minimal adjustments for cohesion)
+     =================================================== */
+    .minimal-footer {
+      background-color: #0f172a; /* Matched to dark elements */
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      padding: 20px 0;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      padding: 0 20px;
+    }
+
+    .footer-left p, .footer-right p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+
+    .dev-link {
+      color: #38bdf8; /* Bright blue color for high contrast */
+      text-decoration: none;
+      font-weight: 600; /* Thoda bold kiya hai visibility ke liye */
+      transition: all 0.2s ease;
+    }
+
+    .dev-link:hover {
+      color: #ffffff; /* Hover par white ho jayega */
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+    }
+
+    /* ===================================================
+     MODAL CSS (Cleaned up for academic look)
+     =================================================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.7); /* Darker backdrop */
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show { display: flex; opacity: 1; }
+
+    .modal-content {
+      background: #ffffff;
+      width: 90%;
+      max-width: 500px;
+      max-height: 85vh;
+      border-radius: 8px;
+      position: relative;
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-overlay.show .modal-content { transform: translateY(0); }
+
+    .modal-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #0f172a;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      font-size: 24px;
+      cursor: pointer;
+      color: #64748b;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+
+    .close-btn:hover { color: #0f172a; }
+
+    .modal-body {
+      padding: 25px 20px;
+      text-align: center;
+      color: #334155;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    .dev-img {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+      margin-bottom: 15px;
+      padding: 2px;
+    }
+
+    .dev-info h2 { margin: 0 0 5px; color: #0f172a; font-weight: 700; font-size: 1.4rem; }
+    .dev-title { color: #1e3a8a; font-weight: 500; margin: 0 0 15px; font-size: 0.9rem; }
+    .dev-desc { color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+
+    .dev-contact { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    .contact-btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #ffffff;
+      background: #0f172a;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .contact-btn:hover { background: #334155; }
+    .contact-btn.whatsapp { background: #16a34a; }
+    .contact-btn.whatsapp:hover { background: #15803d; }
+
+  </style>
 </head>
 <body>
 
     <div class="nav-overlay" id="navOverlay"></div>
 
     <nav class="navbar">
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; box-sizing: border-box; padding: 5px 15px;">
+        <div class="nav-container">
             
-            <a href="index.html" class="brand" style="text-decoration: none; display: flex; align-items: center; gap: 5px;">
-                <img src="logo.png" alt="CMMAI Logo" style="height: 60px; width: auto;">
-                <div class="brand-text">
-                    <h1 style="margin: 0; color: #1a1a1a; font-weight: 700; font-size: 1.4rem;">CMMAI 2026</h1>
-                </div>
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="CMMAI Logo" class="logo-1">
+                <img src="https://www.bharatamatacollege.in/assets/images/hLogo.png" alt="BMC Logo" class="logo-2">
             </a>
             
-        <ul class="nav-links" id="navLinks">
+             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="#speakers" class="dropbtn">
@@ -560,7 +666,7 @@ Computational Mathematics, Modeling & AI</title>
                         <i class="fas fa-minus"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
+                      <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
                         <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
                         <li><a href="organising-committee.html">Organising Committee</a></li>
                     </ul>
@@ -573,318 +679,371 @@ Computational Mathematics, Modeling & AI</title>
                         <i class="fas fa-minus"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="dates.html">Important Dates</a></li>
+                         <li><a href="dates.html">Important Dates</a></li>
                         <li><a href="schedule.html">Schedule</a></li>
                     </ul>
                 </li>
-                <li><a href="registration.html">Registration</a></li>
-                <li><a href="call-for-extended-abstracts.html">Call for Abstracts</a></li>
+                <li><a href="author.html">Author info</a></li>
+               
+                 <li><a href="accommodation.html"> Attractions Nearby</a></li>
+               
                 <li><a href="Contact-us.html">Contact us</a></li>
-                <li></li>
             </ul>
         
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
-    <section id="venue" class="committee-section">
-        <h3 class="section-title">Venue & Directions</h3>
-        <p class="section-intro-text">
-            Bharata Mata College is a premier institution of higher education located in Thrikkakara, Kochi, Kerala. Affiliated with Mahatma Gandhi University, the campus is equipped with modern academic facilities and is easily accessible from all major transit hubs.
-        </p>
+  <section id="venue" class="committee-section">
+    <h3 class="section-title">Venue & Directions</h3>
+    <p class="section-intro-text">
+      Bharata Mata College is a premier institution of higher education located in Thrikkakara, Kochi, Kerala. Affiliated with Mahatma Gandhi University, the campus is equipped with modern academic facilities and is easily accessible from all major transit hubs.
+    </p>
 
-        <div class="venue-modern-wrapper">
-            <div class="venue-grid">
-                
-             <div class="transport-side">
-                    <div class="transport-nav-modern">
-                        <button class="nav-pill active" onclick="switchTab(event, 'tab-plane')">
-                            <i class="fas fa-plane-departure"></i> Airport
-                        </button>
-                        <button class="nav-pill" onclick="switchTab(event, 'tab-train')">
-                            <i class="fas fa-train"></i> Train
-                        </button>
-                        <button class="nav-pill" onclick="switchTab(event, 'tab-bus')">
-                            <i class="fas fa-bus-alt"></i> Bus
-                        </button>
-                        <button class="nav-pill" onclick="switchTab(event, 'tab-car')">
-                            <i class="fas fa-car-side"></i> Drive
-                        </button>
-                    </div>
+    <div class="venue-modern-wrapper">
+      <div class="venue-grid">
+       
+      <div class="transport-side">
+          <div class="transport-nav-modern">
+            <button class="nav-pill active" onclick="switchTab(event, 'tab-plane')">
+              <i class="fas fa-plane-departure"></i> Airport
+            </button>
+            <button class="nav-pill" onclick="switchTab(event, 'tab-train')">
+              <i class="fas fa-train"></i> Train
+            </button>
+            <button class="nav-pill" onclick="switchTab(event, 'tab-bus')">
+              <i class="fas fa-bus-alt"></i> Bus
+            </button>
+            <button class="nav-pill" onclick="switchTab(event, 'tab-car')">
+              <i class="fas fa-car-side"></i> Drive
+            </button>
+          </div>
 
-                    <div class="transport-content-area">
-                        <div id="tab-plane" class="tab-pane-modern active">
-                            <div class="pane-header">
-                                <div class="pane-icon"><i class="fas fa-plane"></i></div>
-                                <h4 class="pane-title">By Air</h4>
-                            </div>
-                            <p class="pane-desc">The nearest airport is <strong>Cochin International Airport (COK)</strong>, situated approximately 22 km from the college. App-based taxi services like Uber and Ola are readily available at the arrival gates for a direct commute to Thrikkakara.</p>
-                            <a href="https://www.google.com/search?q=flights+to+Cochin+International+Airport" target="_blank" class="btn-modern-link">Find Flights <i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                        <div id="tab-train" class="tab-pane-modern">
-                            <div class="pane-header">
-                                <div class="pane-icon"><i class="fas fa-train"></i></div>
-                                <h4 class="pane-title">By Train</h4>
-                            </div>
-                            <p class="pane-desc"><strong>Ernakulam Junction (South)</strong> and <strong>Ernakulam Town (North)</strong> are the nearest major railway stations, both located 10-12 km away. Pre-paid auto-rickshaws and cabs are available outside the stations 24/7.</p>
-                            <a href="https://www.google.com/search?q=trains+to+Ernakulam+Junction" target="_blank" class="btn-modern-link">Check Timings <i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                        <div id="tab-bus" class="tab-pane-modern">
-                            <div class="pane-header">
-                                <div class="pane-icon"><i class="fas fa-bus"></i></div>
-                                <h4 class="pane-title">By Bus</h4>
-                            </div>
-                            <p class="pane-desc">Thrikkakara is heavily connected by KSRTC and private bus networks from Vyttila Mobility Hub, Aluva, and Ernakulam city. Alight directly at the <strong>"Bharata Mata College Bus Stop"</strong> located at the main gate.</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=Bharata+Mata+College+(Autonomous),+Thrikkakara,+Kochi,+Kerala,+India&travelmode=transit" target="_blank" class="btn-modern-link">Bus Routes <i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                        <div id="tab-car" class="tab-pane-modern">
-                            <div class="pane-header">
-                                <div class="pane-icon"><i class="fas fa-car"></i></div>
-                                <h4 class="pane-title">By Car / Taxi</h4>
-                            </div>
-                            <p class="pane-desc">Situated on the prominent <strong>Seaport-Airport Road</strong>, the campus is easily navigable via GPS. Ample parking space is available within the campus for delegates and keynote speakers.</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=Bharata+Mata+College+(Autonomous),+Thrikkakara,+Kochi,+Kerala,+India&travelmode=driving" target="_blank" class="btn-modern-link">Get Directions <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-right-wrapper">
-                    
-                    <div class="info-card-full">
-                        <h3>Conference Helpdesk</h3>
-                        
-                        <div class="info-item-row">
-                            <i class="fas fa-user"></i>
-                            <div>
-                                <strong>Dr. Lakshmi C</strong>
-                                <a href="tel:+918138915484">+91 8138915484</a>
-                            </div>
-                        </div>
-
-                        <div class="info-item-row">
-                            <i class="fas fa-user"></i>
-                            <div>
-                                <strong>Dr. Ankit Ruhi</strong>
-                              <a href="mailto:ap_ankitr@dhsgsu.edu.in">ap_ankitr@dhsgsu.edu.in</a>
-                         
-                            </div>
-                        </div>
-
-                        <div class="info-item-row">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <strong>Email Support</strong>
-                                <a href="mailto:cmmai2026@bharatamatacollege.in">cmmai2026@bharatamatacollege.in</a>
-                            </div>
-                        </div>
-                       
-                    </div>
-     
-                </div>
+          <div class="transport-content-area">
+            <div id="tab-plane" class="tab-pane-modern active">
+              <div class="pane-header">
+                <div class="pane-icon"><i class="fas fa-plane"></i></div>
+                <h4 class="pane-title">By Air</h4>
+              </div>
+              <p class="pane-desc">The nearest airport is <strong>Cochin International Airport (COK)</strong>, situated approximately 22 km from the college. App-based taxi services like Uber and Ola are readily available at the arrival gates for a direct commute to Thrikkakara.</p>
+              <a href="https://www.google.com/search?q=flights+to+Cochin+International+Airport" target="_blank" class="btn-modern-link">Find Flights <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="map-bottom-wrapper">
-                <div style="text-align: center;">
-                    <a href="https://maps.google.com/?q=Bharata+Mata+College+Thrikkakara" target="_blank" class="btn-modern-link">
-                        Go to Conference Location <i class="fas fa-map-marker-alt" style="margin-left: 5px;"></i>
-                    </a>
-                </div>
-
-                <div class="map-container-modern">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.155745428616!2d76.3276633147942!3d10.02107499283688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080c5112df2ed5%3A0xc3b5ed1eb8de9fbd!2sBharata%20Mata%20College!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+            <div id="tab-train" class="tab-pane-modern">
+              <div class="pane-header">
+                <div class="pane-icon"><i class="fas fa-train"></i></div>
+                <h4 class="pane-title">By Train</h4>
+              </div>
+              <p class="pane-desc"><strong>Ernakulam Junction (South)</strong> and <strong>Ernakulam Town (North)</strong> are the nearest major railway stations, both located 10-12 km away. Pre-paid auto-rickshaws and cabs are available outside the stations 24/7.</p>
+              <a href="https://www.google.com/search?q=trains+to+Ernakulam+Junction" target="_blank" class="btn-modern-link">Check Timings <i class="fas fa-arrow-right"></i></a>
             </div>
 
+            <div id="tab-bus" class="tab-pane-modern">
+              <div class="pane-header">
+                <div class="pane-icon"><i class="fas fa-bus"></i></div>
+                <h4 class="pane-title">By Bus</h4>
+              </div>
+              <p class="pane-desc">Thrikkakara is heavily connected by KSRTC and private bus networks from Vyttila Mobility Hub, Aluva, and Ernakulam city. Alight directly at the <strong>"Bharata Mata College Bus Stop"</strong> located at the main gate.</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Bharata+Mata+College+(Autonomous),+Thrikkakara,+Kochi,+Kerala,+India&travelmode=transit" target="_blank" class="btn-modern-link">Bus Routes <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div id="tab-car" class="tab-pane-modern">
+              <div class="pane-header">
+                <div class="pane-icon"><i class="fas fa-car"></i></div>
+                <h4 class="pane-title">By Car / Taxi</h4>
+              </div>
+              <p class="pane-desc">Situated on the prominent <strong>Seaport-Airport Road</strong>, the campus is easily navigable via GPS. Ample parking space is available within the campus for delegates and keynote speakers.</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Bharata+Mata+College+(Autonomous),+Thrikkakara,+Kochi,+Kerala,+India&travelmode=driving" target="_blank" class="btn-modern-link">Get Directions <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
         </div>
-    </section>
 
-     <footer class="minimal-footer">
+        <div class="contact-right-wrapper">
          
-    <div class="footer-content">
-        <div class="footer-left">
-            <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
-            <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+          <div class="info-card-full">
+            <h3>Conference Helpdesk</h3>
+           
+            <div class="info-item-row">
+              <i class="fas fa-user"></i>
+              <div>
+                <strong>Dr. Lakshmi C</strong>
+                <a href="tel:+918138915484">+91 8138915484</a>
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <i class="fas fa-user"></i>
+              <div>
+                <strong>Dr. Ankit Ruhi</strong>
+               <a href="mailto:ap_ankitr@dhsgsu.edu.in">ap_ankitr@dhsgsu.edu.in</a>
+            
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <strong>Email Support</strong>
+                <a href="mailto:cmmai2026@bharatamatacollege.in">cmmai2026@bharatamatacollege.in</a>
+              </div>
+            </div>
+           
+          </div>
+  
         </div>
-        
-        <div class="footer-right">
-            <p>Developed by <a href="#" id="devModalBtnRaj" class="dev-link">Raj Thakur</a> & <a href="#" id="devModalBtnAngelo" class="dev-link">Angelo</a></p>
+      </div>
+
+      <div class="map-bottom-wrapper">
+        <div style="text-align: center;">
+          <a href="https://maps.google.com/?q=Bharata+Mata+College+Thrikkakara" target="_blank" class="btn-modern-link">
+            Go to Conference Location <i class="fas fa-map-marker-alt" style="margin-left: 5px;"></i>
+          </a>
         </div>
+
+        <div class="map-container-modern">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.155745428616!2d76.3276633147942!3d10.02107499283688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080c5112df2ed5%3A0xc3b5ed1eb8de9fbd!2sBharata%20Mata%20College!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
     </div>
+  </section>
+
+  <footer class="minimal-footer">
+    
+  <div class="footer-content">
+    <div class="footer-left">
+      <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
+      <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+    </div>
+   
+    <div class="footer-right">
+      <p>Developed by <a href="#" id="devModalBtnRaj" class="dev-link">Raj Thakur</a> & <a href="#" id="devModalBtnAngelo" class="dev-link">Angelo</a></p>
+    </div>
+  </div>
 </footer>
 
 <div id="devModalRaj" class="modal-overlay">
-    <div class="modal-content">
-        
-        <div class="modal-header">
-            <h3>Developer Profile</h3>
-            <span class="close-btn" id="closeModalBtnRaj">×</span>
-        </div>
-
-        <div class="modal-body">
-            <div class="dev-image-box">
-                <img src="raj.png" alt="Raj Thakur" class="dev-img">
-            </div>
-            <div class="dev-info">
-                <h2>Raj Thakur</h2>
-                <p class="dev-title">Software & Web Developer</p>
-                <p class="dev-desc">
-                    Hello! I am a developer specializing in building scalable websites and software solutions. 
-                    Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
-                    coaching institute software, and academic conference websites like CMMAI.
-                </p>
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <div class="dev-contact">
-                <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
-                <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            </div>
-        </div>
-
+  <div class="modal-content">
+   
+    <div class="modal-header">
+      <h3>Developer Profile</h3>
+      <span class="close-btn" id="closeModalBtnRaj">×</span>
     </div>
+
+    <div class="modal-body">
+      <div class="dev-image-box">
+        <img src="raj.png" alt="Raj Thakur" class="dev-img">
+      </div>
+      <div class="dev-info">
+        <h2>Raj Thakur</h2>
+        <p class="dev-title">Software & Web Developer</p>
+        <p class="dev-desc">
+          Hello! I am a developer specializing in building scalable websites and software solutions.
+          Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms,
+          coaching institute software, and academic conference websites like CMMAI.
+        </p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="dev-contact">
+        <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
+        <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <div id="devModalAngelo" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Developer Profile</h3>
-            <span class="close-btn" id="closeModalBtnAngelo">×</span>
-        </div>
-        <div class="modal-body">
-            <div class="dev-image-box">
-                <img src="angelo.webp" alt="Angelo" class="dev-img"> 
-            </div>
-            <div class="dev-info">
-                <h2>Angelo</h2>
-                <p class="dev-title">Web Developer / Designer</p>
-                <p class="dev-desc">
-                    Hello! I contributed to the UI/UX design and frontend development for this academic conference website. 
-                    Passionate about creating clean, responsive, and user-friendly digital experiences.
-                </p>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="dev-contact">
-                <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-              
-            </div>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Developer Profile</h3>
+      <span class="close-btn" id="closeModalBtnAngelo">×</span>
     </div>
+    <div class="modal-body">
+      <div class="dev-image-box">
+        <img src="angelo.webp" alt="Angelo" class="dev-img">
+      </div>
+      <div class="dev-info">
+        <h2>Angelo</h2>
+        <p class="dev-title">Web Developer / Designer</p>
+        <p class="dev-desc">
+          Hello! I contributed to the UI/UX design and frontend development for this academic conference website.
+          Passionate about creating clean, responsive, and user-friendly digital experiences.
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="dev-contact">
+        <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      
+      </div>
+    </div>
+  </div>
 </div>
 
-   
+ 
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Elements for Raj
-        const modalRaj = document.getElementById("devModalRaj");
-        const btnRaj = document.getElementById("devModalBtnRaj");
-        const closeBtnRaj = document.getElementById("closeModalBtnRaj");
+  document.addEventListener("DOMContentLoaded", () => {
+    // Elements for Raj
+    const modalRaj = document.getElementById("devModalRaj");
+    const btnRaj = document.getElementById("devModalBtnRaj");
+    const closeBtnRaj = document.getElementById("closeModalBtnRaj");
 
-        // Elements for Angelo
-        const modalAngelo = document.getElementById("devModalAngelo");
-        const btnAngelo = document.getElementById("devModalBtnAngelo");
-        const closeBtnAngelo = document.getElementById("closeModalBtnAngelo");
+    // Elements for Angelo
+    const modalAngelo = document.getElementById("devModalAngelo");
+    const btnAngelo = document.getElementById("devModalBtnAngelo");
+    const closeBtnAngelo = document.getElementById("closeModalBtnAngelo");
 
-        // Function to open modal
-        function openModal(e, modalElement) {
-            e.preventDefault();
-            modalElement.classList.add("show");
-        }
+    // Function to open modal
+    function openModal(e, modalElement) {
+      e.preventDefault();
+      modalElement.classList.add("show");
+    }
 
-        // Function to close modal
-        function closeModal(modalElement) {
-            modalElement.classList.remove("show");
-        }
+    // Function to close modal
+    function closeModal(modalElement) {
+      modalElement.classList.remove("show");
+    }
 
-        // Event Listeners for Raj
-        btnRaj.addEventListener("click", (e) => openModal(e, modalRaj));
-        closeBtnRaj.addEventListener("click", () => closeModal(modalRaj));
+    // Event Listeners for Raj
+    btnRaj.addEventListener("click", (e) => openModal(e, modalRaj));
+    closeBtnRaj.addEventListener("click", () => closeModal(modalRaj));
 
-        // Event Listeners for Angelo
-        btnAngelo.addEventListener("click", (e) => openModal(e, modalAngelo));
-        closeBtnAngelo.addEventListener("click", () => closeModal(modalAngelo));
+    // Event Listeners for Angelo
+    btnAngelo.addEventListener("click", (e) => openModal(e, modalAngelo));
+    closeBtnAngelo.addEventListener("click", () => closeModal(modalAngelo));
 
-        // Click outside to close for both modals
-        window.addEventListener("click", (e) => {
-            if (e.target === modalRaj) closeModal(modalRaj);
-            if (e.target === modalAngelo) closeModal(modalAngelo);
-        });
+    // Click outside to close for both modals
+    window.addEventListener("click", (e) => {
+      // Don't close if they clicked the mobile nav overlay!
+      if (e.target === modalRaj) closeModal(modalRaj);
+      if (e.target === modalAngelo) closeModal(modalAngelo);
     });
+  });
 </script>
+ 
+  <script src="script.js"></script>
+
+  <script>
+    // Array of tabs for Swipe Logic
+    const tabsOrder = ['tab-plane', 'tab-train', 'tab-bus', 'tab-car'];
+    let currentTabIndex = 0;
+
+    // Unified function to activate a specific tab
+    function activateTab(tabId) {
+      currentTabIndex = tabsOrder.indexOf(tabId);
+
+      // Hide all tab panes
+      const panes = document.querySelectorAll('.tab-pane-modern');
+      panes.forEach(pane => {
+        pane.classList.remove('active');
+      });
+
+      // Remove active class from all pills
+      const pills = document.querySelectorAll('.nav-pill');
+      pills.forEach(pill => {
+        pill.classList.remove('active');
+      });
+
+      // Show current tab & set active pill
+      document.getElementById(tabId).classList.add('active');
+      
+      // Find the pill that controls this tab and make it active
+      const activePill = document.querySelector(`.nav-pill[onclick*="${tabId}"]`);
+      if(activePill) activePill.classList.add('active');
+    }
+
+    // Tab Switching Logic (Click)
+    function switchTab(evt, tabId) {
+      activateTab(tabId);
+    }
+
+    // MOBILE SWIPE LOGIC
+    const transportContent = document.querySelector('.transport-content-area');
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    transportContent.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    transportContent.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX;
+      handleTransportSwipe();
+    }, {passive: true});
+
+    function handleTransportSwipe() {
+      const swipeThreshold = 50; // Minimum distance for a swipe to register
+      
+      if (touchendX < touchstartX - swipeThreshold) {
+        // Swiped Left - Show Next Tab
+        if (currentTabIndex < tabsOrder.length - 1) {
+          activateTab(tabsOrder[currentTabIndex + 1]);
+        }
+      }
+      if (touchendX > touchstartX + swipeThreshold) {
+        // Swiped Right - Show Previous Tab
+        if (currentTabIndex > 0) {
+          activateTab(tabsOrder[currentTabIndex - 1]);
+        }
+      }
+    }
+  </script>
+
+  <script>
+  // Updated Mobile Navbar Toggle Script with Overlay & Smooth UI transition
+  document.getElementById('mobileToggle').addEventListener('click', function() {
+    var nav = document.getElementById('navLinks');
+    var overlay = document.getElementById('navOverlay');
+    var icon = this.querySelector('i');
+
+    nav.classList.toggle('active');
+    overlay.classList.toggle('active');
+
+    // Toggle icon between bars and times (close)
+    if(nav.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+  });
+
+  // Close sidebar when clicking outside on the overlay
+  document.getElementById('navOverlay').addEventListener('click', function() {
+    var nav = document.getElementById('navLinks');
+    var icon = document.querySelector('#mobileToggle i');
     
-    <script src="script.js"></script>
+    nav.classList.remove('active');
+    this.classList.remove('active');
+    
+    icon.classList.remove('fa-times');
+    icon.classList.add('fa-bars');
+  });
 
-    <script>
-        // Array of tabs for Swipe Logic
-        const tabsOrder = ['tab-plane', 'tab-train', 'tab-bus', 'tab-car'];
-        let currentTabIndex = 0;
-
-        // Unified function to activate a specific tab
-        function activateTab(tabId) {
-            currentTabIndex = tabsOrder.indexOf(tabId);
-
-            // Hide all tab panes
-            const panes = document.querySelectorAll('.tab-pane-modern');
-            panes.forEach(pane => {
-                pane.classList.remove('active');
-            });
-
-            // Remove active class from all pills
-            const pills = document.querySelectorAll('.nav-pill');
-            pills.forEach(pill => {
-                pill.classList.remove('active');
-            });
-
-            // Show current tab & set active pill
-            document.getElementById(tabId).classList.add('active');
-            
-            // Find the pill that controls this tab and make it active
-            const activePill = document.querySelector(`.nav-pill[onclick*="${tabId}"]`);
-            if(activePill) activePill.classList.add('active');
+  // Dropdown toggle logic for mobile
+  var dropdowns = document.querySelectorAll('.dropdown');
+  dropdowns.forEach(function(dropdown) {
+    var dropbtn = dropdown.querySelector('.dropbtn');
+    dropbtn.addEventListener('click', function(e) {
+      if (window.innerWidth <= 1024) {
+        e.preventDefault();
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+        } else {
+          dropdowns.forEach(function(d) { d.classList.remove('active'); });
+          dropdown.classList.add('active');
         }
+      }
+    });
+  });
+  </script>
 
-        // Tab Switching Logic (Click)
-        function switchTab(evt, tabId) {
-            activateTab(tabId);
-        }
-
-        // MOBILE SWIPE LOGIC
-        const transportContent = document.querySelector('.transport-content-area');
-        let touchstartX = 0;
-        let touchendX = 0;
-
-        transportContent.addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-
-        transportContent.addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX;
-            handleTransportSwipe();
-        }, {passive: true});
-
-        function handleTransportSwipe() {
-            const swipeThreshold = 50; // Minimum distance for a swipe to register
-            
-            if (touchendX < touchstartX - swipeThreshold) {
-                // Swiped Left - Show Next Tab
-                if (currentTabIndex < tabsOrder.length - 1) {
-                    activateTab(tabsOrder[currentTabIndex + 1]);
-                }
-            }
-            if (touchendX > touchstartX + swipeThreshold) {
-                // Swiped Right - Show Previous Tab
-                if (currentTabIndex > 0) {
-                    activateTab(tabsOrder[currentTabIndex - 1]);
-                }
-            }
-        }
-    </script>
 </body>
 </html>
