@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+
+% -------------------------
+% Page & Font Settings
+% -------------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{times}          % Times New Roman–like font
+\usepackage{setspace}
+\usepackage{authblk}        % For multiple authors & affiliations
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+
+\usepackage{fancyhdr}
+
+\setlength{\parindent}{0pt}
+
+% Header
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\tiny
+\textbf{International Conference on Computational Mathematics,Modelling and Artificial Intelligence -- 2026 \\
+Bharat Mata College \\
+Thrikkakara}
+}
+\renewcommand{\headrulewidth}{0pt}
+
+% -------------------------
+% Extended Abstract Formatting
+% -------------------------
+\setlength{\parindent}{0pt}
+\renewcommand\Authfont{\normalsize}
+\renewcommand\Affilfont{\small}
+
+% -------------------------
+% Title Information
+% -------------------------
+\title{\textbf{Title of the Extended Abstract Goes Here}}
+
+\author[1]{First Author}
+\author[2]{Second Author}
+\author[3]{Third Author}
+
+\affil[1]{Department of Mathematics, University Name, City, Country}
+\affil[2]{Research Scientist, Company / Industry Name, City, Country}
+\affil[3]{Independent Researcher / Organization Name, City, Country}
+
+\date{}  % No date
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% -------------------------
+% Length & Font Information
+% -------------------------
+% Font size: 11 pt
+% Extended Abstract length: 800--1000 words (recommended)
+% Maximum length: 3-4 pages including references
+% Line spacing: single
+
+\begin{abstract}
+\textbf{Word limit:} The extended abstract should not exceed \textbf{1000 words}.
+
+
+The abstract should clearly state the motivation of the study, the problem
+being addressed, and the methodology adopted. The key results and their
+significance should be briefly highlighted. Technical details, lengthy
+derivations, and figures should be avoided unless explicitly permitted.
+
+The abstract must be self-contained and written in clear, concise language.
+Citations may be included if required.
+\end{abstract}
+
+\vspace{0.5em}
+
+\textbf{Keywords:} keyword1; keyword2; keyword3; keyword4
+
+\vspace{1em}
+
+% -------------------------
+% References Section
+% -------------------------
+\begin{thebibliography}{9}
+
+\bibitem{ref1}
+Author(s),
+\textit{Title of the paper},
+Journal Name, Volume (Year), Pages.
+
+\bibitem{ref2}
+Author(s),
+\textit{Title of the book},
+Publisher, Edition, Year.
+
+\bibitem{ref3}
+Author(s),
+\textit{Title of the conference paper},
+Conference Name, Year.
+
+\end{thebibliography}
+
+\end{document}
