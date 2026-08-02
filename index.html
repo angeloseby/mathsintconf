@@ -446,10 +446,10 @@
 
         
         .main-title {
-            font-size: clamp(2.5rem, 2vw, 5rem);
-            line-height: 1.15;
-            font-weight: 800;
-            margin-bottom: 15px;
+            font-size: clamp(1.5rem, 2.8vw, 3.2rem);
+            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 25px;
             background: linear-gradient(to bottom, #fff 40%, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -845,7 +845,7 @@
             .footer-content { flex-direction: column; text-align: center; gap: 12px; }
             .footer-content > div { text-align: center !important; }
             .hero {
-                padding-top: 10px; /* Header ke piche chupne se rokne ke liye */
+                padding-top: 70px; /* Header ke piche chupne se rokne ke liye */
             }
             .main-title {
                 font-size: 2rem; /* Mobile par font size thoda aur theek dikhne ke liye */
@@ -939,25 +939,42 @@
         <canvas id="neural-canvas"></canvas>
         <div class="hero-content">
             
-            <h1 class="main-title">International Conference on <br>Computational Mathematics, Modeling & Artificial Intelligence</h1>
-            <p style="color: #94a3b8; font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
-               <p style="color: white; font-size: 0.95rem; font-weight: 500;">Co-sponsored by the International Council for Industrial and Applied Mathematics  <a href="https://iciam.org/" style="color: #ffffff; text-decoration: none;" target="_blank">(ICIAM) </a> </p>
-               
-                  <p style="color: white; font-size: 0.95rem; font-weight: 500;">Organized by Postgraduate and Research Department of Mathematics </p>
-                <br> <p style="color: white; font-size: 0.95rem; font-weight: 500;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 6px;"></i> Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India
+            <h1 class="main-title">International Conference on Computational Mathematics, Modeling & Artificial Intelligence</h1>
+           <p style="
+    color: #cbd5e1;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin: 0 auto 12px;
+    line-height: 1.5;
+">
+    Co-sponsored by the
+    <a href="https://iciam.org/"
+       style="color: var(--primary); text-decoration: none; font-weight: 700;"
+       target="_blank">
+        International Council for Industrial and Applied Mathematics (ICIAM)
+        <i class="fas fa-external-link-alt" style="font-size: 0.75rem;"></i>
+    </a>
+</p>
 
+<p style="
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 auto 14px;
+    line-height: 1.5;
+">
+    Organized by Postgraduate and Research Department of Mathematics
+</p>
 
-                </p>
-                
-              <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: dropIn 0.8s ease;">
-                <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; color: #fff; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);">
-                    <i class="fas fa-calendar-check" style="color: var(--primary); margin-right: 8px;"></i> 17 - 19 September 2026
-                </h3>
-               
-            </div>
-            
-            </p>
+<p style="
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 500;
+">
+    <i class="fas fa-map-marker-alt"
+       style="color: var(--primary); margin-right: 6px;"></i>
+    Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India
+</p>
             <div class="timer-grid" id="timer">
                 <div class="timer-item"><span class="t-num" id="d">00</span><span class="t-lab">Days</span></div>
                 <div class="timer-item"><span class="t-num" id="h">00</span><span class="t-lab">Hrs</span></div>
