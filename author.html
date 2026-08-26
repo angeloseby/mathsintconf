@@ -718,41 +718,12 @@
                         </div>
                     </div>
 
-                   <a href="https://docs.google.com/forms/d/1i0o7460r8zX8sm435Xj4XYEWvQ9L6eXODNEbANaVhnU/viewform"
-   id="registrationBtn"
-   class="register-full-btn"
+                  <a href="https://docs.google.com/forms/d/1i0o7460r8zX8sm435Xj4XYEWvQ9L6eXODNEbANaVhnU/viewform"
+   class="register-full-btn registration-link"
    target="_blank">
     Proceed to Register <i class="fas fa-arrow-right"></i>
 </a>
 
-<script>
-    // Registration deadline:
-    // 31 August 2026, 11:59:59 PM (IST)
-    const registrationDeadline = new Date("2026-08-31T23:59:59+05:30");
-
-    const registrationBtn = document.getElementById("registrationBtn");
-
-    // Check current date and time
-    if (new Date() > registrationDeadline) {
-
-        // Deactivate the link
-        registrationBtn.removeAttribute("href");
-        registrationBtn.removeAttribute("target");
-
-        // Disable clicking
-        registrationBtn.style.pointerEvents = "none";
-        registrationBtn.style.cursor = "not-allowed";
-        registrationBtn.style.opacity = "0.6";
-
-        // Change button text
-        registrationBtn.innerHTML =
-            '<i class="fas fa-lock"></i> Registration Closed';
-
-        // Tooltip
-        registrationBtn.title =
-            "Registration closed after 31 August 2026";
-    }
-</script>
                 </div>
             </div>
             <br>
@@ -821,40 +792,11 @@ International Participants</h4>
         </div>
     </div>
 <a href="https://docs.google.com/forms/d/1i0o7460r8zX8sm435Xj4XYEWvQ9L6eXODNEbANaVhnU/viewform"
-   id="registrationBtn"
-   class="register-full-btn"
+   class="register-full-btn registration-link"
    target="_blank">
     Proceed to Register <i class="fas fa-arrow-right"></i>
 </a>
 
-<script>
-    // Registration deadline:
-    // 31 August 2026, 11:59:59 PM (IST)
-    const registrationDeadline = new Date("2026-08-31T23:59:59+05:30");
-
-    const registrationBtn = document.getElementById("registrationBtn");
-
-    // Check current date and time
-    if (new Date() > registrationDeadline) {
-
-        // Deactivate the link
-        registrationBtn.removeAttribute("href");
-        registrationBtn.removeAttribute("target");
-
-        // Disable clicking
-        registrationBtn.style.pointerEvents = "none";
-        registrationBtn.style.cursor = "not-allowed";
-        registrationBtn.style.opacity = "0.6";
-
-        // Change button text
-        registrationBtn.innerHTML =
-            '<i class="fas fa-lock"></i> Registration Closed';
-
-        // Tooltip
-        registrationBtn.title =
-            "Registration closed after 31 August 2026";
-    }
-</script>
 
 </div>
             </div>
@@ -1003,5 +945,37 @@ International Participants</h4>
         });
     });
     </script>
+    
+    <script>
+    // Registration deadline: 31 August 2026, 11:59:59 PM IST
+    const registrationDeadline = new Date("2026-08-31T23:59:59+05:30");
+
+    // Select ALL registration buttons
+    const registrationLinks = document.querySelectorAll(".registration-link");
+
+    // Check current date and time
+    if (new Date() > registrationDeadline) {
+
+        registrationLinks.forEach(function(button) {
+
+            // Remove link functionality
+            button.removeAttribute("href");
+            button.removeAttribute("target");
+
+            // Disable clicking
+            button.style.pointerEvents = "none";
+            button.style.cursor = "not-allowed";
+            button.style.opacity = "0.6";
+
+            // Change button text
+            button.innerHTML =
+                '<i class="fas fa-lock"></i> Registration Closed';
+
+            // Tooltip
+            button.title =
+                "Registration closed after 31 August 2026";
+        });
+    }
+</script>
 </body>
 </html>
