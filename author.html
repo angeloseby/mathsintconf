@@ -585,9 +585,39 @@
                     <a href="assets/images/Abstract_Template_for_cmmai2026.pdf" class="btn btn-outline" target="_blank">
                         <i class="fas fa-file-pdf" style="color: #d32f2f;"></i> PDF Template
                     </a>
-                    <a href="https://docs.google.com/forms/d/1Gyz9p8L-gZib_OHR1fJMUGyDaX22E3QumFq8ArtKZcw/viewform" class="btn btn-solid" target="_blank" style="margin-left: auto;">
-                        <i class="fas fa-paper-plane"></i> Submit Your Abstract
-                    </a>
+                   
+                   <a href="https://docs.google.com/forms/d/1Gyz9p8L-gZib_OHR1fJMUGyDaX22E3QumFq8ArtKZcw/viewform"
+   id="abstractBtn"
+   class="btn btn-solid"
+   target="_blank"
+   style="margin-left: auto;">
+    <i class="fas fa-paper-plane"></i> Submit Your Abstract
+</a>
+
+<script>
+    // Submission deadline: 25 August 2026, 11:59:59 PM
+    const deadline = new Date("2026-08-25T23:59:59+05:30");
+
+    const button = document.getElementById("abstractBtn");
+
+    if (new Date() > deadline) {
+        // Disable the button
+        button.removeAttribute("href");
+        button.removeAttribute("target");
+
+        button.style.pointerEvents = "none";
+        button.style.opacity = "0.6";
+        button.style.cursor = "not-allowed";
+
+        // Change button text
+        button.innerHTML = '<i class="fas fa-lock"></i> Abstract Submission Closed';
+
+        // Optional tooltip
+        button.title = "Abstract submission closed after 25 August 2026";
+    }
+</script>
+                   
+                   
                 </div>
             </div>
         </div>
