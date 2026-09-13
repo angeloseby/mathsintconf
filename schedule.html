@@ -2005,10 +2005,11 @@ tbody tr:first-child td{border-top:0}
                 <!-- Download Button -->
 
                 <a
-                    href="campus-map.jpg"
-                    download="https://cmmai2026.bharatamatacollege.in/assets/images/Campus%20map.png"
+                    href="https://cmmai2026.bharatamatacollege.in/assets/images/Campus%20map.png"
+                    download="Campus-map.png"
                     class="campus-map-download"
                     aria-label="Download CMMAI 2026 Campus Map"
+                    onclick="event.preventDefault(); fetch(this.href).then(response => { if (!response.ok) throw new Error('Download failed'); return response.blob(); }).then(blob => { const url = window.URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = 'Campus-map.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); window.URL.revokeObjectURL(url); }).catch(() => { window.location.href = this.href; });"
                 >
 
                     <span class="campus-map-download-icon">
@@ -3062,7 +3063,7 @@ tbody tr:first-child td{border-top:0}
 }
 
 </style>
-```
+
 
 
      <footer class="minimal-footer">
