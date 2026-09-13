@@ -1888,7 +1888,1182 @@ tbody tr:first-child td{border-top:0}
 </html>
     </section>
 
- 
+<!-- =========================================================
+     CMMAI 2026 — CAMPUS MAP SECTION
+========================================================= -->
+
+<section class="campus-map-section">
+
+    <div class="campus-map-container">
+
+        <!-- =================================================
+             MAP HEADER
+        ================================================== -->
+
+        <div class="campus-map-header">
+
+            <div class="campus-map-label">
+                <i class="fas fa-location-dot"></i>
+                CAMPUS MAP
+            </div>
+
+            <h2>Find Your Way Around Our College</h2>
+
+            <p>
+                For ease of navigation, use the campus map below to quickly locate
+                important points and key areas within our college.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             MAP CARD
+        ================================================== -->
+
+        <div class="campus-map-card">
+
+
+            <!-- =================================================
+                 MAP TOP BAR
+            ================================================== -->
+
+            <div class="campus-map-top">
+
+                <div class="campus-map-title">
+
+                    <div class="campus-map-icon">
+                        <i class="fas fa-map-location-dot"></i>
+                    </div>
+
+                    <div class="campus-map-title-text">
+                        <strong>College Campus Map</strong>
+
+                        <span>
+                            Locate important points within the campus
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="campus-map-badge-small">
+
+                    <i class="fas fa-compass"></i>
+
+                    Navigation Guide
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MAP IMAGE
+            ================================================== -->
+
+            <div class="campus-map-image-area">
+
+                <img
+                    src="https://cmmai2026.bharatamatacollege.in/assets/images/Campus%20map.webp"
+                    alt="CMMAI 2026 College Campus Map"
+                    class="campus-map-image"
+                >
+
+            </div>
+
+
+            <!-- =================================================
+                 MAP INFORMATION + DOWNLOAD
+            ================================================== -->
+
+            <div class="campus-map-bottom">
+
+
+                <!-- Helpful Note -->
+
+                <div class="campus-map-note">
+
+                    <div class="campus-map-note-icon">
+                        <i class="fas fa-circle-info"></i>
+                    </div>
+
+                    <div class="campus-map-note-content">
+
+                        <strong>Helpful Note</strong>
+
+                        <p>
+                            Use this map to easily locate important venues,
+                            buildings and key points within our college.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Download Button -->
+
+                <a
+                    href="campus-map.jpg"
+                    download="https://cmmai2026.bharatamatacollege.in/assets/images/Campus%20map.png"
+                    class="campus-map-download"
+                    aria-label="Download CMMAI 2026 Campus Map"
+                >
+
+                    <span class="campus-map-download-icon">
+                        <i class="fas fa-download"></i>
+                    </span>
+
+                    <span>
+                        Download Map
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CAMPUS MAP CSS
+========================================================= -->
+
+<style>
+
+/* =========================================================
+   CAMPUS MAP SECTION
+========================================================= */
+
+.campus-map-section {
+
+    width: 100%;
+
+    padding: 42px 24px 55px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.campus-map-container {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.campus-map-header {
+
+    width: 100%;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================================================
+   SMALL LABEL
+========================================================= */
+
+.campus-map-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 7px 14px;
+
+    border-radius: 50px;
+
+    background: var(--teal-100);
+
+    color: var(--teal-950);
+
+    border: 1px solid rgba(8,123,124,.15);
+
+    font-size: 11px;
+
+    font-weight: 850;
+
+    letter-spacing: .08em;
+
+    line-height: 1;
+
+}
+
+
+.campus-map-label i {
+
+    font-size: 11px;
+
+    color: var(--teal-700);
+
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
+
+.campus-map-header h2 {
+
+    margin: 12px 0 9px;
+
+    color: var(--teal-950);
+
+    font-family: var(--font-heading);
+
+    font-size: clamp(24px, 3vw, 34px);
+
+    line-height: 1.25;
+
+    font-weight: 900;
+
+    letter-spacing: .01em;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.campus-map-header p {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    color: var(--muted);
+
+    font-family: var(--font-body);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   MAP CARD
+========================================================= */
+
+.campus-map-card {
+
+    width: 100%;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid var(--line);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+
+        0 18px 50px rgba(6,75,80,.12),
+
+        0 4px 15px rgba(6,75,80,.05);
+
+    backdrop-filter: blur(10px);
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.campus-map-top {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 15px 18px;
+
+    box-sizing: border-box;
+
+    background:
+
+        radial-gradient(
+
+            circle at 85% 15%,
+
+            rgba(40,188,160,.20),
+
+            transparent 28%
+
+        ),
+
+        linear-gradient(
+
+            135deg,
+
+            var(--teal-950),
+
+            var(--teal-900),
+
+            var(--teal-700)
+
+        );
+
+}
+
+
+/* =========================================================
+   MAP TITLE
+========================================================= */
+
+.campus-map-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+}
+
+
+/* =========================================================
+   MAP ICON
+========================================================= */
+
+.campus-map-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.14);
+
+    color: #fff;
+
+    font-size: 18px;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    box-sizing: border-box;
+
+}
+
+
+.campus-map-icon i {
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   TITLE TEXT
+========================================================= */
+
+.campus-map-title-text {
+
+    min-width: 0;
+
+}
+
+
+.campus-map-title strong {
+
+    display: block;
+
+    color: #fff;
+
+    font-family: var(--font-body);
+
+    font-size: 15px;
+
+    font-weight: 850;
+
+    line-height: 1.25;
+
+}
+
+
+.campus-map-title span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: rgba(255,255,255,.72);
+
+    font-family: var(--font-body);
+
+    font-size: 11px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   NAVIGATION BADGE
+========================================================= */
+
+.campus-map-badge-small {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+
+    padding: 7px 12px;
+
+    border-radius: 50px;
+
+    color: var(--teal-950);
+
+    background: var(--cream-50);
+
+    border: 1px solid rgba(242,169,0,.22);
+
+    font-size: 10px;
+
+    font-weight: 850;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+}
+
+
+.campus-map-badge-small i {
+
+    color: #b87900;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   MAP IMAGE AREA
+========================================================= */
+
+.campus-map-image-area {
+
+    width: 100%;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #f7fbfb,
+
+            #eef7f6
+
+        );
+
+    border-bottom: 1px solid var(--line);
+
+}
+
+
+/* =========================================================
+   MAP IMAGE
+========================================================= */
+
+.campus-map-image {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+    background: #fff;
+
+    border: 1px solid #dce9e7;
+
+    box-shadow:
+
+        0 5px 18px rgba(6,75,80,.08);
+
+}
+
+
+/* =========================================================
+   BOTTOM AREA
+========================================================= */
+
+.campus-map-bottom {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 18px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+
+}
+
+
+/* =========================================================
+   HELPFUL NOTE
+========================================================= */
+
+.campus-map-note {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+/* =========================================================
+   NOTE ICON
+========================================================= */
+
+.campus-map-note-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: var(--teal-100);
+
+    color: var(--teal-700);
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   NOTE CONTENT
+========================================================= */
+
+.campus-map-note-content {
+
+    min-width: 0;
+
+}
+
+
+.campus-map-note-content strong {
+
+    display: block;
+
+    color: var(--teal-950);
+
+    font-family: var(--font-body);
+
+    font-size: 12px;
+
+    font-weight: 850;
+
+    line-height: 1.3;
+
+}
+
+
+.campus-map-note-content p {
+
+    margin: 3px 0 0;
+
+    color: var(--muted);
+
+    font-family: var(--font-body);
+
+    font-size: 11.5px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.campus-map-download {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    flex: 0 0 auto;
+
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--teal-950),
+
+            var(--teal-700)
+
+        );
+
+    border: 1px solid var(--teal-900);
+
+    box-shadow:
+
+        0 7px 16px rgba(6,75,80,.18);
+
+    font-family: var(--font-body);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    transition:
+
+        transform .2s ease,
+
+        box-shadow .2s ease,
+
+        background .2s ease;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD ICON
+========================================================= */
+
+.campus-map-download-icon {
+
+    width: 25px;
+
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(255,255,255,.14);
+
+    font-size: 12px;
+
+}
+
+
+.campus-map-download i {
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD HOVER
+========================================================= */
+
+.campus-map-download:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+
+        0 11px 22px rgba(6,75,80,.24);
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--teal-900),
+
+            var(--teal-700)
+
+        );
+
+    color: #fff;
+
+}
+
+
+.campus-map-download:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+
+    .campus-map-section {
+
+        padding: 30px 14px 40px;
+
+    }
+
+
+    .campus-map-header {
+
+        margin-bottom: 19px;
+
+    }
+
+
+    .campus-map-header h2 {
+
+        font-size: 25px;
+
+    }
+
+
+    .campus-map-header p {
+
+        font-size: 13px;
+
+        line-height: 1.6;
+
+    }
+
+
+    .campus-map-card {
+
+        border-radius: 16px;
+
+    }
+
+
+    .campus-map-top {
+
+        padding: 12px;
+
+        gap: 10px;
+
+    }
+
+
+    .campus-map-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        flex-basis: 38px;
+
+        border-radius: 10px;
+
+        font-size: 16px;
+
+    }
+
+
+    .campus-map-title strong {
+
+        font-size: 13px;
+
+    }
+
+
+    .campus-map-title span {
+
+        font-size: 10px;
+
+    }
+
+
+    .campus-map-badge-small {
+
+        display: none;
+
+    }
+
+
+    .campus-map-image-area {
+
+        padding: 8px;
+
+    }
+
+
+    .campus-map-image {
+
+        border-radius: 10px;
+
+    }
+
+
+    .campus-map-bottom {
+
+        padding: 13px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+    }
+
+
+    .campus-map-note {
+
+        width: 100%;
+
+    }
+
+
+    .campus-map-download {
+
+        width: 100%;
+
+        min-height: 44px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+
+    .campus-map-section {
+
+        padding: 25px 9px 32px;
+
+    }
+
+
+    .campus-map-header {
+
+        margin-bottom: 16px;
+
+    }
+
+
+    .campus-map-label {
+
+        padding: 6px 10px;
+
+        font-size: 9px;
+
+    }
+
+
+    .campus-map-label i {
+
+        font-size: 9px;
+
+    }
+
+
+    .campus-map-header h2 {
+
+        margin-top: 10px;
+
+        font-size: 22px;
+
+        line-height: 1.25;
+
+    }
+
+
+    .campus-map-header p {
+
+        font-size: 12px;
+
+        line-height: 1.55;
+
+    }
+
+
+    .campus-map-top {
+
+        padding: 11px;
+
+    }
+
+
+    .campus-map-icon {
+
+        width: 36px;
+
+        height: 36px;
+
+        flex-basis: 36px;
+
+        border-radius: 10px;
+
+        font-size: 15px;
+
+    }
+
+
+    .campus-map-title {
+
+        gap: 9px;
+
+    }
+
+
+    .campus-map-title strong {
+
+        font-size: 12px;
+
+    }
+
+
+    .campus-map-title span {
+
+        font-size: 9px;
+
+    }
+
+
+    .campus-map-image-area {
+
+        padding: 6px;
+
+    }
+
+
+    .campus-map-image {
+
+        border-radius: 9px;
+
+    }
+
+
+    .campus-map-bottom {
+
+        padding: 12px;
+
+        gap: 11px;
+
+    }
+
+
+    .campus-map-note {
+
+        gap: 8px;
+
+    }
+
+
+    .campus-map-note-icon {
+
+        width: 29px;
+
+        height: 29px;
+
+        flex-basis: 29px;
+
+        border-radius: 8px;
+
+        font-size: 12px;
+
+    }
+
+
+    .campus-map-note-content strong {
+
+        font-size: 11px;
+
+    }
+
+
+    .campus-map-note-content p {
+
+        font-size: 10.5px;
+
+        line-height: 1.5;
+
+    }
+
+
+    .campus-map-download {
+
+        min-height: 44px;
+
+        font-size: 12px;
+
+    }
+
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+
+    .campus-map-section {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+    }
+
+
+    .campus-map-header h2 {
+
+        font-size: 20px;
+
+    }
+
+
+    .campus-map-header p {
+
+        font-size: 11.5px;
+
+    }
+
+
+    .campus-map-title span {
+
+        display: none;
+
+    }
+
+
+    .campus-map-bottom {
+
+        padding: 10px;
+
+    }
+
+
+    .campus-map-note-content p {
+
+        font-size: 10px;
+
+    }
+
+}
+
+</style>
+```
+
 
      <footer class="minimal-footer">
         <div class="footer-content">
