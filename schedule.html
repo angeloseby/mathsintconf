@@ -1643,6 +1643,58 @@ table tbody tr:hover td,
                     </tr>
                 </tbody>
             </table>
+           <!-- VENUE NOTICE -->
+<div style="
+    margin: 35px auto 20px;
+    max-width: 900px;
+    padding: 22px 28px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff8e1, #ffffff, #fff3cd);
+    border: 2px solid #f0b400;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    text-align: left;
+    animation: venuePulse 2.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+">
+
+  
+
+    <div style="
+        font-size: 16px;
+        line-height: 1.9;
+        color: #333;
+        font-weight: 600;
+    ">
+        <div>⭐ <b>Venue 1 :</b> MBA Auditorium (4th floor )</div>
+        <div>⭐ <b>Venue 2 :</b> MBA Basement hall (Basement)</div>
+        <div>⭐ <b>Venue 3 :</b> AV room (Main Building)</div>
+    </div>
+
+</div>
+
+<style>
+@keyframes venuePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    50% {
+        transform: scale(1.015);
+        box-shadow: 0 12px 35px rgba(240,180,0,0.28);
+    }
+}
+
+@keyframes venueTitle {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-3px);
+    }
+}
+</style>
+<!-- END VENUE NOTICE -->
         </div>
     </section>
 
