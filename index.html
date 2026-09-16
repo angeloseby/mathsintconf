@@ -871,6 +871,150 @@
                 padding-top: 1px; /* Ensures header doesn't overlap hero content */
             }
         }
+        /* =============================================
+   CONFERENCE LIVE STATUS
+============================================= */
+
+.conference-live {
+    display: none;
+    max-width: 760px;
+    margin: 35px auto 0;
+    padding: 30px 35px;
+    text-align: center;
+
+    background: rgba(0, 242, 255, 0.035);
+    border: 1px solid rgba(0, 242, 255, 0.35);
+    border-radius: 20px;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 0 25px rgba(0, 242, 255, 0.08),
+        inset 0 0 25px rgba(112, 0, 255, 0.03);
+
+    animation: liveAppear 0.8s ease forwards;
+}
+
+.conference-live.active {
+    display: block;
+}
+
+.live-pulse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    color: var(--primary);
+    font-size: 1.35rem;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    text-shadow: 0 0 12px rgba(0, 242, 255, 0.65);
+}
+
+.live-pulse span {
+    width: 11px;
+    height: 11px;
+    background: #00f2ff;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 8px #00f2ff,
+        0 0 18px #00f2ff;
+
+    animation: liveDot 1.2s infinite;
+}
+
+.conference-live p {
+    margin: 15px auto 22px;
+    max-width: 620px;
+
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.live-schedule-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 13px 25px;
+
+    background: var(--primary);
+    color: #000;
+
+    border-radius: 10px;
+    text-decoration: none;
+
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+
+    box-shadow: 0 8px 25px rgba(0, 242, 255, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+.live-schedule-btn:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 242, 255, 0.4);
+}
+
+@keyframes liveDot {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.35;
+        transform: scale(0.75);
+    }
+}
+
+@keyframes liveAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .conference-live {
+        margin: 25px 15px 0;
+        padding: 25px 18px;
+    }
+
+    .live-pulse {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+
+    .conference-live p {
+        font-size: 0.85rem;
+    }
+
+    .live-schedule-btn {
+        width: 100%;
+        padding: 13px 15px;
+    }
+}
     </style>
 </head>
 <body>
@@ -981,6 +1125,23 @@
                 <div class="timer-item"><span class="t-num" id="m">00</span><span class="t-lab">Mins</span></div>
                 <div class="timer-item"><span class="t-num" id="s">00</span><span class="t-lab">Secs</span></div>
             </div>
+            <!-- LIVE CONFERENCE STATUS -->
+<div id="conference-live" class="conference-live">
+    <div class="live-pulse">
+        <span></span>
+        CONFERENCE IS NOW LIVE
+    </div>
+
+    <p>
+        CMMAI 2026 is now underway. Explore the complete
+        conference programme and session schedule.
+    </p>
+
+    <a href="/schedule.html" class="live-schedule-btn">
+        View Conference Schedule
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
             <div class="cta-group">
                 <a href="dates.html" class="btn-primary">Important Dates <i class="fas fa-calendar-days"></i></a>
                 
@@ -2035,15 +2196,43 @@ Mathematics <br>
         });
 
         // --- 4. COUNTDOWN ---
-        const targetDate = new Date("September 17, 2026 08:30:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }, 1000);
+       // --- 4. COUNTDOWN + LIVE STATUS ---
+
+const targetDate = new Date("2026-09-17T08:30:00+05:30").getTime();
+
+const timer = document.getElementById("timer");
+const liveStatus = document.getElementById("conference-live");
+
+function updateCountdown() {
+
+    const now = Date.now();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+        timer.style.display = "none";
+        liveStatus.classList.add("active");
+        return;
+    }
+
+    document.getElementById("d").innerText =
+        Math.floor(diff / (1000 * 60 * 60 * 24))
+        .toString().padStart(2, "0");
+
+    document.getElementById("h").innerText =
+        Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        .toString().padStart(2, "0");
+
+    document.getElementById("m").innerText =
+        Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+        .toString().padStart(2, "0");
+
+    document.getElementById("s").innerText =
+        Math.floor((diff % (1000 * 60)) / 1000)
+        .toString().padStart(2, "0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
         // --- 5. SCROLL REVEAL ---
         const revealEls = document.querySelectorAll('.reveal');
