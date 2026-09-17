@@ -845,7 +845,7 @@
             .footer-content { flex-direction: column; text-align: center; gap: 12px; }
             .footer-content > div { text-align: center !important; }
             .hero {
-                padding-top: 70px; /* Header ke piche chupne se rokne ke liye */
+                padding-top: 100px; /* Header ke piche chupne se rokne ke liye */
             }
             .main-title {
                 font-size: 2rem; /* Mobile par font size thoda aur theek dikhne ke liye */
@@ -882,20 +882,22 @@
     padding: 30px 35px;
     text-align: center;
 
-    background: rgba(0, 242, 255, 0.035);
+    /* Fully Transparent */
+    background: transparent;
+
+    /* Cyan border */
     border: 1px solid rgba(0, 242, 255, 0.35);
     border-radius: 20px;
 
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    /* No glass blur */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 
-    box-shadow:
-        0 0 25px rgba(0, 242, 255, 0.08),
-        inset 0 0 25px rgba(112, 0, 255, 0.03);
+    /* No box background glow */
+    box-shadow: none;
 
     animation: liveAppear 0.8s ease forwards;
 }
-
 .conference-live.active {
     display: block;
 }
