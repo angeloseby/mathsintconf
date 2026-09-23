@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMMAI 2026 | International Conference on Computational Mathematics, Modeling & AI</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===================================================
+           1. GLOBAL VARIABLES & RESET (Merged A & B)
+           =================================================== */
+        :root {
+            --primary-navy: #001f3f;    
+            --secondary-blue: #0ea5e9;  
+            --accent-gold: #f59e0b;      
+            --bg-light: #f8fafc;        
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --check-green: #10b981;
+            --font-heading: 'Merriweather', serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 40px -10px rgba(14, 165, 233, 0.2);
+            
+            /* Needed for Code A's footer/modals */
+            --theme-card-dark: #105854;   
+            --theme-card-main: #146c67;   
+            --theme-card-light: #d2e5e0;  
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+            width: 100%; 
+        }
+
+        body {
+            background-color: var(--bg-light); 
+            background-image: radial-gradient(at 0% 0%, hsla(213,100%,94%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(42,100%,90%,1) 0, transparent 50%);
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            padding-top: 75px; 
+            margin: 0;
+            overflow-x: hidden; 
+            width: 100%; 
+            position: relative;
+        }
+
+        /* ===================================================
+           2. NAVBAR & TOP BAR (From Code A)
+           =================================================== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 0 0 20px 20px;
+            padding: 0.8rem 5%;
+            display: flex;
+            align-items: center;
+            position: fixed !important; 
+            top: 0; left: 0; width: 100%;
+            z-index: 1005;
+        }
+
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; max-width: 1400px; margin: 0 auto;
+        }
+
+        .brand {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .logo-1 { height: auto; max-height: 65px; width: auto; max-width: 25vw; object-fit: contain; }
+        .logo-2 { height: auto; max-height: 65px; width: auto; max-width: 45vw; object-fit: contain; }
+
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; margin: 0; padding: 0; justify-content: flex-end; }
+        .nav-links li { list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-links > li > a:hover { color: var(--secondary-blue); }
+
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1rem; color: var(--primary-navy); cursor: pointer; transition: 0.3s; margin-left: auto; }
+        .mobile-toggle:hover { color: var(--secondary-blue); transform: scale(1.1); }
+
+        .dropdown { position: relative; }
+        .dropdown .dropbtn { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .dropdown .dropbtn i { font-size: 0.75rem; transition: transform 0.3s ease; }
+        .dropdown .dropbtn i.fa-plus, .dropdown .dropbtn i.fa-minus { display: none; }
+        .dropdown .dropbtn i.fa-chevron-down { display: inline-block; }
+
+        .dropdown-content {
+            display: none; position: absolute; background-color: var(--bg-white); min-width: 260px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; border-radius: 8px; top: 100%; left: 0; padding: 0.5rem 0; border: 1px solid var(--border-color);
+            list-style: none; margin: 0;
+        }
+        .dropdown-content a { color: var(--text-dark); padding: 12px 20px; display: block; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--bg-light); transition: 0.2s ease; }
+        .dropdown-content a:hover { background-color: var(--bg-light); color: var(--secondary-blue); padding-left: 25px; } 
+
+        @media (min-width: 1025px) {
+            .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease forwards; }
+            .dropdown:hover .dropbtn i.fa-chevron-down { transform: rotate(180deg); color: var(--secondary-blue); }
+        }
+
+        .nav-overlay { display: none; }
+
+        /* RESPONSIVE NAVBAR (From Code A) */
+        @media (max-width: 1024px) {
+            .navbar { padding: 5px 1px; justify-content: space-between; border-radius: 0; }
+            .nav-container { padding-left: 1px; justify-content: space-between; }
+            .brand { width: auto; justify-content: flex-start; gap: 5px; margin-right: auto; }
+            .logo-1 { max-height: 70px; max-width: 30vw; }
+            .logo-2 { max-height: 70px; max-width: 55vw; }
+            .mobile-toggle { display: block; z-index: 1006; position: relative; margin-right: 1px; margin-left: auto; font-size: 1.2rem; padding: 5px; }
+            
+            .nav-links { 
+                position: fixed; top: 81px; right: -100%; width: 340px; max-width: 85vw; height: calc(100vh - 72px); 
+                background-color: var(--bg-white); flex-direction: column; align-items: flex-start; justify-content: flex-start; 
+                padding: 2rem 1.5rem 3rem 1.5rem; border-top: 1px solid var(--border-color); box-shadow: -10px 0 25px rgba(0,0,0,0.15); 
+                gap: 0; transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1003; overflow-y: auto; 
+            }
+            .nav-links.active { right: 0; }
+            .nav-links > li { width: 100%; border-bottom: 1px solid var(--border-color); }
+            .nav-links a, .dropdown .dropbtn { font-size: 1.15rem; width: 100%; display: block; padding: 1.2rem 0; color: var(--text-dark); }
+            .dropdown .dropbtn i.fa-chevron-down { display: none; }
+            .dropdown .dropbtn i.fa-plus { display: inline-block; font-size: 1.1rem; color: var(--secondary-blue); }
+            .dropdown.active .dropbtn i.fa-plus { display: none; }
+            .dropdown.active .dropbtn i.fa-minus { display: inline-block; transform: rotate(180deg); }
+            .dropdown-content { display: none; position: static; box-shadow: none; border: none; background-color: var(--bg-light); border-left: 4px solid var(--secondary-blue); margin-bottom: 1rem; }
+            .dropdown.active .dropdown-content { display: block; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================================
+           3. CONTENT DESIGN: NEUMORPHIC RIBBONS & NODES (Code B)
+           ========================================================= */
+        /* ===================================================
+           EVENT GALLERY
+           =================================================== */
+        .event-gallery-page{max-width:1400px;margin:50px auto;padding:0 20px}
+        .event-gallery-hero{text-align:center;background:#fff;border-radius:30px;padding:45px 20px;margin-bottom:35px;box-shadow:var(--shadow-soft);position:relative;overflow:hidden}
+        .event-gallery-hero:before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:4px;background:var(--secondary-blue);border-radius:0 0 5px 5px}
+        .event-gallery-hero h2{font-family:var(--font-heading);color:var(--primary-navy);font-size:2.8rem;line-height:1.2;margin:0 0 12px;font-weight:900}
+        .event-gallery-hero p{color:#0a6366;font-size:1rem;font-weight:700;letter-spacing:2px;margin:0;text-transform:uppercase}
+        .event-gallery-section{background:#fff;border-radius:30px;padding:35px;box-shadow:var(--shadow-soft)}
+        .day-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:35px;padding:8px;background:var(--bg-light);border-radius:18px}
+        .day-tab{border:1px solid transparent;background:transparent;color:var(--text-muted);border-radius:13px;padding:16px 18px;font-family:var(--font-body);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:var(--transition)}
+        .day-tab:hover{color:var(--primary-navy);background:#fff}.day-tab.active{background:var(--primary-navy);color:#fff;box-shadow:0 10px 25px rgba(0,31,63,.18)}
+        .day-number{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(14,165,233,.12);color:var(--secondary-blue);font-size:.8rem;font-weight:800}.day-tab.active .day-number{background:rgba(255,255,255,.15);color:#fff}
+        .day-panel{display:none}.day-panel.active{display:block;animation:galleryFadeIn .35s ease}
+        .day-heading{display:flex;align-items:center;gap:15px;margin-bottom:25px;padding-bottom:18px;border-bottom:1px solid var(--border-color)}
+        .day-icon{width:50px;height:50px;flex:0 0 50px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(14,165,233,.1);color:var(--secondary-blue);font-size:1.2rem}.day-heading h3{margin:0 0 3px;color:var(--primary-navy);font-family:var(--font-heading);font-size:1.6rem}.day-heading p{margin:0;color:var(--text-muted);font-size:.9rem}
+        .event-image-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.event-image-card{position:relative;min-width:0;aspect-ratio:4/3;overflow:hidden;border-radius:18px;background:#eef2f7;border:1px solid var(--border-color);cursor:zoom-in;box-shadow:0 8px 25px rgba(15,23,42,.08)}
+        .event-image-card img{width:100%;height:100%;display:block;object-fit:cover;opacity:0;transform:scale(1.01);transition:opacity .35s ease,transform .5s ease;position:relative;z-index:2}.event-image-card img.loaded{opacity:1}.event-image-card:hover img{transform:scale(1.04)}
+        .image-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;background:linear-gradient(110deg,#eef2f7 8%,#f8fafc 18%,#eef2f7 33%);background-size:200% 100%;animation:imageShimmer 1.5s linear infinite}.image-loader span{width:34px;height:34px;border:3px solid rgba(14,165,233,.2);border-top-color:var(--secondary-blue);border-radius:50%;animation:imageSpin .8s linear infinite}.event-image-card.loaded .image-loader{display:none}
+        .image-lightbox{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:55px 25px 25px;background:rgba(0,0,0,.94);opacity:0;transition:opacity .25s ease}.image-lightbox.show{display:flex;opacity:1}.lightbox-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.lightbox-inner img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);user-select:none;-webkit-user-drag:none}.lightbox-close{position:absolute;top:15px;right:18px;width:46px;height:46px;border:none;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:1.3rem;cursor:pointer;z-index:2;transition:.25s ease}.lightbox-close:hover{background:rgba(255,255,255,.22);transform:rotate(90deg)}body.lightbox-open{overflow:hidden}
+        @keyframes galleryFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes imageShimmer{from{background-position:200% 0}to{background-position:-200% 0}}@keyframes imageSpin{to{transform:rotate(360deg)}}
+        @media(max-width:992px){.event-image-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:768px){.event-gallery-page{margin:30px auto;padding:0 10px}.event-gallery-hero{padding:32px 15px;margin-bottom:25px;border-radius:20px}.event-gallery-hero h2{font-size:1.7rem}.event-gallery-hero p{font-size:.8rem;letter-spacing:1.2px}.event-gallery-section{padding:18px;border-radius:20px}.day-tabs{gap:7px;padding:5px;margin-bottom:25px;border-radius:14px}.day-tab{padding:12px 5px;font-size:.85rem;flex-direction:column;gap:5px}.day-number{width:27px;height:27px;font-size:.7rem}.day-heading{margin-bottom:18px;padding-bottom:14px}.day-icon{width:42px;height:42px;flex-basis:42px;font-size:1rem;border-radius:12px}.day-heading h3{font-size:1.3rem}.day-heading p{font-size:.8rem}.event-image-grid{grid-template-columns:1fr;gap:15px}.event-image-card{border-radius:14px}.image-lightbox{padding:55px 10px 15px}.lightbox-close{top:10px;right:10px;width:42px;height:42px}}
+        @media(max-width:380px){.day-tab{font-size:.75rem}.event-gallery-section{padding:14px}}
+
+        /* ===================================================
+           4. FOOTER & MODAL STYLES (From Code A)
+           =================================================== */
+        .minimal-footer {
+            background-color: #001f3f;
+            color: #fff;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 15px 20px;
+        }
+
+        .footer-left p, .footer-right p {
+            margin: 0px 0;
+            line-height: 1.5;
+            color: var(--theme-card-light);
+        }
+
+        .footer-left { text-align: left; }
+        .footer-right { text-align: right; }
+
+        .dev-link {
+            color: #f2a900; 
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dev-link:hover {
+            color: #f7d56e;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content { flex-direction: column; text-align: center; gap: 15px; }
+            .footer-left, .footer-right { text-align: center; }
+        }
+
+        /* Modals Shared CSS */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 600px; 
+            max-height: 85vh; 
+            border-radius: 20px;
+            position: relative;
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+
+        .modal-header {
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--theme-card-dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .close-btn { font-size: 28px; cursor: pointer; color: #a0aec0; transition: color 0.2s; line-height: 1; }
+        .close-btn:hover { color: #1a202c; }
+        .modal-body { padding: 25px 30px; text-align: center; color: #333; overflow-y: auto; }
+        .modal-footer { padding: 15px 25px; border-top: 1px solid var(--border-color); background: var(--bg-light); }
+
+        /* Dev Modals Elements */
+        .dev-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #f2a900; margin-bottom: 15px; padding: 3px; }
+        .dev-info h2 { margin: 0 0 5px; color: var(--theme-card-dark); font-weight: 800; }
+        .dev-title { color: #f2a900; font-weight: 600; margin: 0 0 15px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .dev-desc { color: #4a5568; font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px; }
+        .dev-contact { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .contact-btn { padding: 10px 20px; border-radius: 25px; text-decoration: none; color: white; background: var(--theme-card-main); font-size: 0.9rem; font-weight: 500; transition: transform 0.2s, box-shadow 0.2s; display: flex; align-items: center; gap: 8px; }
+        .contact-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(20, 108, 103, 0.3); }
+        .contact-btn.whatsapp { background: #25D366; }
+
+    </style>
+    
+    <style>
+    .alert-info {
+    background-color: #eaf4ff;
+    border: 1px solid #b6d4fe;
+    border-left: 5px solid #0d6efd;
+    color: #1f3b5c;
+    padding: 15px 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.7;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.alert-info strong {
+    color: #0a6366;
+    font-weight: 600;
+}
+
+.alert-info br {
+    margin-bottom: 8px;
+}
+    
+</style>
+</head>
+<body>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="CMMAI Logo" class="logo-1">
+                <img src="https://www.bharatamatacollege.in/assets/images/hLogo.png" alt="BMC Logo" class="logo-2">
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#speakers" class="dropbtn">
+                        Speakers & Committee
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="keynote-speakers.html">Keynote/Invited Speakers</a></li>
+                        <li><a href="Scientific-Advisory-Committee.html">Scientific Advisory Committee</a></li>
+                        <li><a href="organising-committee.html">Organising Committee</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#schedule" class="dropbtn">
+                        Program
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="dates.html">Important Dates</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                    </ul>
+                </li>
+                <li><a href="author.html">Author info</a></li>
+                <li><a href="accommodation.html"> Attractions Nearby</a></li>
+                <li><a href="Contact-us.html">Contact us</a></li>
+            </ul>
+        
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <main class="event-gallery-page">
+
+        <section class="event-gallery-hero">
+            <h2>CMMAI 2026 Event Gallery</h2>
+            <p>Memories from Day 1, Day 2 & Day 3</p>
+        </section>
+
+      <section class="event-gallery-section">
+
+```
+        <div class="day-tabs" role="tablist" aria-label="Event Days">
+            <button class="day-tab active" type="button" role="tab" aria-selected="true" aria-controls="day1" data-day="day1">
+                <span class="day-number">01</span>
+                <span>Day 1</span>
+            </button>
+
+            <button class="day-tab" type="button" role="tab" aria-selected="false" aria-controls="day2" data-day="day2">
+                <span class="day-number">02</span>
+                <span>Day 2</span>
+            </button>
+
+            <button class="day-tab" type="button" role="tab" aria-selected="false" aria-controls="day3" data-day="day3">
+                <span class="day-number">03</span>
+                <span>Day 3</span>
+            </button>
+        </div>
+
+        <div class="day-panel active" id="day1" role="tabpanel">
+            <div class="day-heading">
+                <span class="day-icon"><i class="fas fa-calendar-day"></i></span>
+                <div>
+                    <h3>Day 1</h3>
+                    <p>CMMAI 2026</p>
+                </div>
+            </div>
+
+            <div class="event-image-grid" data-gallery="day1">
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_001.webp" alt="CMMAI 2026 Day 1 Event Image 1" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_002.webp" alt="CMMAI 2026 Day 1 Event Image 2" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_003.webp" alt="CMMAI 2026 Day 1 Event Image 3" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_004.webp" alt="CMMAI 2026 Day 1 Event Image 4" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_005.webp" alt="CMMAI 2026 Day 1 Event Image 5" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_006.webp" alt="CMMAI 2026 Day 1 Event Image 6" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_007.webp" alt="CMMAI 2026 Day 1 Event Image 7" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_008.webp" alt="CMMAI 2026 Day 1 Event Image 8" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_009.webp" alt="CMMAI 2026 Day 1 Event Image 9" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_010.webp" alt="CMMAI 2026 Day 1 Event Image 10" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_011.webp" alt="CMMAI 2026 Day 1 Event Image 11" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_012.webp" alt="CMMAI 2026 Day 1 Event Image 12" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_013.webp" alt="CMMAI 2026 Day 1 Event Image 13" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_014.webp" alt="CMMAI 2026 Day 1 Event Image 14" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_015.webp" alt="CMMAI 2026 Day 1 Event Image 15" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_016.webp" alt="CMMAI 2026 Day 1 Event Image 16" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_017.webp" alt="CMMAI 2026 Day 1 Event Image 17" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_018.webp" alt="CMMAI 2026 Day 1 Event Image 18" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_019.webp" alt="CMMAI 2026 Day 1 Event Image 19" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_020.webp" alt="CMMAI 2026 Day 1 Event Image 20" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_021.webp" alt="CMMAI 2026 Day 1 Event Image 21" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_022.webp" alt="CMMAI 2026 Day 1 Event Image 22" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_023.webp" alt="CMMAI 2026 Day 1 Event Image 23" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_024.webp" alt="CMMAI 2026 Day 1 Event Image 24" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_025.webp" alt="CMMAI 2026 Day 1 Event Image 25" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_026.webp" alt="CMMAI 2026 Day 1 Event Image 26" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_027.webp" alt="CMMAI 2026 Day 1 Event Image 27" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_028.webp" alt="CMMAI 2026 Day 1 Event Image 28" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <div class="day-panel" id="day2" role="tabpanel" hidden>
+            <div class="day-heading">
+                <span class="day-icon"><i class="fas fa-calendar-day"></i></span>
+                <div>
+                    <h3>Day 2</h3>
+                    <p>CMMAI 2026</p>
+                </div>
+            </div>
+
+            <div class="event-image-grid" data-gallery="day2">
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_029.webp" alt="CMMAI 2026 Day 2 Event Image 1" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_030.webp" alt="CMMAI 2026 Day 2 Event Image 2" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_031.webp" alt="CMMAI 2026 Day 2 Event Image 3" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_032.webp" alt="CMMAI 2026 Day 2 Event Image 4" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_033.webp" alt="CMMAI 2026 Day 2 Event Image 5" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_034.webp" alt="CMMAI 2026 Day 2 Event Image 6" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_035.webp" alt="CMMAI 2026 Day 2 Event Image 7" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_036.webp" alt="CMMAI 2026 Day 2 Event Image 8" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_037.webp" alt="CMMAI 2026 Day 2 Event Image 9" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_038.webp" alt="CMMAI 2026 Day 2 Event Image 10" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_039.webp" alt="CMMAI 2026 Day 2 Event Image 11" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_040.webp" alt="CMMAI 2026 Day 2 Event Image 12" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_041.webp" alt="CMMAI 2026 Day 2 Event Image 13" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_042.webp" alt="CMMAI 2026 Day 2 Event Image 14" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_043.webp" alt="CMMAI 2026 Day 2 Event Image 15" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_044.webp" alt="CMMAI 2026 Day 2 Event Image 16" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_045.webp" alt="CMMAI 2026 Day 2 Event Image 17" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_046.webp" alt="CMMAI 2026 Day 2 Event Image 18" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_047.webp" alt="CMMAI 2026 Day 2 Event Image 19" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_048.webp" alt="CMMAI 2026 Day 2 Event Image 20" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_049.webp" alt="CMMAI 2026 Day 2 Event Image 21" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_050.webp" alt="CMMAI 2026 Day 2 Event Image 22" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_051.webp" alt="CMMAI 2026 Day 2 Event Image 23" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_052.webp" alt="CMMAI 2026 Day 2 Event Image 24" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+        <div class="day-panel" id="day3" role="tabpanel" hidden>
+            <div class="day-heading">
+                <span class="day-icon"><i class="fas fa-calendar-day"></i></span>
+                <div>
+                    <h3>Day 3</h3>
+                    <p>CMMAI 2026</p>
+                </div>
+            </div>
+
+            <div class="event-image-grid" data-gallery="day3">
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_053.webp" alt="CMMAI 2026 Day 3 Event Image 1" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_054.webp" alt="CMMAI 2026 Day 3 Event Image 2" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_055.webp" alt="CMMAI 2026 Day 3 Event Image 3" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_056.webp" alt="CMMAI 2026 Day 3 Event Image 4" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_057.webp" alt="CMMAI 2026 Day 3 Event Image 5" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_058.webp" alt="CMMAI 2026 Day 3 Event Image 6" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_059.webp" alt="CMMAI 2026 Day 3 Event Image 7" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_060.webp" alt="CMMAI 2026 Day 3 Event Image 8" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_061.webp" alt="CMMAI 2026 Day 3 Event Image 9" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_062.webp" alt="CMMAI 2026 Day 3 Event Image 10" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_063.webp" alt="CMMAI 2026 Day 3 Event Image 11" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_064.webp" alt="CMMAI 2026 Day 3 Event Image 12" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_065.webp" alt="CMMAI 2026 Day 3 Event Image 13" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_066.webp" alt="CMMAI 2026 Day 3 Event Image 14" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_067.webp" alt="CMMAI 2026 Day 3 Event Image 15" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_068.webp" alt="CMMAI 2026 Day 3 Event Image 16" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_069.webp" alt="CMMAI 2026 Day 3 Event Image 17" loading="lazy" decoding="async">
+                </div>
+                <div class="event-image-card">
+                    <div class="image-loader"><span></span></div>
+                    <img data-src="https://cmmai2026.bharatamatacollege.in/assets/images/event/cmmai2026event_070.webp" alt="CMMAI 2026 Day 3 Event Image 18" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </div>
+
+    </section>
+```
+
+    </main>
+
+    <div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close image viewer">
+            <i class="fas fa-xmark"></i>
+        </button>
+
+        <div class="lightbox-inner">
+            <img id="lightboxImage" src="" alt="">
+        </div>
+    </div>
+
+    <footer class="minimal-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 CMMAI - Postgraduate and Research Department of Mathematics</p>
+                <p>Bharata Mata College (Autonomous), Thrikkakara, Kochi, Kerala, India</p>
+            </div>
+            
+            <div class="footer-right">
+                <p>Developed by <a href="#" id="devModalBtnRaj" class="dev-link">Raj Thakur</a> & <a href="#" id="devModalBtnAngelo" class="dev-link">Angelo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="devModalRaj" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Developer Profile</h3>
+                <span class="close-btn" id="closeModalBtnRaj">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="dev-image-box">
+                    <img src="raj.png" alt="Raj Thakur" class="dev-img">
+                </div>
+                <div class="dev-info">
+                    <h2>Raj Thakur</h2>
+                    <p class="dev-title">Software & Web Developer</p>
+                    <p class="dev-desc">
+                        Hello! I am a developer specializing in building scalable websites and software solutions. 
+                        Using HTML, CSS, JavaScript, PHP, Python, and MySQL, I design and develop educational platforms, 
+                        coaching institute software, and academic conference websites like CMMAI.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="dev-contact">
+                    <a href="mailto:vrsmiw@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i> Email Me</a>
+                    <a href="https://wa.me/916261227800" target="_blank" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="devModalAngelo" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Developer Profile</h3>
+                <span class="close-btn" id="closeModalBtnAngelo">×</span>
+            </div>
+            <div class="modal-body">
+                <div class="dev-image-box">
+                    <img src="angelo.webp" alt="Angelo" class="dev-img"> 
+                </div>
+                <div class="dev-info">
+                    <h2>Angelo</h2>
+                    <p class="dev-title">Web Developer / Designer</p>
+                    <p class="dev-desc">
+                        Hello! I contributed to the UI/UX design and frontend development for this academic conference website. 
+                        Passionate about creating clean, responsive, and user-friendly digital experiences.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="dev-contact">
+                    <a href="http://linkedin.com/in/angeloseby" target="_blank" class="contact-btn linkedin-btn">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // -----------------------------------------------------
+    // DEV MODALS & NAVIGATION LOGIC (From Code A)
+    // -----------------------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+        // Dev Modals Elements
+        const modalRaj = document.getElementById("devModalRaj");
+        const btnRaj = document.getElementById("devModalBtnRaj");
+        const closeBtnRaj = document.getElementById("closeModalBtnRaj");
+
+        const modalAngelo = document.getElementById("devModalAngelo");
+        const btnAngelo = document.getElementById("devModalBtnAngelo");
+        const closeBtnAngelo = document.getElementById("closeModalBtnAngelo");
+
+        function openModal(e, modalElement) {
+            e.preventDefault();
+            modalElement.classList.add("show");
+        }
+
+        function closeModal(modalElement) {
+            modalElement.classList.remove("show");
+        }
+
+        btnRaj.addEventListener("click", (e) => openModal(e, modalRaj));
+        closeBtnRaj.addEventListener("click", () => closeModal(modalRaj));
+
+        btnAngelo.addEventListener("click", (e) => openModal(e, modalAngelo));
+        closeBtnAngelo.addEventListener("click", () => closeModal(modalAngelo));
+
+        // Close on outside click
+        window.addEventListener("click", (e) => {
+            if (e.target === modalRaj) closeModal(modalRaj);
+            if (e.target === modalAngelo) closeModal(modalAngelo);
+        });
+    });
+
+    // Mobile Toggle Script
+    document.getElementById('mobileToggle').addEventListener('click', function() {
+        var nav = document.getElementById('navLinks');
+        var icon = this.querySelector('i');
+        
+        nav.classList.toggle('active');
+
+        if (nav.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark'); 
+        } 
+        else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Dropdown toggle logic
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+        var dropbtn = dropdown.querySelector('.dropbtn');
+        dropbtn.addEventListener('click', function(e) {
+            if (window.innerWidth <= 1024) {
+                e.preventDefault();
+                if (dropdown.classList.contains('active')) {
+                    dropdown.classList.remove('active');
+                } else {
+                    dropdowns.forEach(function(d) { d.classList.remove('active'); });
+                    dropdown.classList.add('active');
+                }
+            }
+        });
+    });
+    </script>
+    
+
+    <script>
+    // -----------------------------------------------------
+    // EVENT GALLERY: DAY TABS + LAZY IMAGE LOADING + LIGHTBOX
+    // -----------------------------------------------------
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const dayTabs = document.querySelectorAll(".day-tab");
+        const dayPanels = document.querySelectorAll(".day-panel");
+        const galleryImages = document.querySelectorAll(".event-image-card img");
+
+        function loadImage(img) {
+            if (!img || img.dataset.loaded === "true") return;
+
+            const source = img.getAttribute("data-src");
+            if (!source) return;
+
+            img.dataset.loaded = "true";
+
+            img.onload = function () {
+                img.classList.add("loaded");
+                const card = img.closest(".event-image-card");
+                if (card) card.classList.add("loaded");
+            };
+
+            img.onerror = function () {
+                const card = img.closest(".event-image-card");
+                if (card) {
+                    card.classList.add("image-error");
+                    const loader = card.querySelector(".image-loader");
+                    if (loader) loader.innerHTML = '<span style="font-size:12px;color:#64748b;">Image unavailable</span>';
+                }
+            };
+
+            img.src = source;
+        }
+
+        const imageObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    loadImage(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: "250px 0px",
+            threshold: 0.01
+        });
+
+        galleryImages.forEach(function (img) {
+            imageObserver.observe(img);
+        });
+
+        function activateDay(dayId) {
+            dayTabs.forEach(function (tab) {
+                const isActive = tab.dataset.day === dayId;
+                tab.classList.toggle("active", isActive);
+                tab.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+
+            dayPanels.forEach(function (panel) {
+                const isActive = panel.id === dayId;
+                panel.classList.toggle("active", isActive);
+                panel.hidden = !isActive;
+            });
+
+            const activePanel = document.getElementById(dayId);
+            if (activePanel) {
+                const firstImages = activePanel.querySelectorAll(".event-image-card img");
+                firstImages.forEach(function (img) {
+                    if (img.getBoundingClientRect().top < window.innerHeight + 250) {
+                        loadImage(img);
+                    }
+                });
+            }
+        }
+
+        dayTabs.forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                activateDay(this.dataset.day);
+            });
+        });
+
+        const lightbox = document.getElementById("imageLightbox");
+        const lightboxImage = document.getElementById("lightboxImage");
+        const lightboxClose = document.getElementById("lightboxClose");
+
+        function closeLightbox() {
+            lightbox.classList.remove("show");
+            lightbox.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("lightbox-open");
+            lightboxImage.src = "";
+            lightboxImage.alt = "";
+
+            if (document.fullscreenElement && document.exitFullscreen) {
+                document.exitFullscreen().catch(function () {});
+            }
+        }
+
+        function openLightbox(img) {
+            if (!img || !img.src) return;
+
+            lightboxImage.src = img.currentSrc || img.src;
+            lightboxImage.alt = img.alt || "CMMAI 2026 Event Image";
+            lightbox.classList.add("show");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.classList.add("lightbox-open");
+
+            if (lightbox.requestFullscreen) {
+                lightbox.requestFullscreen().catch(function () {});
+            }
+        }
+
+        galleryImages.forEach(function (img) {
+            img.addEventListener("click", function () {
+                if (this.dataset.loaded === "true") {
+                    openLightbox(this);
+                }
+            });
+
+            img.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            });
+        });
+
+        lightboxClose.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", function (e) {
+            if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-inner")) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && lightbox.classList.contains("show")) {
+                closeLightbox();
+            }
+        });
+
+    });
+    </script>
+
+    <script>
+    // Registration deadline: 31 August 2026, 11:59:59 PM IST
+    const registrationDeadline = new Date("2026-08-25T23:59:59+05:30");
+
+    // Select ALL registration buttons
+    const registrationLinks = document.querySelectorAll(".registration-link");
+
+    // Check current date and time
+    if (new Date() > registrationDeadline) {
+
+        registrationLinks.forEach(function(button) {
+
+            // Remove link functionality
+            button.removeAttribute("href");
+            button.removeAttribute("target");
+
+            // Disable clicking
+            button.style.pointerEvents = "none";
+            button.style.cursor = "not-allowed";
+            button.style.opacity = "0.6";
+
+            // Change button text
+            button.innerHTML =
+                '<i class="fas fa-lock"></i> Registration Closed';
+
+            // Tooltip
+            button.title =
+                "Registration closed after 31 August 2026";
+        });
+    }
+</script>
+</body>
+</html>
