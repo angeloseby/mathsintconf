@@ -1017,6 +1017,117 @@
         padding: 13px 15px;
     }
 }
+
+
+/* =============================================
+   FULL PAPER SUBMISSION ANNOUNCEMENT
+============================================= */
+
+.full-paper-announcement {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 900px;
+    width: calc(100% - 30px);
+    margin: 28px auto 10px;
+    padding: 20px 24px;
+    position: relative;
+    z-index: 20;
+    text-align: left;
+    text-decoration: none;
+    color: #ffffff;
+    background: rgba(0, 242, 255, 0.055);
+    border: 1px solid rgba(0, 242, 255, 0.45);
+    border-left: 4px solid var(--primary);
+    border-radius: 14px;
+    box-shadow: 0 0 22px rgba(0, 242, 255, 0.08);
+    transition: background 0.3s ease, transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.full-paper-announcement:hover {
+    background: rgba(0, 242, 255, 0.11);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0, 242, 255, 0.16);
+}
+
+.full-paper-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    animation: fullPaperBlink 1.5s ease-in-out infinite;
+}
+
+.full-paper-announcement h3 {
+    color: #ffffff;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    line-height: 1.5;
+    margin: 8px 0;
+}
+
+.full-paper-announcement p {
+    color: #94a3b8;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.full-paper-deadline {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.full-paper-arrow {
+    flex-shrink: 0;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+@keyframes fullPaperBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
+@media (max-width: 600px) {
+    .full-paper-announcement {
+        padding: 18px 16px;
+        gap: 12px;
+        margin-top: 22px;
+    }
+
+    .full-paper-announcement p {
+        font-size: 0.82rem;
+    }
+
+    .full-paper-badge {
+        font-size: 0.7rem;
+        letter-spacing: 0.6px;
+    }
+
+    .full-paper-arrow {
+        font-size: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .full-paper-badge {
+        animation: none;
+    }
+
+    .full-paper-announcement {
+        transition: none;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1156,6 +1267,39 @@
             <div class="cta-group">
                 <a href="dates.html" class="btn-primary">Important Dates <i class="fas fa-calendar-days"></i></a>
                 
+<!-- FULL PAPER SUBMISSION ANNOUNCEMENT -->
+
+<a href="author.html#full-paper-submission"
+   class="full-paper-announcement">
+
+    <div>
+        <span class="full-paper-badge">
+            <i class="fas fa-bell"></i>
+            Full Paper Submission
+        </span>
+
+        <h3>
+            Springer Proceedings in Mathematics &amp; Statistics (PROMS)
+        </h3>
+
+        <p>
+            Authors who presented their research at CMMAI 2026
+            are invited to submit their full research papers
+            for consideration in the proposed proceedings volume.
+        </p>
+
+        <span class="full-paper-deadline">
+            <i class="fas fa-calendar-alt"></i>
+            Submission Deadline: 30 November 2026
+        </span>
+    </div>
+
+    <i class="fas fa-arrow-right full-paper-arrow"></i>
+
+</a>
+
+<!-- END FULL PAPER SUBMISSION ANNOUNCEMENT -->
+
             </div>
           
         </div>
